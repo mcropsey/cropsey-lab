@@ -1,0 +1,369 @@
+<title>Home Lab Topology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#E9EDF1; --surface:#FFFFFF; --surface2:#F4F6F8; --ink:#141B23; --muted:#58657A; --line:#CBD3DC;
+  --pi:#C51D4A; --obs:#C77F00; --k8s:#326CE5; --gw:#0C8587; --crapi:#DC4F24; --mcp:#7449DB;
+  --metric:#C77F00; --log:#0C8587; --warn:#B42318; --warn-bg:#FDECEA;
+  --on-color:#FFFFFF;
+  --display:"Chakra Petch", "Rajdhani", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0C1117; --surface:#141B24; --surface2:#1A2330; --ink:#E4E9EF; --muted:#8F9CAD; --line:#2A3542;
+    --pi:#F0487A; --obs:#F2A93B; --k8s:#6F9BFF; --gw:#2FC1BE; --crapi:#FF7A4D; --mcp:#A585FF;
+    --metric:#F2A93B; --log:#2FC1BE; --warn:#FF8A7A; --warn-bg:#3A1714; --on-color:#0C1117;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0C1117; --surface:#141B24; --surface2:#1A2330; --ink:#E4E9EF; --muted:#8F9CAD; --line:#2A3542;
+  --pi:#F0487A; --obs:#F2A93B; --k8s:#6F9BFF; --gw:#2FC1BE; --crapi:#FF7A4D; --mcp:#A585FF;
+  --metric:#F2A93B; --log:#2FC1BE; --warn:#FF8A7A; --warn-bg:#3A1714; --on-color:#0C1117;
+}
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  background-image:radial-gradient(color-mix(in srgb,var(--line) 70%,transparent) 1px,transparent 1px);background-size:22px 22px}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:20px;padding-block:36px 64px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:.01em}
+.mono{font-family:var(--mono)}
+
+/* header */
+header{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;margin-bottom:28px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(34px,5vw,58px);line-height:1;font-weight:700;margin-top:8px}
+h1 span{color:var(--muted);font-weight:500}
+.lede{color:var(--muted);max-width:62ch;margin:10px 0 0}
+.stats{display:grid;grid-template-columns:repeat(4,auto);gap:0;border:1px solid var(--line);background:var(--surface);border-radius:10px;overflow:hidden}
+.stat{padding:12px 18px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.stat b{display:block;font-family:var(--display);font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.stat small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* alerts */
+.flags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.flag{display:flex;gap:8px;align-items:center;font-size:13px;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.flag.bad{background:var(--warn-bg);border-color:color-mix(in srgb,var(--warn) 40%,transparent);color:var(--warn)}
+.dot{width:8px;height:8px;border-radius:50%;background:currentColor;flex:none}
+.flag .dot{background:var(--muted)}
+.flag.bad .dot{background:var(--warn);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+
+/* section heads */
+.sec{display:flex;align-items:baseline;gap:14px;margin:0 0 14px}
+.sec h2{font-size:24px;font-weight:600}
+.sec p{margin:0;color:var(--muted);font-size:13px}
+
+/* edge + LAN rail */
+.edge{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-bottom:10px}
+.tunnel{display:flex;align-items:center;gap:10px;font-size:13px;background:var(--surface);border:1px dashed var(--line);border-radius:8px;padding:8px 12px}
+.tunnel .ico{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:12px;color:var(--on-color)}
+.tunnel em{font-style:normal;color:var(--muted)}
+.rail{position:relative;height:34px;border-radius:6px;background:var(--ink);color:var(--ground);display:flex;align-items:center;padding-inline:14px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.1em;overflow:hidden;margin-bottom:18px}
+.rail::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 60px,color-mix(in srgb,var(--ground) 55%,transparent) 60px 64px,transparent 64px 120px);
+  animation:flow 3s linear infinite;opacity:.5}
+@keyframes flow{to{background-position:120px 0}}
+.rail span{position:relative;z-index:1}
+.rail .r{margin-left:auto;opacity:.7}
+
+/* host cards */
+.hosts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:48px}
+.host{--c:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 1px 0 var(--line),0 10px 24px -18px color-mix(in srgb,var(--c) 70%,transparent)}
+.host.pi{--c:var(--pi)} .host.obs{--c:var(--obs)} .host.k8s{--c:var(--k8s)} .host.gw{--c:var(--gw)} .host.crapi{--c:var(--crapi)} .host.mcp{--c:var(--mcp)}
+.hh{background:var(--c);color:var(--on-color);padding:14px 16px 12px;display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:center}
+.ip{font-family:var(--display);font-weight:700;font-size:40px;line-height:.9;grid-row:span 2}
+.hn{font-family:var(--mono);font-size:13px;font-weight:600}
+.role{font-size:13px;opacity:.92;line-height:1.3}
+.hub{margin-left:6px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:2px 6px;border-radius:4px;background:color-mix(in srgb,var(--on-color) 22%,transparent)}
+.hb{padding:12px 16px 14px;display:flex;flex-direction:column;gap:12px;flex:1}
+.grp{display:flex;flex-direction:column;gap:6px}
+.rt{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--c);font-weight:600;display:flex;align-items:center;gap:6px}
+.rt::after{content:"";flex:1;height:1px;background:var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{display:inline-flex;align-items:stretch;border:1px solid var(--line);border-radius:5px;font-size:12px;overflow:hidden;background:var(--surface2)}
+.chip b{font-weight:500;padding:2px 7px}
+.chip i{font-style:normal;font-family:var(--mono);font-size:11px;padding:2px 6px;border-left:1px solid var(--line);color:var(--muted);background:var(--surface);display:flex;align-items:center}
+.chip.int{border-style:dashed}
+.chip.int i{opacity:.8}
+.chip.key{border-color:color-mix(in srgb,var(--c) 55%,var(--line))}
+.chip.key b{color:var(--c);font-weight:600}
+.telemetry{font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px}
+.telemetry span::before{content:"◆ ";color:var(--c);font-size:8px;vertical-align:1px}
+.hf{border-top:1px solid var(--line);padding:10px 16px;display:grid;grid-template-columns:1fr 1fr auto;gap:12px;font-size:11.5px;color:var(--muted);align-items:end;background:var(--surface2)}
+.hf b{display:block;color:var(--ink);font-family:var(--mono);font-size:12px;font-weight:500;font-variant-numeric:tabular-nums}
+.bar{height:5px;border-radius:3px;background:var(--line);margin-top:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c)}
+.note{font-size:12px;color:var(--muted);border-left:2px solid var(--c);padding-left:8px;line-height:1.4}
+
+/* observability */
+.obsbox{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px}
+.svgwrap{overflow-x:auto}
+.svgwrap svg{display:block;width:100%;min-width:860px;height:auto}
+svg text{font-family:var(--body)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12.5px;color:var(--muted);margin-top:10px}
+.legend span{display:flex;align-items:center;gap:8px}
+.legend svg{width:34px;height:10px;min-width:0}
+.flowm{animation:dash 1.4s linear infinite}
+.flowl{animation:dash 1.1s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-20}}
+.ops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.op{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13px}
+.op h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.op ul{margin:0;padding-left:18px;color:var(--muted)}
+.op li{margin:3px 0}
+.op code{font-family:var(--mono);font-size:11.5px;color:var(--ink);background:var(--surface2);padding:0 4px;border-radius:3px}
+.op.bad{border-color:color-mix(in srgb,var(--warn) 45%,var(--line))}
+.op.bad h3{color:var(--warn)}
+footer{margin-top:36px;font-size:12px;color:var(--muted);font-family:var(--mono)}
+
+@media (max-width:1000px){.hosts,.ops{grid-template-columns:repeat(2,minmax(0,1fr))} header{grid-template-columns:1fr}}
+@media (max-width:640px){
+  .hosts,.ops{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .wrap{padding-inline:16px}
+  .rail .r{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div>
+    <div class="eyebrow">Verified live via SSH · 2026-09-19</div>
+    <h1>Home Lab <span>192.168.1.x</span></h1>
+    <p class="lede">One Raspberry Pi 5 control node driving five Rocky Linux 9.8 Hyper-V VMs — an observability hub, a k3s cluster, an API gateway with CI, and two API-security targets watched by eBPF sensors.</p>
+  </div>
+  <div class="stats" aria-label="Lab totals">
+    <div class="stat"><b>6</b><small>Hosts</small></div>
+    <div class="stat"><b>24</b><small>Containers</small></div>
+    <div class="stat"><b>7</b><small>k3s deploys</small></div>
+    <div class="stat"><b>3</b><small>Runtimes</small></div>
+  </div>
+</header>
+
+<div class="flags">
+  <div class="flag bad"><span class="dot"></span>Alertmanager receiver is <b class="mono">null</b> — alerts fire but go nowhere</div>
+  <div class="flag"><span class="dot"></span>rk1–rk4 (.75–.78) log shipping pending</div>
+  <div class="flag"><span class="dot"></span>.103–.105 excluded from monitoring</div>
+</div>
+
+<div class="sec"><h2>Network &amp; services</h2><p>Dashed chips are internal-only ports</p></div>
+
+<div class="edge">
+  <div class="tunnel"><span class="ico" style="background:var(--pi)">TG</span><div><b>Twingate connector</b> <em>remote access → .85</em></div></div>
+  <div class="tunnel"><span class="ico" style="background:var(--k8s)">CF</span><div><b>Cloudflare Tunnel</b> <em>external ingress → .99</em></div></div>
+</div>
+<div class="rail"><span>LAN · 192.168.1.0/24</span><span class="r">Hyper-V · Intel i9-9900K @ 3.60 GHz</span></div>
+
+<section class="hosts">
+
+  <article class="host pi">
+    <div class="hh"><div class="ip">.85</div><div class="hn">rasp5</div><div class="role">Control node — Claude Code + opencode, inventory &amp; runbooks</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Docker</div><div class="chips">
+        <span class="chip key"><b>twingate-jade-limpet</b><i>outbound</i></span></div></div>
+      <div class="grp"><div class="rt">Systemd</div><div class="chips">
+        <span class="chip"><b>glances</b><i>127.0.0.1:61209</i></span><span class="chip"><b>atop</b><i>acct</i></span><span class="chip"><b>cups</b><i>print</i></span></div></div>
+      <div class="note">SSH mesh hub — passwordless to .98–.105 (.103–.105 currently reject the key)</div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>alloy → Loki</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>16 / 117 G</b><div class="bar"><i style="width:14%"></i></div></div><div>RAM<b>7.7 Gi</b></div><div>Up<b>15h</b></div></div>
+  </article>
+
+  <article class="host obs">
+    <div class="hh"><div class="ip">.98</div><div class="hn">hv-rocky-linux-1 <span class="hub">HUB</span></div><div class="role">Observability hub + VulnNotes API + MCP session host</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Docker Compose · /opt/monitoring</div><div class="chips">
+        <span class="chip key"><b>grafana</b><i>3000</i></span><span class="chip key"><b>prometheus</b><i>9090</i></span><span class="chip key"><b>alertmanager</b><i>9093</i></span><span class="chip key"><b>loki</b><i>3100</i></span><span class="chip"><b>cadvisor</b><i>8081</i></span></div></div>
+      <div class="grp"><div class="rt">Docker</div><div class="chips">
+        <span class="chip"><b>vnotes</b><i>8000</i></span></div></div>
+      <div class="grp"><div class="rt">Systemd</div><div class="chips">
+        <span class="chip"><b>mcp-heartbeat</b><i>svc</i></span><span class="chip"><b>mcp-sweep</b><i>svc</i></span></div></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>16 / 70 G</b><div class="bar"><i style="width:22%"></i></div></div><div>RAM<b>8.6 Gi</b></div><div>Up<b>22d</b></div></div>
+  </article>
+
+  <article class="host k8s">
+    <div class="hh"><div class="ip">.99</div><div class="hn">hv-rocky-linux-2</div><div class="role">k3s v1.36.3 single-node cluster + Cloudflare ingress</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">k3s workloads · NodePort</div><div class="chips">
+        <span class="chip key"><b>juice-shop</b><i>30300</i></span><span class="chip key"><b>vampi</b><i>30500</i></span><span class="chip key"><b>nginx</b><i>30453</i></span></div></div>
+      <div class="grp"><div class="rt">k3s system</div><div class="chips">
+        <span class="chip"><b>ingress-nginx</b><i>80·443·8443</i></span><span class="chip"><b>k3s API</b><i>6443</i></span><span class="chip int"><b>coredns</b><i>—</i></span><span class="chip int"><b>metrics-server</b><i>—</i></span><span class="chip int"><b>local-path</b><i>—</i></span></div></div>
+      <div class="grp"><div class="rt">Systemd</div><div class="chips">
+        <span class="chip"><b>cloudflared</b><i>tunnel</i></span></div></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>kubelet :10250</span><span>alloy (pod logs)</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>15 / 70 G</b><div class="bar"><i style="width:21%"></i></div></div><div>RAM<b>6.0 Gi</b></div><div>Up<b>31d</b></div></div>
+  </article>
+
+  <article class="host gw">
+    <div class="hh"><div class="ip">.100</div><div class="hn">hv-rocky-linux-3</div><div class="role">Kong API Gateway + Jenkins CI/CD</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Podman</div><div class="chips">
+        <span class="chip key"><b>kong 3.6</b><i>80·8001</i></span></div></div>
+      <div class="grp"><div class="rt">Docker</div><div class="chips">
+        <span class="chip key"><b>jenkins</b><i>8080·50000</i></span><span class="chip"><b>jenkins-docker (dind)</b><i>2376</i></span><span class="chip"><b>cadvisor</b><i>8081</i></span></div></div>
+      <div class="note">Jenkins pinned to <span class="mono">myjenkins-noname:2.568.3-jdk21</span> with Blue Ocean</div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>podman-exp :9882</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>15 / 70 G</b><div class="bar"><i style="width:21%"></i></div></div><div>RAM<b>8.4 Gi</b></div><div>Up<b>31d</b></div></div>
+  </article>
+
+  <article class="host crapi">
+    <div class="hh"><div class="ip">.101</div><div class="hn">hv-rocky-linux-4</div><div class="role">crAPI vulnerable-app lab + Noname sensor</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Podman · crAPI stack</div><div class="chips">
+        <span class="chip key"><b>crapi-web</b><i>8888·8443</i></span><span class="chip"><b>crapi-chatbot</b><i>5500</i></span><span class="chip"><b>mailhog</b><i>8025</i></span><span class="chip int"><b>gateway-svc</b><i>443</i></span><span class="chip int"><b>identity</b><i>8080</i></span><span class="chip int"><b>community</b><i>6060</i></span><span class="chip int"><b>workshop</b><i>—</i></span><span class="chip int"><b>postgres</b><i>5432</i></span><span class="chip int"><b>mongodb</b><i>27017</i></span><span class="chip int"><b>chromadb</b><i>8000</i></span></div></div>
+      <div class="grp"><div class="rt">Podman · extras</div><div class="chips">
+        <span class="chip key"><b>juice-shop</b><i>3000</i></span><span class="chip"><b>searxng</b><i>8080</i></span></div></div>
+      <div class="grp"><div class="rt">Systemd</div><div class="chips">
+        <span class="chip"><b>noname-sensor</b><i>eBPF</i></span></div></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>podman-exp :9882</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>18 / 70 G</b><div class="bar"><i style="width:25%"></i></div></div><div>RAM<b>8.1 Gi</b></div><div>Up<b>31d</b></div></div>
+  </article>
+
+  <article class="host mcp">
+    <div class="hh"><div class="ip">.102</div><div class="hn">hv-rocky-linux-5</div><div class="role">Noname sensor + MCP servers + AI simulator</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Systemd · /opt</div><div class="chips">
+        <span class="chip key"><b>crapi-mcp</b><i>8009</i></span><span class="chip key"><b>noname-mcp</b><i>8013</i></span><span class="chip"><b>ai-sim LLM</b><i>8011</i></span><span class="chip"><b>ai-sim GenAI</b><i>8012</i></span><span class="chip"><b>noname-sensor</b><i>eBPF</i></span></div></div>
+      <div class="grp"><div class="rt">Podman</div><div class="chips">
+        <span class="chip key"><b>vampi-mcp</b><i>5000</i></span></div></div>
+      <div class="note">Each service runs from <span class="mono">/opt/&lt;name&gt;</span> with its own .venv</div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>podman-exp :9882</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>20 / 70 G</b><div class="bar"><i style="width:29%"></i></div></div><div>RAM<b>3.9 Gi</b></div><div>Up<b>31d</b></div></div>
+  </article>
+</section>
+
+<div class="sec"><h2>Observability flow</h2><p>Metrics are pulled by Prometheus · logs are pushed by Alloy</p></div>
+
+<div class="obsbox">
+  <div class="svgwrap">
+  <svg viewBox="0 0 1000 500" role="img" aria-label="Metrics and log flows from six hosts into the observability hub on .98">
+    <defs>
+      <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--metric)"/></marker>
+      <marker id="al" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--log)"/></marker>
+      <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--muted)"/></marker>
+      <marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--warn)"/></marker>
+    </defs>
+
+    <!-- flows: metrics (top edge) to Prometheus, logs (bottom edge) to Loki -->
+    <g fill="none" stroke-width="1.8">
+      <g stroke="var(--metric)" stroke-dasharray="6 4" class="flowm">
+        <path d="M290,72 C370,72 370,118 448,118" marker-end="url(#am)"/>
+        <path d="M290,142 C370,142 370,122 448,122"/>
+        <path d="M290,212 C370,212 370,126 448,126"/>
+        <path d="M290,282 C370,282 370,130 448,130"/>
+        <path d="M290,352 C370,352 370,134 448,134"/>
+        <path d="M290,422 C370,422 370,138 448,138"/>
+      </g>
+      <g stroke="var(--log)" stroke-dasharray="3 4" class="flowl">
+        <path d="M290,94 C380,94 380,380 448,380"/>
+        <path d="M290,164 C380,164 380,384 448,384"/>
+        <path d="M290,234 C380,234 380,388 448,388"/>
+        <path d="M290,304 C380,304 380,392 448,392"/>
+        <path d="M290,374 C380,374 380,396 448,396"/>
+        <path d="M290,444 C380,444 380,400 448,400" marker-end="url(#al)"/>
+      </g>
+    </g>
+
+    <!-- source hosts -->
+    <g font-size="12">
+      <g transform="translate(20,56)"><rect width="270" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--pi)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="17" fill="var(--pi)">.85</text><text x="68" y="22" fill="var(--ink)" font-weight="600">rasp5</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node :9100 · alloy journal+docker</text></g>
+      <g transform="translate(20,126)"><rect width="270" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--obs)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="17" fill="var(--obs)">.98</text><text x="68" y="22" fill="var(--ink)" font-weight="600">hv-rocky-linux-1</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node · cAdvisor · alloy +auditd+docker</text></g>
+      <g transform="translate(20,196)"><rect width="270" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--k8s)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="17" fill="var(--k8s)">.99</text><text x="68" y="22" fill="var(--ink)" font-weight="600">hv-rocky-linux-2</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node · kubelet :10250 · alloy k3s-pods</text></g>
+      <g transform="translate(20,266)"><rect width="270" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--gw)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="17" fill="var(--gw)">.100</text><text x="68" y="22" fill="var(--ink)" font-weight="600">hv-rocky-linux-3</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node · cAdvisor · podman · alloy +docker</text></g>
+      <g transform="translate(20,336)"><rect width="270" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--crapi)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="17" fill="var(--crapi)">.101</text><text x="68" y="22" fill="var(--ink)" font-weight="600">hv-rocky-linux-4</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node · podman :9882 · alloy</text></g>
+      <g transform="translate(20,406)"><rect width="270" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--mcp)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="17" fill="var(--mcp)">.102</text><text x="68" y="22" fill="var(--ink)" font-weight="600">hv-rocky-linux-5</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node · podman :9882 · alloy</text></g>
+    </g>
+
+    <!-- hub -->
+    <rect x="435" y="34" width="360" height="446" rx="14" fill="color-mix(in srgb,var(--obs) 7%,var(--surface))" stroke="var(--obs)" stroke-dasharray="2 5" stroke-width="1.5"/>
+    <text x="452" y="60" font-family="var(--mono)" font-size="11" letter-spacing="1.5" fill="var(--obs)" font-weight="600">.98  /opt/monitoring  · network_mode: host</text>
+
+    <g font-size="12">
+      <g transform="translate(450,88)"><rect width="150" height="72" rx="9" fill="var(--surface)" stroke="var(--metric)" stroke-width="1.6"/>
+        <text x="14" y="28" font-family="var(--display)" font-size="17" font-weight="700" fill="var(--ink)">Prometheus</text><text x="14" y="50" font-family="var(--mono)" font-size="11" fill="var(--muted)">:9090 · v3.14</text></g>
+      <g transform="translate(450,350)"><rect width="150" height="72" rx="9" fill="var(--surface)" stroke="var(--log)" stroke-width="1.6"/>
+        <text x="14" y="28" font-family="var(--display)" font-size="17" font-weight="700" fill="var(--ink)">Loki</text><text x="14" y="50" font-family="var(--mono)" font-size="11" fill="var(--muted)">:3100 · 3.7.8</text></g>
+      <g transform="translate(625,88)"><rect width="140" height="72" rx="9" fill="var(--surface)" stroke="var(--warn)" stroke-width="1.6"/>
+        <text x="14" y="28" font-family="var(--display)" font-size="15" font-weight="700" fill="var(--ink)">Alertmanager</text><text x="14" y="50" font-family="var(--mono)" font-size="11" fill="var(--muted)">:9093</text></g>
+      <g transform="translate(625,220)"><rect width="140" height="72" rx="9" fill="var(--ink)"/>
+        <text x="14" y="28" font-family="var(--display)" font-size="17" font-weight="700" fill="var(--ground)">Grafana</text><text x="14" y="50" font-family="var(--mono)" font-size="11" fill="var(--ground)" opacity=".75">:3000 · 13.2</text></g>
+      <g transform="translate(625,440)"><rect width="140" height="26" rx="6" fill="var(--surface2)" stroke="var(--line)"/>
+        <text x="12" y="17" font-family="var(--mono)" font-size="10.5" fill="var(--muted)">cAdvisor :8081 local</text></g>
+    </g>
+
+    <!-- internal hub edges -->
+    <g fill="none" stroke-width="1.6">
+      <path d="M600,124 H621" stroke="var(--muted)" marker-end="url(#ai)"/>
+      <path d="M490,350 V164" stroke="var(--log)" marker-end="url(#al)"/>
+      <path d="M600,396 H782 V178 H700 V164" stroke="var(--log)" marker-end="url(#al)"/>
+      <path d="M625,246 C590,246 590,175 572,164" stroke="var(--muted)" stroke-dasharray="2 3" marker-end="url(#ai)"/>
+      <path d="M625,268 C590,268 590,338 572,347" stroke="var(--muted)" stroke-dasharray="2 3" marker-end="url(#ai)"/>
+    </g>
+    <text x="498" y="250" font-size="11" fill="var(--log)" font-family="var(--mono)">remote-write</text>
+    <text x="498" y="265" font-size="10.5" fill="var(--muted)">log-derived series</text>
+    <text x="704" y="330" font-size="11" fill="var(--log)" font-family="var(--mono)" text-anchor="end">ruler</text>
+    <text x="604" y="203" font-size="10.5" fill="var(--muted)" text-anchor="end">queries</text>
+
+    <!-- outputs -->
+    <path d="M765,110 H842" fill="none" stroke="var(--warn)" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#aw)"/>
+    <g transform="translate(846,80)"><rect width="140" height="64" rx="9" fill="var(--warn-bg)" stroke="var(--warn)" stroke-dasharray="4 3"/>
+      <text x="12" y="26" font-family="var(--mono)" font-size="13" font-weight="600" fill="var(--warn)">receiver: null</text>
+      <text x="12" y="46" font-size="11" fill="var(--warn)">alerts not delivered</text></g>
+    <path d="M765,256 H842" fill="none" stroke="var(--ink)" stroke-width="1.8" marker-end="url(#ai)"/>
+    <g transform="translate(846,226)"><rect width="140" height="64" rx="9" fill="var(--surface)" stroke="var(--line)"/>
+      <text x="12" y="26" font-size="13" font-weight="600" fill="var(--ink)">Dashboards</text>
+      <text x="12" y="46" font-size="11" fill="var(--muted)" font-family="var(--mono)">gen_dashboards.py</text></g>
+
+    <text x="290" y="30" font-size="11" fill="var(--muted)" font-family="var(--mono)" text-anchor="end">SOURCES</text>
+  </svg>
+  </div>
+  <div class="legend">
+    <span><svg viewBox="0 0 34 10"><path d="M0,5H34" stroke="var(--metric)" stroke-width="2" stroke-dasharray="6 4"/></svg>Metrics · Prometheus scrapes (pull)</span>
+    <span><svg viewBox="0 0 34 10"><path d="M0,5H34" stroke="var(--log)" stroke-width="2" stroke-dasharray="3 4"/></svg>Logs · Alloy ships journal + auditd (push)</span>
+    <span><svg viewBox="0 0 34 10"><path d="M0,5H34" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 3"/></svg>Grafana queries</span>
+  </div>
+</div>
+
+<div class="ops">
+  <div class="op bad"><h3>Open items</h3><ul>
+    <li>Alertmanager receiver is still <code>null</code> — wire up a destination</li>
+    <li>rk1–rk4 (.75–.78) log shipping pending — offline on 09-19</li>
+    <li>.103–.105 reject rasp5's SSH key</li></ul></div>
+  <div class="op"><h3>Firewall rules of thumb</h3><ul>
+    <li>.98 / .101 / .102 — firewalld rich rules; <b>never</b> <code>firewall-cmd --reload</code></li>
+    <li>.99 / .100 — nft table <code>inet monitoring_acl</code></li>
+    <li>Loki accepts logs only from .85 and .99–.102</li></ul></div>
+  <div class="op"><h3>Where things live</h3><ul>
+    <li>Runbook: <code>~/MONITORING_SETUP.md</code> on rasp5</li>
+    <li>Prometheus reload: <code>POST :9090/-/reload</code></li>
+    <li>Dashboards are file-provisioned — edit the script, not the UI</li></ul></div>
+</div>
+
+<footer>Source: lab-inventory.md · updated 2026-09-19 · Rocky Linux 9.8 (Blue Onyx) on Hyper-V · Raspberry Pi 5 on Ubuntu 24.04.5 aarch64</footer>
+</div>
