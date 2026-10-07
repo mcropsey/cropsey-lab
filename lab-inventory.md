@@ -1,22 +1,24 @@
 # Lab Inventory — 192.168.1.x home lab
-**Updated:** 2026-09-29 | 13 hosts verified live via SSH | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
-New since 2026-09-19: **LiteLLM AI gateway on .101**, the **Agent Lab** (6 scheduled AI agents on .100/.85/.75/.76),
-full monitoring coverage of rk1–rk4 and .103–.105, and sections for the microk8s cluster and the RHCSA practice lab.
+**Updated:** 2026-10-07 | 13 hosts verified live via SSH | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
+New since 2026-09-29: **mikes-agents** (5 scheduled ops agents on .98: secnews, labwatch, cvewatch, patchwatch +
+labinventory) using the local LLM through LiteLLM; the **Agent Lab** traffic generator was retired (~2026-10-05);
+**security patching of all 11 managed hosts** on 2026-10-07 (reboots 22:05 the same night).
 
 ### Where the documentation lives
 
 | Doc | Location | Use it for |
 |---|---|---|
-| Lab inventory (this file) | `~/cropsey-lab/lab-inventory.md` on .101 | every host, service, port and change |
+| Lab inventory (this file) | `~/cropsey-lab/lab-inventory.md` (git clone on .98) | every host, service, port and change |
 | Topology diagram | `~/cropsey-lab/home-lab-topology.html` → `home-lab-topology.png` (light), `cropsey-lab.png` (dark) | visual overview; PNGs are rendered from the HTML (see below) |
-| Agent Lab overview | `~/agent-lab/README.md` on .101 | what the AI agents do, safeguards, day-to-day commands |
-| Agent Lab manual rebuild | `~/agent-lab/docs/MANUAL-SETUP.md` | rebuild/verify/tear down by hand, no scripts or AI |
-| Agent Lab build log | `~/agent-lab/docs/BUILD-NOTES.md` | timeline, decisions, incidents, every change made, follow-ups |
+| Lab agents (mikes-agents) | `~/mikes-agents/` on .98 (git) · per-agent READMEs | what each ops agent does, install, operate, troubleshoot |
+| Patching log | `~/patching/2026-10-07/` on .98 | per-host dnf/apt output, `reboots.log` from the reboot run |
+| Agent Lab (retired) | `~/agent-lab/` on .101 (README, `docs/MANUAL-SETUP.md`, `docs/BUILD-NOTES.md`) | history of the retired traffic generator |
 | Monitoring runbook | `~/MONITORING_SETUP.md` on rasp5 (.85) | Prometheus/Grafana/Loki/Alloy install |
 | Previous diagrams | `~/cropsey-lab/archive/2026-09-19/` | the 2026-09-19 PNGs |
-| GitHub | `github.com/mcropsey/cropsey-lab` (**public**: these docs) · `github.com/mcropsey/agent-lab` (**private**: Agent Lab code + docs) | off-box copies; .101 pushes with repo-specific deploy keys (`~/.ssh/github_cropsey_lab`, `~/.ssh/github_agent_lab`, SSH aliases `github-cropsey-lab` / `github-agent-lab` in `~/.ssh/config`) |
+| GitHub | `github.com/mcropsey/cropsey-lab` (these docs) · `mikes-agents` (lab agents) · `agent-lab` (retired) · `vnotes` — all **public** | Clones on .98 push over HTTPS with the token in `~/.git-credentials` (repo-local `credential.helper=store`). The old per-repo deploy keys on .101 are no longer accepted by GitHub. No keys or passwords in any repo. |
 
-Re-render the PNGs after editing the HTML (on .101, needs `chromium-headless`):
+Re-render the PNGs after editing the HTML. `chromium-headless` is only on .101, so copy the HTML there, render,
+and copy the PNGs back to the clone on .98:
 ```bash
 cd ~/cropsey-lab; HS=/usr/lib64/chromium-browser/headless_shell; URL="file://$PWD/home-lab-topology.html"
 for t in light dark; do
@@ -35,17 +37,18 @@ done
 │                                  192.168.1.x Home Lab                                          │
 │                                                                                                │
 │  .85 rasp5 (RPi 5)            CONTROL NODE — Claude Code/opencode, inventory, runbooks          │
-│    [Docker] twingate-jade-limpet · agentlab (analyst, news) · node_exporter · alloy             │
+│    [Docker] twingate-jade-limpet · node_exporter · alloy                                        │
 │                                                                                                │
 │  .98  hv-rocky-linux-1  ★ OBSERVABILITY HUB   grafana:3000 prometheus:9090 alertmanager:9093    │
 │                                               loki:3100 cadvisor:8081 · vnotes:8000 (VulnNotes) │
+│                         ★ LAB AGENTS (podman + timers): secnews · labwatch · cvewatch · patchwatch│
 │  .99  hv-rocky-linux-2  k3s v1.36 + Cloudflare Tunnel — juice-shop:30300 vampi:30500 nginx      │
-│  .100 hv-rocky-linux-3  Kong:80/8001 (Podman) · Jenkins:8080 (Docker) · agentlab (triage, sre)  │
+│  .100 hv-rocky-linux-3  Kong:80/8001 (Podman) · Jenkins:8080 (Docker)                           │
 │  .101 hv-rocky-linux-4  ★ LiteLLM AI GATEWAY :4000 (Podman) · crAPI stack · juice-shop · searxng│
 │  .102 hv-rocky-linux-5  Noname sensor · crapi-mcp:8009 noname-mcp:8013 ai-sim:8011/8012 vampi-mcp│
 │                                                                                                │
-│  .75 rk1 ┐ microk8s v1.29 (2 nodes): vampi x2, ingress   · agentlab (conversation)              │
-│  .76 rk2 ┘                                                · agentlab (reviewer)                  │
+│  .75 rk1 ┐ microk8s v1.29 (2 nodes): vampi x2, ingress                                          │
+│  .76 rk2 ┘                                                                                      │
 │  .77 rk3 · .78 rk4    spare Raspberry Pi 5s (monitoring agents only; reserved)                  │
 │                                                                                                │
 │  .103 hv-rocky-linux-6 ┐ RHCSA RHEL10 practice lab (Rocky 10.2, GNOME + Cockpit :9090)         │
@@ -58,95 +61,47 @@ done
 
 ---
 
-## AI Gateway & Agent Lab (new 2026-09-29)
+## AI Gateway & Lab Agents (mikes-agents, new 2026-10-07)
+
+Scheduled ops agents on **.98** that use the local LLM (qwen3.8-27b on the RTX 5090) **only through LiteLLM**.
+No cloud models. Code, install docs and diagrams: `~/mikes-agents` on .98 = `github.com/mcropsey/mikes-agents`.
 
 ```
- AGENTS (one scheduler per host)            GATEWAY (.101)                        MODEL (.194)
- .100 hv-rocky-linux-3  triage, sre, chaos ─┐                                     ┌───────────────────┐
- .85  rasp5             analyst, news ──────┤  one virtual key   ┌──────────────┐  │ LM Studio :1234   │
- .75  rk1               conversation ───────┼──────per persona──►│ LiteLLM :4000├─►│ qwen3.8-27b       │
- .76  rk2               reviewer ───────────┘  (team agent-lab)  │ route        │  │ RTX 5090 (~78 t/s)│
-                                                                 │ agentlab-main│  └───────────────────┘
-      │ 1 JSON line per run                                      │ spend logs → Postgres (postgresdb)
-      └──► docker / journald ──► Alloy ──► Loki .98 ──► Grafana "Agent Lab" dashboard
+ .98 hv-rocky-linux-1 (podman + systemd timers)         GATEWAY (.101)                   MODEL (.194)
+ 05:30 labinventory ──ssh──► 11 hosts (no LLM)                                       ┌───────────────────┐
+ 06:00 secnews     ─┐                                  ┌──────────────┐              │ LM Studio :1234   │
+ 06:15 labwatch    ─┼── one virtual key + agent ──────►│ LiteLLM :4000├─────────────►│ qwen3.8-27b       │
+ 06:30 cvewatch    ─┤   registry entry per agent       │ qwen3.8-27b  │              │ RTX 5090          │
+ Mon 06:45 patchwatch┘                                  └──────────────┘              └───────────────────┘
+       └──► HTML reports on .98 + email to mcropsey@gmail.com (Gmail SMTP, app password)
 ```
 
-### How it works
+| Agent | Schedule | What it does | Manual run (on .98) |
+|---|---|---|---|
+| secnews-agent | daily 06:00 | Cybersecurity news briefing: 9 security RSS feeds + new CISA KEV entries, ranked and summarised | `secnews` |
+| labwatch-agent | daily 06:15 | Lab health briefing (GREEN/YELLOW/RED). Snapshot of Prometheus/Loki/Alertmanager, then **its own PromQL/LogQL tool calls** to investigate | `labwatch` |
+| cvewatch-agent | daily 06:30 | Matches CVEs newly published on NVD + KEV against the software inventory; **emails only if the lab is affected** | `cvewatch` |
+| patchwatch-agent | Mon 06:45 | Patch plan: pending updates, Rocky security advisories + CVEs, reboot-needed hosts, broken repos, container images with newer builds. **Reports only; never installs.** | `patchwatch` |
+| labinventory | daily 05:30 | (no LLM) SSH inventory of all 11 managed hosts: packages, updates, advisories, containers, k8s images → `/opt/labagents/data/inventory/latest.json` | `labinventory` |
 
-- Each agent host runs one **scheduler** (APScheduler) for the personas assigned to it in `~/agent-lab/hosts.conf`.
-  Docker hosts (.100, .85) run it as container `agentlab` (Docker Compose); rk1/rk2 run it as `agentlab.service`
-  (Python venv + systemd).
-- Every wake-up re-reads `config/lab.yaml`, picks a jittered wait from the persona's rate × global intensity ×
-  time of day, and runs the persona. **08:00–22:00 (America/Chicago) is the daytime trickle** (~1.4 runs/hour
-  lab-wide) because the 5090 is used interactively; 22:00–08:00 runs ~10.5 runs/hour.
-- Agents call LiteLLM with the OpenAI-compatible API (`OPENAI_BASE_URL=http://192.168.1.101:4000/v1`), each
-  persona with its **own virtual key**. Requests are tagged `agent-lab`, `persona:<name>`, `host:<hostname>`.
-- Each persona is also **registered in LiteLLM's agent registry** (UI → *Agents*): 7 agents, `agent-triage` …
-  `agent-reviewer`, each with an agent card (description, framework, host, skills). Its virtual key carries the
-  matching `agent_id`, so every request is attributed to the agent and the Agents page shows per-agent spend and
-  activity. Chaos isn't registered. The cards have no A2A URL: the agents are scheduled clients, not A2A servers,
-  so they can't be invoked from the UI.
-- A shared HTTP layer meters every call (tokens, tool calls, latency, LiteLLM's cost header) and ~2% of
-  calls are sent deliberately wrong (bad model name → 403, over-long prompt → 400). LiteLLM rejects both
-  before they reach LM Studio.
-- Each run prints **one JSON log line** (persona, host, model, tokens, latency, tool calls, success, errors,
-  cost, persona-specific fields). Alloy ships it to Loki; the Grafana dashboard is built from those lines.
+- Files on .98: `/opt/secnews/` and `/opt/labagents/` (code, root-only env files with keys + Gmail app password,
+  `data/reports/<agent>/latest.html`), wrappers in `/usr/local/bin/`, units + timers in `/etc/systemd/system/`.
+- **LiteLLM:** each agent has its own virtual key (`secnews-agent`, `labwatch-agent`, `cvewatch-agent`,
+  `patchwatch-agent`) restricted to `qwen3.8-27b`, 1 request in flight, 30 rpm, linked by `agent_id` to its
+  entry on the LiteLLM **Agents** page (4 registered agents).
+- **Guardrail:** LiteLLM's default-on `basic-safety-filter` (content filter, created 2026-10-03) blocks normal
+  security vocabulary ("attack"). The 4 agent keys carry `metadata.opted_out_global_guardrails:
+  ["basic-safety-filter"]`; the filter still applies to every other key.
+- GPU use: about 5 min per morning in total (secnews ~1.5 min, labwatch ~1.5 min, cvewatch ~1.5 min), all
+  before 07:00; patchwatch adds ~3.5 min on Mondays.
 
-### Personas
+### Agent Lab (retired)
 
-| Persona | Framework | Host | Key(s) | What it does |
-|---|---|---|---|---|
-| triage | PydanticAI | .100 | agent-triage | Synthetic support tickets (Faker, some fake PII, half written by the LLM). Tools: customer lookup, status page. Outputs category, priority, PII flags, draft reply. |
-| sre | LangGraph | .100 | agent-sre | Generates 300–1500 lines of service logs with one incident (DB pool, OOM, expired cert, disk full, latency, login failures), investigates with list/read/search tools, writes an incident summary. |
-| analyst | LangGraph | .85 | agent-analyst | Random business questions over the Chinook SQLite DB with a read-only SQL tool; retries failed queries (20% of runs get a stale schema hint). |
-| news | PydanticAI | .85 | agent-news | Pulls 2–3 public RSS feeds, summarizes and tags topics; canned articles if offline. |
-| conversation | OpenAI Agents SDK | .75 rk1 | agent-customer, agent-support | Customer agent (random persona/goal) and support agent (fake CRM tools) talk for 3–8 turns. |
-| reviewer | OpenAI Agents SDK | .76 rk2 | agent-reviewer | Reviews bundled diffs with planted bugs or synthetic diffs of the lab's own code; long-context (up to ~15k tokens). |
-| chaos | httpx | .100 | agent-chaos | ~6 rate-limit bursts/day: 5 simultaneous calls on a 1-in-flight / 2-rpm key → LiteLLM 429s. |
-
-Red-team persona deferred; key `agent-redteam` exists but is unused.
-
-### Safeguards for the LM Studio GPU
-
-| Guard | Where | Effect |
-|---|---|---|
-| Model lock | agent keys allow only `agentlab-main` / `agentlab-main-patient` | No agent can make LM Studio load another model (403). |
-| 1 request in flight | `max_parallel_requests: 1` on the `agentlab-main` route | LiteLLM queues agent calls; verified 3 concurrent → served one after another. |
-| Daytime trickle | `config/lab.yaml` schedule | 13% of night rate 08:00–22:00. |
-| Back-off | scheduler | A slow daytime call (>20 s at <20 tok/s) pauses that host 30 min. |
-| Per-key limits | LiteLLM | rpm 20–30, tpm 120k–250k, $1/day simulated budget per key. |
-| Pre-call context check | `router_settings.enable_pre_call_checks` | Over-long prompts rejected by LiteLLM, not the GPU. |
-
-### Operating it (from `~/agent-lab` on .101)
-
-| Task | Command |
-|---|---|
-| Status of every host | `./deploy.sh status` |
-| Run one persona now | `./deploy.sh run <persona> [--no-errors]` |
-| Change volume | edit `global.intensity` in `config/lab.yaml` → `./deploy.sh config` |
-| Kill switch (pause) | `global.enabled: false` → `./deploy.sh config` |
-| Stop everything | `./stop.sh` (one host: `./stop.sh 192.168.1.100`) |
-| Redeploy / start | `./deploy.sh` (one host: `./deploy.sh 192.168.1.85`) |
-| Dashboard | http://192.168.1.98:3000/d/agent-lab (folder **Agent Lab**) |
-| Spend / requests | LiteLLM UI → Logs / Usage (key alias `agent-*`, tag `persona:*`) |
-| Per-agent view | LiteLLM UI → **Agents** (7 registered agents, spend per agent) |
-
-### Registered agents (LiteLLM UI → Agents)
-
-| Agent | Card name | Framework | Host | Linked key |
-|---|---|---|---|---|
-| agent-triage | Ticket triage | PydanticAI | .100 | agent-triage |
-| agent-sre | SRE log analyst | LangGraph | .100 | agent-sre |
-| agent-analyst | Data analyst | LangGraph | .85 | agent-analyst |
-| agent-news | News digest | PydanticAI | .85 | agent-news |
-| agent-customer | Simulated customer | OpenAI Agents SDK | .75 rk1 | agent-customer |
-| agent-support | Customer support | OpenAI Agents SDK | .75 rk1 | agent-support |
-| agent-reviewer | Code reviewer | OpenAI Agents SDK | .76 rk2 | agent-reviewer |
-
-Registered and linked by `~/agent-lab/scripts/setup_keys.sh` (idempotent, matched by agent name). Spend is
-attributed from 2026-09-29 21:25 CDT on; earlier test traffic isn't linked to an agent.
-
-Repo: `~/agent-lab` on .101 (git). Details in its README; manual rebuild in `docs/MANUAL-SETUP.md`; build log in `docs/BUILD-NOTES.md`.
+The Agent Lab traffic generator (7 personas on .100/.85/.75/.76, team `agent-lab`, routes `agentlab-main` /
+`agentlab-main-patient`, 2026-09-29) is **no longer running**: no `agentlab` containers or services on any host,
+no agentlab routes, keys or registry entries in LiteLLM (config backup `config.yaml.bak-pre-agentlab-removal-20261005`
+on .101). The `~/agent-lab` directories are still on .101, .100, .85, rk1 and rk2; code + docs remain in
+`github.com/mcropsey/agent-lab`.
 
 ---
 
@@ -173,7 +128,7 @@ Prometheus: 24 active targets, all **up** (2026-09-29).
 
 **Notes**
 - Grafana dashboard folders on .98: Fleet Overview, k3s Cluster (.99), Gateway + CI Host (.100), crAPI Stack (.101),
-  MCP Host (.102), Logs, **Raspberry Pi Cluster**, **Agent Lab**.
+  MCP Host (.102), Logs, **Raspberry Pi Cluster**, **Agent Lab** (retired; dashboard may still exist).
 - ⚠ `gen_dashboards.py` (rasp5) does **not** generate the *Raspberry Pi Cluster* or *Agent Lab* folders, and its
   documented deploy step runs `rm -rf /opt/monitoring/grafana/dashboards/*` — running it as written deletes both.
   The Agent Lab dashboard has its own generator/installer: `~/agent-lab/grafana/install.sh` (touches only its folder).
@@ -189,40 +144,40 @@ Prometheus: 24 active targets, all **up** (2026-09-29).
 
 | IP | Hostname | Role | OS | RAM (total / avail) | Disk used | Uptime |
 |----|----------|------|----|-----|-----------|--------|
-| .85 | rasp5 | Control node, Twingate, **agents: analyst + news** | Ubuntu 24.04.5 (RPi 5) | 7.7 / 5.2 Gi | 16 / 117 G | 16h |
-| .98 | hv-rocky-linux-1 | **Observability hub** + VulnNotes API + MCP session host | Rocky 9.8 | 7.5 / 4.9 Gi | 19 / 70 G | 4d |
+| .85 | rasp5 | Control node, Twingate | Ubuntu 24.04.5 (RPi 5) | 7.7 / 5.2 Gi | 16 / 117 G | 16h |
+| .98 | hv-rocky-linux-1 | **Observability hub** + **lab agents (mikes-agents)** + VulnNotes API + MCP session host | Rocky 9.8 | 7.5 / 4.9 Gi | 19 / 70 G | 4d |
 | .99 | hv-rocky-linux-2 | k3s cluster + Cloudflare ingress | Rocky 9.8 | 3.6 / 1.5 Gi | 15 / 70 G | 4d |
-| .100 | hv-rocky-linux-3 | Kong + Jenkins CI, **agents: triage + sre + chaos** | Rocky 9.8 | 7.5 / 4.9 Gi | 15 / 70 G | 12h |
+| .100 | hv-rocky-linux-3 | Kong + Jenkins CI | Rocky 9.8 | 7.5 / 4.9 Gi | 15 / 70 G | 12h |
 | .101 | hv-rocky-linux-4 | **LiteLLM AI gateway** + crAPI lab + Noname sensor | Rocky 9.8 | 3.6 / 1.2 Gi | 19 / 70 G | 4d |
 | .102 | hv-rocky-linux-5 | Noname sensor + MCP servers + AI sim | Rocky 9.8 | 3.6 / 2.1 Gi | 19 / 70 G | 4d |
 | .103 | hv-rocky-linux-6 | RHCSA practice workstation | Rocky 10.2 | 3.6 / 2.6 Gi | 6.5 / 70 G | 4d |
 | .104 | hv-rocky-linux-7 | RHCSA practice workstation | Rocky 10.2 | 3.6 / 2.5 Gi | 11 / 70 G | 4d |
 | .105 | utility.lab.example.com | RHCSA utility server: dnf repos + NFS | Rocky 10.2 | 3.6 / 2.6 Gi | 17 / 70 G | 4d |
-| .75 | rk1 | microk8s node, **agent: conversation** | Ubuntu 24.04.4 (RPi 5) | 7.8 / 6.5 Gi | 8.6 / 58 G | 4d |
-| .76 | rk2 | microk8s node, **agent: reviewer** | Ubuntu 24.04.4 (RPi 5) | 7.8 / 6.4 Gi | 8.7 / 58 G | 4d |
+| .75 | rk1 | microk8s node | Ubuntu 24.04.4 (RPi 5) | 7.8 / 6.5 Gi | 8.6 / 58 G | 4d |
+| .76 | rk2 | microk8s node | Ubuntu 24.04.4 (RPi 5) | 7.8 / 6.4 Gi | 8.7 / 58 G | 4d |
 | .77 | rk3 | spare (reserved) | Ubuntu 24.04.4 (RPi 5) | 7.8 / 7.3 Gi | 3.9 / 58 G | 2d |
 | .78 | rk4 | spare (reserved) | Ubuntu 24.04.4 (RPi 5) | 7.8 / 7.3 Gi | 4.0 / 58 G | 4d |
 
 Rocky VMs: Hyper-V on an Intel i9-9900K @ 3.60 GHz. Raspberry Pis: Pi 5 Model B, aarch64.
 ⚠ RAM on .99 (was 6.0 Gi) and .101 (was 8.1 Gi) now reports 3.6 Gi — cause not verified (Hyper-V dynamic
 memory or a VM resize). .101 is tight with LiteLLM added; keep new workloads off it.
+RAM/disk/uptime columns are from 2026-09-29; every Rocky host reboots on 2026-10-07 22:05+ after patching.
 
 ---
 
 ## .85 — rasp5
 
 **Role:** Control / management node — Claude Code and opencode run here; holds the monitoring runbook
-(`~/MONITORING_SETUP.md`) and staging (`~/monitoring/`). Also runs two Agent Lab personas.
+(`~/MONITORING_SETUP.md`) and staging (`~/monitoring/`).
 
 | Service / container | Description | Status |
 |---------|-------------|--------|
 | `twingate-jade-limpet` (Docker) | Twingate connector (remote access) | Up (healthy) |
-| `agentlab` (Docker Compose, `~/agent-lab`) | Agent Lab scheduler — personas **analyst**, **news** | Up |
 | `node_exporter.service` | :9100, scraped by Prometheus on .98 | Running |
 | `alloy.service` | journal + docker logs → Loki | Running |
 | `glances.service` / `atop` / `cups` | local monitoring, accounting, printing | Running |
 
-- Docker Compose CLI plugin v5.5.1 installed per-user (`~/.docker/cli-plugins`) for the Agent Lab (2026-09-29).
+- Docker Compose CLI plugin v5.5.1 installed per-user (`~/.docker/cli-plugins`) for the Agent Lab (2026-09-29; Agent Lab since retired).
 - SSH mesh hub: passwordless to .98–.102 and rk1–rk4 with `~/.ssh/id_ed25519`; **.103–.105 still reject this key**
   (they accept the key on .101).
 
@@ -230,7 +185,7 @@ memory or a VM resize). .101 is tight with LiteLLM added; keep new workloads off
 
 ## .98 — hv-rocky-linux-1
 
-**Role:** Observability hub (Grafana/Prometheus/Loki/Alertmanager) + VulnNotes API lab target + MCP session host
+**Role:** Observability hub (Grafana/Prometheus/Loki/Alertmanager) + **lab agents (mikes-agents)** + VulnNotes API lab target + MCP session host
 
 | Container (Docker) | Image | Ports |
 |------|-------|-------|
@@ -244,9 +199,21 @@ memory or a VM resize). .101 is tight with LiteLLM added; keep new workloads off
 
 Systemd: `docker`, `containerd`, `node_exporter`, `alloy`, `mcp-heartbeat`, `mcp-sweep`.
 
+**Lab agents** (rootful **podman**, started by systemd timers; see *AI Gateway & Lab Agents* above):
+
+| Timer → service | Image / command | Data |
+|---|---|---|
+| `labinventory.timer` 05:30 | `/opt/labagents/app/labinventory.py` on the host as mcropsey (SSH + `sudo -n` to all managed hosts) | `/opt/labagents/data/inventory/` |
+| `secnews.timer` 06:00 | `localhost/secnews` | `/opt/secnews/data/reports/` |
+| `labwatch.timer` 06:15 · `cvewatch.timer` 06:30 · `patchwatch.timer` Mon 06:45 | `localhost/labagents` (`python -m labagents.<agent>`, `--network host`) | `/opt/labagents/data/reports/<agent>/` |
+
+Secrets: `/opt/secnews/secnews.env`, `/opt/labagents/labagents.env` (root, 600: LiteLLM keys, Gmail app password).
+Git clones here: `~/mikes-agents`, `~/cropsey-lab`, `~/vnotes` (push over HTTPS, token in `~/.git-credentials`).
+.98 has passwordless SSH + `sudo -n` to .99–.105, rasp5, rk1, rk2 (used by labinventory and the reboot run).
+
 | URL | What |
 |-----|------|
-| http://192.168.1.98:3000 | Grafana (dashboards incl. **Agent Lab**: `/d/agent-lab`) |
+| http://192.168.1.98:3000 | Grafana |
 | http://192.168.1.98:9090 | Prometheus |
 | http://192.168.1.98:9093 | Alertmanager |
 | http://192.168.1.98:3100 | Loki API (query via Grafana) |
@@ -277,7 +244,7 @@ Lab scripts in `~/notes-test/`: `normal_traffic.py` (baseline traffic), `exploit
 
 ## .100 — hv-rocky-linux-3
 
-**Role:** Kong API Gateway (Podman) + Jenkins CI/CD (Docker) + Agent Lab personas triage/sre/chaos
+**Role:** Kong API Gateway (Podman) + Jenkins CI/CD (Docker)
 
 | Container | Runtime | Image | Ports |
 |------|---------|-------|-------|
@@ -285,17 +252,17 @@ Lab scripts in `~/notes-test/`: `normal_traffic.py` (baseline traffic), `exploit
 | `jenkins` | Docker | `myjenkins-noname:2.568.3-jdk21` | :8080, :50000 |
 | `jenkins-docker` | Docker | `docker:dind` | :2376 (TLS) |
 | `cadvisor` | Docker | `ghcr.io/google/cadvisor:v0.60.6` | :8081 |
-| `agentlab` | Docker Compose (`~/agent-lab`) | `agentlab:latest` (built locally) | — (outbound to .101:4000) |
 
 Systemd: `docker`, `containerd`, `node_exporter`, `prometheus-podman-exporter` (:9882), `alloy`.
 URLs: Jenkins http://192.168.1.100:8080 (`/blue`), Kong proxy :80, Kong admin :8001, cAdvisor :8081.
 Rebooted ~2026-09-29 09:00 (all containers came back on their own). Firewall: nft `inet monitoring_acl`.
+`jenkins` restart policy changed `on-failure` → `unless-stopped` on 2026-10-07 so it comes back after reboots.
 
 ---
 
 ## .101 — hv-rocky-linux-4
 
-**Role:** **LiteLLM AI gateway** + crAPI vulnerable-app lab + Noname Sensor. Agent Lab control repo lives here (`~/agent-lab`).
+**Role:** **LiteLLM AI gateway** + crAPI vulnerable-app lab + Noname Sensor. (Retired Agent Lab repo still in `~/agent-lab`.)
 
 ### LiteLLM (added 2026-09-29)
 
@@ -314,22 +281,31 @@ Rebooted ~2026-09-29 09:00 (all containers came back on their own). Firewall: nf
 | `qwen3.8-27b` | qwen/qwen3.8-27b | **Default model kept loaded in LM Studio** (~78 tok/s on the 5090) |
 | `qwen3.6-35b-a3b`, `gemma-4-31b-qat`, `muse-glimmer` | — | Available, but calling them makes LM Studio load them next to qwen3.8 and pushes it partly onto CPU (~0.3 tok/s). Avoid unless you unload qwen3.8 first. |
 | `nomic-embed-text` | text-embedding-nomic-embed-text-v1.5 | Embeddings |
-| `agentlab-main` | qwen/qwen3.8-27b | Agent Lab route: 180 s timeout, 1 request in flight, simulated pricing, 32k input limit |
-| `agentlab-main-patient` | qwen/qwen3.8-27b | Fallback for `agentlab-main` (600 s timeout); same model, so no model load |
 
-`router_settings`: `enable_pre_call_checks: true`, fallback `agentlab-main → agentlab-main-patient`.
-Agents page: 7 registered agents (`agent-triage` … `agent-reviewer`), each linked to its key via `agent_id`,
-so spend/activity is attributed per agent (no A2A endpoint; not invokable from the UI).
-Team **agent-lab** with 9 virtual keys (`agent-triage`, `-sre`, `-analyst`, `-news`, `-customer`, `-support`,
-`-reviewer`, `-redteam` (unused), `-chaos`). Managed by `~/agent-lab/scripts/setup_litellm.sh` and `setup_keys.sh`
-(idempotent; the agent-lab config blocks are marked and removable).
+The `agentlab-main` / `agentlab-main-patient` routes, team `agent-lab` and its keys were removed with the
+Agent Lab (~2026-10-05; backup `config.yaml.bak-pre-agentlab-removal-20261005`).
+
+As of 2026-10-07 LiteLLM runs as **quadlets** (`/etc/containers/systemd/litellm.container` → `litellm.service`,
+image pinned to `ghcr.io/berriai/litellm:v1.104.0`; `litellm-db.container` → own Postgres `postgres:16.15`,
+network `litellm.network`).
+
+**Agents page:** 4 registered agents (`secnews-agent`, `labwatch-agent`, `cvewatch-agent`, `patchwatch-agent`,
+the lab agents on .98), each linked to its own virtual key via `agent_id`; keys allow only `qwen3.8-27b`,
+1 request in flight, 30 rpm. Registration script: `~/mikes-agents/litellm/register_agent.py` (runs inside the
+container, so the master key never leaves it).
+
+**Guardrail:** `basic-safety-filter` (`litellm_content_filter`, pre_call, **default on**, created 2026-10-03):
+blocks the harm/violence/self-harm/child-safety/prompt-injection/exfiltration categories at medium severity.
+The 4 lab-agent keys opt out of it via key metadata `opted_out_global_guardrails` (admin-set only); everything
+else is still filtered.
 
 ### Podman containers (rootful)
 
 | Name | Image | Ports |
 |------|-------|-------|
-| `litellm` | `ghcr.io/berriai/litellm:main-stable` | :4000 |
-| `postgresdb` | `postgres:14` | 5432 internal (crAPI + LiteLLM) |
+| `litellm` | `ghcr.io/berriai/litellm:v1.104.0` (quadlet `litellm.service`) | :4000 |
+| `litellm-db` | `postgres:16.15` (quadlet `litellm-db.service`) | 5432 internal (LiteLLM) |
+| `postgresdb` | `postgres:14` | 5432 internal (crAPI) |
 | `mongodb` | `mongo:4.4` | 27017 internal |
 | `chromadb` | `chromadb/chroma:latest` | 8000 internal |
 | `mailhog` | `crapi/mailhog:latest` | :8025 |
@@ -339,11 +315,19 @@ Team **agent-lab** with 9 virtual keys (`agent-triage`, `-sre`, `-analyst`, `-ne
 | `crapi-web` | `crapi/crapi-web:latest` | :8888, :8443, :30080, :30443 |
 | `searxng` | `searxng/searxng:latest` | :8080 |
 | `juice-shop` | `bkimminich/juice-shop:latest` | :3000 |
+| `dvga` | `dolevf/dvga:latest` (Damn Vulnerable GraphQL App) | :5013 |
 
-Systemd: `noname-sensor` (eBPF), `node_exporter`, `prometheus-podman-exporter`, `alloy`.
+Systemd: `noname-sensor` (eBPF), `crapi.service` (starts the crAPI compose stack at boot), `node_exporter`,
+`prometheus-podman-exporter`, `alloy`.
 URLs: crAPI http://192.168.1.101:8888 / https://…:8443, MailHog :8025, chatbot :5500, SearXNG :8080, Juice Shop :3000,
 **LiteLLM :4000**. Firewall: firewalld rich rules — **never** `firewall-cmd --reload`.
 Also installed 2026-09-29: `chromium-headless` (EPEL) for rendering these docs to PNG.
+
+⚠ **Noname sensor repo** (`/etc/yum.repos.d/noname-registry.repo`, `[Noname-Artifactory]` on Google Artifact
+Registry, credential embedded in the URL) fails since ~2026-10 (repomd.xml can't be downloaded, likely an expired
+or rotated credential). Set `skip_if_unavailable=1` on 2026-10-07 so plain `dnf` keeps working (backup
+`/root/noname-registry.repo.bak-20261007`). Sensor updates (`noname-sensor-ebpf-rhel9`, installed 3.3-62) need a
+fresh repo file from the Noname/Akamai portal. Same on .102.
 
 ---
 
@@ -360,12 +344,13 @@ Also installed 2026-09-29: `chromium-headless` (EPEL) for rendering these docs t
 | `noname-sensor`, `node_exporter`, `prometheus-podman-exporter`, `alloy` | — / 9100 / 9882 |
 
 Services live under `/opt/{crapi-mcp,noname-mcp,ai-sim}` with their own `.venv`. firewalld rich rules — never `--reload`.
+Noname sensor repo: same broken `[Noname-Artifactory]` repo as .101, same `skip_if_unavailable=1` fix (2026-10-07).
 
 ---
 
 ## .75 / .76 — rk1, rk2 (Raspberry Pi 5)
 
-**Role:** 2-node **microk8s v1.29.15** cluster + Agent Lab personas (rk1: conversation, rk2: reviewer)
+**Role:** 2-node **microk8s v1.29.15** cluster
 
 | microk8s workload | Status |
 |---|---|
@@ -374,7 +359,7 @@ Services live under `/opt/{crapi-mcp,noname-mcp,ai-sim}` with their own `.venv`.
 | kube-system: calico, coredns, hostpath-provisioner, metrics-server | Running |
 
 Add-ons: dns, ha-cluster, helm/helm3, hostpath-storage, ingress, metrics-server, storage.
-Agent Lab runs as `agentlab.service` (venv `~/agent-lab/.venv`, `python3-venv` installed 2026-09-29), logs to journald.
+The Agent Lab `agentlab.service` is gone (retired); `~/agent-lab` + `.venv` remain on both nodes.
 `node_exporter` + `alloy` running (log shipping TODO from 09-19 is done).
 
 ## .77 / .78 — rk3, rk4 (Raspberry Pi 5)
@@ -399,6 +384,13 @@ All three: `node_exporter` + `alloy` running and scraped/shipped to .98. No cont
 
 | Date | Host | Change |
 |------|------|--------|
+| 2026-10-07 | .98–.105 | **Security updates** (`dnf update --security`, unreachable repos skipped): ~365 package installs/upgrades on 8 hosts (logs on .98 count 26–91 per host): new kernels, ghostscript, sudo, openssh, freerdp (Critical, .104), expat, libxml2, curl, nodejs, vim, podman, rsyslog. No security updates left. **Reboots scheduled 22:05** one host at a time (.103 → .104 → .105 → .102 → .100 → .99 → .101 → .98) by `~/patching/lab-reboots.sh` on .98; it stops if a host or its containers don't come back. Log: `~/patching/2026-10-07/reboots.log`. |
+| 2026-10-07 | rasp5, rk1, rk2 | **Security updates** (`-security` pocket): `sudo` on all three, `poppler` on rasp5. No reboot needed. |
+| 2026-10-07 | .101 .102 | `Noname-Artifactory` dnf repo set `skip_if_unavailable=1` (repo credential appears expired). |
+| 2026-10-07 | .100 | `jenkins` container restart policy → `unless-stopped`. |
+| 2026-10-07 | .98 | **Lab agents deployed** (mikes-agents): secnews (06:00), labwatch (06:15), cvewatch (06:30), patchwatch (Mon 06:45), labinventory (05:30). Podman images `localhost/secnews`, `localhost/labagents`; `/opt/secnews`, `/opt/labagents`. Repo `github.com/mcropsey/mikes-agents`. |
+| 2026-10-07 | .101 | LiteLLM: 4 agent keys + Agents-page entries for the lab agents (qwen3.8-27b only); keys opted out of `basic-safety-filter`. |
+| ~2026-10-05 | .100 .85 .75 .76 .101 | **Agent Lab retired**: containers/services gone, LiteLLM agentlab routes, team, keys and agents removed. LiteLLM moved to quadlets with its own Postgres (`litellm-db`) and a pinned image (v1.104.0, ~10-06). |
 | 2026-09-29 | .101 | **LiteLLM documented** (not in the 09-19 doc; container last started 2026-09-29 14:38): :4000, Postgres-backed, LM Studio backend on .194. Added `agentlab-main` + `agentlab-main-patient` routes, fallback and pre-call checks (additive, backed up). Team `agent-lab` + 9 virtual keys. `chromium-headless` installed. |
 | 2026-09-29 | .100 .85 .75 .76 | **Agent Lab deployed**: `agentlab` container on .100 (triage, sre, chaos) and .85 (analyst, news); `agentlab.service` on rk1 (conversation) and rk2 (reviewer). Docker Compose plugin added per-user on .85; `python3-venv` on rk1/rk2. |
 | 2026-09-29 | .101 | Agent Lab documentation added: `~/agent-lab/docs/MANUAL-SETUP.md` (manual rebuild) and `BUILD-NOTES.md` (build log). |
