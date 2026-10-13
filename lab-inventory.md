@@ -9,26 +9,15 @@ labinventory) using the local LLM through LiteLLM; the **Agent Lab** traffic gen
 | Doc | Location | Use it for |
 |---|---|---|
 | Lab inventory (this file) | `~/cropsey-lab/lab-inventory.md` (git clone on .98) | every host, service, port and change |
-| Topology diagram | `~/cropsey-lab/home-lab-topology.html` → `home-lab-topology.png` (light), `cropsey-lab.png` (dark) | visual overview; PNGs are rendered from the HTML (see below) |
 | **Service map (auto, daily)** | [`service-map/`](service-map/) in this repo · live page `http://192.168.1.98:9440/` | every service, timer, cron job, container, k8s workload and AI agent per host, with dependencies; regenerated 05:40 by servicemap-agent and committed here when it changes |
 | **Agent reports (all agents)** | `http://192.168.1.98:9440/reports/` (LAN only) · Grafana *Agent Lab · Daily Reports* | every labwatch/cvewatch/patchwatch/secnews/servicemap report by date with its headline; linked from the cropseyit.com footer on rasp5 |
 | Lab agents (mikes-agents) | `~/mikes-agents/` on .98 (git) · per-agent READMEs | what each ops agent does, install, operate, troubleshoot |
 | Patching log | `~/patching/2026-10-07/` on .98 | per-host dnf/apt output, `reboots.log` from the reboot run |
 | Agent Lab (retired) | `~/agent-lab/` on .101 (README, `docs/MANUAL-SETUP.md`, `docs/BUILD-NOTES.md`) | history of the retired traffic generator |
 | Monitoring runbook | `~/MONITORING_SETUP.md` on rasp5 (.85) | Prometheus/Grafana/Loki/Alloy install |
-| Previous diagrams | `~/cropsey-lab/archive/2026-09-19/` | the 2026-09-19 PNGs |
+| Previous diagrams | `~/cropsey-lab/archive/2026-09-19/` · hand-made topology (`home-lab-topology.html` + PNGs) removed 2026-10-13, last version in commit `c08a50f` | the 2026-09-19 PNGs; restore the topology with `git checkout c08a50f -- home-lab-topology.html home-lab-topology.png cropsey-lab.png` |
 | GitHub | `github.com/mcropsey/cropsey-lab` (these docs) · `mikes-agents` (lab agents) · `agent-lab` (retired) · `vnotes` — all **public** | Clones on .98 push over HTTPS with the token in `~/.git-credentials` (repo-local `credential.helper=store`). The old per-repo deploy keys on .101 are no longer accepted by GitHub. No keys or passwords in any repo. |
 
-Re-render the PNGs after editing the HTML. `chromium-headless` is only on .101, so copy the HTML there, render,
-and copy the PNGs back to the clone on .98:
-```bash
-cd ~/cropsey-lab; HS=/usr/lib64/chromium-browser/headless_shell; URL="file://$PWD/home-lab-topology.html"
-for t in light dark; do
-  H=$($HS --no-sandbox --window-size=1280,900 --virtual-time-budget=15000 --dump-dom "$URL?measure&theme=$t" 2>/dev/null | grep -o 'H=[0-9]*' | cut -d= -f2)
-  out=$([ $t = light ] && echo home-lab-topology.png || echo cropsey-lab.png)
-  $HS --no-sandbox --hide-scrollbars --force-device-scale-factor=2 --window-size=1280,$H --virtual-time-budget=15000 --screenshot=$PWD/$out "$URL?theme=$t"
-done
-```
 
 ---
 
