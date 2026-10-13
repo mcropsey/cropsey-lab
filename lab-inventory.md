@@ -10,6 +10,7 @@ labinventory) using the local LLM through LiteLLM; the **Agent Lab** traffic gen
 |---|---|---|
 | Lab inventory (this file) | `~/cropsey-lab/lab-inventory.md` (git clone on .98) | every host, service, port and change |
 | Topology diagram | `~/cropsey-lab/home-lab-topology.html` → `home-lab-topology.png` (light), `cropsey-lab.png` (dark) | visual overview; PNGs are rendered from the HTML (see below) |
+| **Service map (auto, daily)** | [`service-map/`](service-map/) in this repo · live page `http://192.168.1.98:9440/` | every service, timer, cron job, container, k8s workload and AI agent per host, with dependencies; regenerated 05:40 by servicemap-agent and committed here when it changes |
 | Lab agents (mikes-agents) | `~/mikes-agents/` on .98 (git) · per-agent READMEs | what each ops agent does, install, operate, troubleshoot |
 | Patching log | `~/patching/2026-10-07/` on .98 | per-host dnf/apt output, `reboots.log` from the reboot run |
 | Agent Lab (retired) | `~/agent-lab/` on .101 (README, `docs/MANUAL-SETUP.md`, `docs/BUILD-NOTES.md`) | history of the retired traffic generator |
@@ -69,6 +70,7 @@ No cloud models. Code, install docs and diagrams: `~/mikes-agents` on .98 = `git
 ```
  .98 hv-rocky-linux-1 (podman + systemd timers)         GATEWAY (.101)                   MODEL (.194)
  05:30 labinventory ──ssh──► 11 hosts (no LLM)                                       ┌───────────────────┐
+ 05:40 servicemap  ──ssh──► Grafana's hosts, labels ─┐                                 │                   │
  06:00 secnews     ─┐                                  ┌──────────────┐              │ LM Studio :1234   │
  06:15 labwatch    ─┼── one virtual key + agent ──────►│ LiteLLM :4000├─────────────►│ qwen3.8-27b       │
  06:30 cvewatch    ─┤   registry entry per agent       │ qwen3.8-27b  │              │ RTX 5090          │
@@ -384,6 +386,8 @@ All three: `node_exporter` + `alloy` running and scraped/shipped to .98. No cont
 
 | Date | Host | Change |
 |------|------|--------|
+| 2026-10-13 | .98 | **servicemap-agent** added (mikes-agents): daily 05:40 SSH inventory of every host Grafana monitors (systemd/user units, timers, cron, podman rootless+root, docker, k3s/microk8s, ad-hoc scripts, sockets), labelled by qwen3.8 via its own LiteLLM key; page served by `servicemap-web.service` on **:9440** (firewalld port opened), published to [`service-map/`](service-map/) here. rk3/rk4 (reserved) skipped. |
+| 2026-10-13 | .101 | LiteLLM: key + Agents-page entry `servicemap-agent` (qwen3.8-27b only, guardrail opt-out like the other agents). |
 | 2026-10-07 | .98–.105 | **Security updates** (`dnf update --security`, unreachable repos skipped): ~365 package installs/upgrades on 8 hosts (logs on .98 count 26–91 per host): new kernels, ghostscript, sudo, openssh, freerdp (Critical, .104), expat, libxml2, curl, nodejs, vim, podman, rsyslog. No security updates left. **Reboots scheduled 22:05** one host at a time (.103 → .104 → .105 → .102 → .100 → .99 → .101 → .98) by `~/patching/lab-reboots.sh` on .98; it stops if a host or its containers don't come back. Log: `~/patching/2026-10-07/reboots.log`. |
 | 2026-10-07 | rasp5, rk1, rk2 | **Security updates** (`-security` pocket): `sudo` on all three, `poppler` on rasp5. No reboot needed. |
 | 2026-10-07 | .101 .102 | `Noname-Artifactory` dnf repo set `skip_if_unavailable=1` (repo credential appears expired). |
