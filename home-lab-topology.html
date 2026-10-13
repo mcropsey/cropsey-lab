@@ -1,0 +1,616 @@
+<title>Home Lab Topology</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script>
+// ?theme=dark|light forces a theme (used to render the dark PNG); ?measure puts the page height in the title.
+(function () {
+  var p = new URLSearchParams(location.search);
+  if (p.get("theme")) document.documentElement.setAttribute("data-theme", p.get("theme"));
+  if (p.has("measure")) addEventListener("load", function () {
+    document.fonts.ready.then(function () { document.title = "H=" + document.documentElement.scrollHeight; });
+  });
+})();
+</script>
+<style>
+:root{
+  --ground:#E9EDF1; --surface:#FFFFFF; --surface2:#F4F6F8; --ink:#141B23; --muted:#58657A; --line:#CBD3DC;
+  --pi:#C51D4A; --obs:#C77F00; --k8s:#326CE5; --gw:#0C8587; --crapi:#DC4F24; --mcp:#7449DB;
+  --ai:#B0237E; --rh:#5B6B7F; --metric:#C77F00; --log:#0C8587; --warn:#B42318; --warn-bg:#FDECEA;
+  --on-color:#FFFFFF;
+  --display:"Chakra Petch", "Rajdhani", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0C1117; --surface:#141B24; --surface2:#1A2330; --ink:#E4E9EF; --muted:#8F9CAD; --line:#2A3542;
+    --pi:#F0487A; --obs:#F2A93B; --k8s:#6F9BFF; --gw:#2FC1BE; --crapi:#FF7A4D; --mcp:#A585FF;
+    --ai:#F062B8; --rh:#9AABBF; --metric:#F2A93B; --log:#2FC1BE; --warn:#FF8A7A; --warn-bg:#3A1714; --on-color:#0C1117;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0C1117; --surface:#141B24; --surface2:#1A2330; --ink:#E4E9EF; --muted:#8F9CAD; --line:#2A3542;
+  --pi:#F0487A; --obs:#F2A93B; --k8s:#6F9BFF; --gw:#2FC1BE; --crapi:#FF7A4D; --mcp:#A585FF;
+  --ai:#F062B8; --rh:#9AABBF; --metric:#F2A93B; --log:#2FC1BE; --warn:#FF8A7A; --warn-bg:#3A1714; --on-color:#0C1117;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;
+  background-image:radial-gradient(color-mix(in srgb,var(--line) 70%,transparent) 1px,transparent 1px);background-size:22px 22px}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:20px;padding-block:36px 64px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:.01em}
+.mono{font-family:var(--mono)}
+
+header{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end;margin-bottom:28px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:clamp(34px,5vw,58px);line-height:1;font-weight:700;margin-top:8px}
+h1 span{color:var(--muted);font-weight:500}
+.lede{color:var(--muted);max-width:66ch;margin:10px 0 0}
+.stats{display:grid;grid-template-columns:repeat(4,auto);border:1px solid var(--line);background:var(--surface);border-radius:10px;overflow:hidden}
+.stat{padding:12px 18px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+.stat b{display:block;font-family:var(--display);font-size:28px;line-height:1;font-variant-numeric:tabular-nums}
+.stat small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+.flags{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
+.flag{display:flex;gap:8px;align-items:center;font-size:13px;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface)}
+.flag.bad{background:var(--warn-bg);border-color:color-mix(in srgb,var(--warn) 40%,transparent);color:var(--warn)}
+.flag.new{border-color:color-mix(in srgb,var(--ai) 50%,var(--line))}
+.flag.new .dot{background:var(--ai)}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--muted);flex:none}
+.flag.bad .dot{background:var(--warn);animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.25}}
+
+.sec{display:flex;align-items:baseline;gap:14px;margin:0 0 14px;flex-wrap:wrap}
+.sec h2{font-size:24px;font-weight:600}
+.sec p{margin:0;color:var(--muted);font-size:13px}
+
+.edge{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-bottom:10px}
+.tunnel{display:flex;align-items:center;gap:10px;font-size:13px;background:var(--surface);border:1px dashed var(--line);border-radius:8px;padding:8px 12px}
+.tunnel .ico{width:28px;height:28px;border-radius:6px;display:grid;place-items:center;font-family:var(--mono);font-weight:600;font-size:12px;color:var(--on-color)}
+.tunnel em{font-style:normal;color:var(--muted)}
+.rail{position:relative;height:34px;border-radius:6px;background:var(--ink);color:var(--ground);display:flex;align-items:center;padding-inline:14px;
+  font-family:var(--mono);font-size:12px;letter-spacing:.1em;overflow:hidden;margin-bottom:18px}
+.rail::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 60px,color-mix(in srgb,var(--ground) 55%,transparent) 60px 64px,transparent 64px 120px);
+  animation:flow 3s linear infinite;opacity:.5}
+@keyframes flow{to{background-position:120px 0}}
+.rail span{position:relative;z-index:1}
+.rail .r{margin-left:auto;opacity:.7}
+
+.group{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:6px 0 10px;display:flex;align-items:center;gap:10px}
+.group::after{content:"";flex:1;height:1px;background:var(--line)}
+.hosts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:26px}
+.host{--c:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:0 1px 0 var(--line),0 10px 24px -18px color-mix(in srgb,var(--c) 70%,transparent)}
+.host.pi{--c:var(--pi)} .host.obs{--c:var(--obs)} .host.k8s{--c:var(--k8s)} .host.gw{--c:var(--gw)} .host.crapi{--c:var(--crapi)}
+.host.mcp{--c:var(--mcp)} .host.ai{--c:var(--ai)} .host.rh{--c:var(--rh)}
+.host.ext{border-style:dashed}
+.hh{background:var(--c);color:var(--on-color);padding:14px 16px 12px;display:grid;grid-template-columns:auto 1fr;gap:2px 14px;align-items:center}
+.ip{font-family:var(--display);font-weight:700;font-size:40px;line-height:.9;grid-row:span 2}
+.hn{font-family:var(--mono);font-size:13px;font-weight:600}
+.role{font-size:13px;opacity:.92;line-height:1.3}
+.hub{margin-left:6px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:2px 6px;border-radius:4px;background:color-mix(in srgb,var(--on-color) 22%,transparent)}
+.hb{padding:12px 16px 14px;display:flex;flex-direction:column;gap:12px;flex:1}
+.grp{display:flex;flex-direction:column;gap:6px}
+.rt{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--c);font-weight:600;display:flex;align-items:center;gap:6px}
+.rt::after{content:"";flex:1;height:1px;background:var(--line)}
+.rt.ai{color:var(--ai)}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{display:inline-flex;align-items:stretch;border:1px solid var(--line);border-radius:5px;font-size:12px;overflow:hidden;background:var(--surface2)}
+.chip b{font-weight:500;padding:2px 7px}
+.chip i{font-style:normal;font-family:var(--mono);font-size:11px;padding:2px 6px;border-left:1px solid var(--line);color:var(--muted);background:var(--surface);display:flex;align-items:center}
+.chip.int{border-style:dashed}
+.chip.key{border-color:color-mix(in srgb,var(--c) 55%,var(--line))}
+.chip.key b{color:var(--c);font-weight:600}
+.chip.agent{border-color:color-mix(in srgb,var(--ai) 60%,var(--line));background:color-mix(in srgb,var(--ai) 9%,var(--surface))}
+.chip.agent b{color:var(--ai);font-weight:600}
+.chip.off{opacity:.55}
+.telemetry{font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px}
+.telemetry span::before{content:"◆ ";color:var(--c);font-size:8px;vertical-align:1px}
+.hf{border-top:1px solid var(--line);padding:10px 16px;display:grid;grid-template-columns:1fr 1fr auto;gap:12px;font-size:11.5px;color:var(--muted);align-items:end;background:var(--surface2)}
+.hf b{display:block;color:var(--ink);font-family:var(--mono);font-size:12px;font-weight:500;font-variant-numeric:tabular-nums}
+.bar{height:5px;border-radius:3px;background:var(--line);margin-top:4px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--c)}
+.note{font-size:12px;color:var(--muted);border-left:2px solid var(--c);padding-left:8px;line-height:1.4}
+.note.warn{border-left-color:var(--warn);color:var(--warn)}
+
+.box{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:18px}
+.svgwrap{overflow-x:auto}
+.svgwrap svg{display:block;width:100%;min-width:860px;height:auto}
+svg text{font-family:var(--body)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12.5px;color:var(--muted);margin-top:10px}
+.legend span{display:flex;align-items:center;gap:8px}
+.legend svg{width:34px;height:10px;min-width:0}
+.flowm{animation:dash 1.4s linear infinite}
+.flowl{animation:dash 1.1s linear infinite}
+.flowa{animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-20}}
+
+.steps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:18px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--muted);position:relative}
+.step b{display:block;color:var(--ink);font-size:13.5px;margin-bottom:4px}
+.step .n{font-family:var(--display);font-weight:700;font-size:22px;color:var(--ai);line-height:1;display:block;margin-bottom:6px}
+.personas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}
+.persona{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--ai);border-radius:10px;padding:13px 15px;font-size:13px;display:flex;flex-direction:column;gap:7px}
+.persona h3{font-size:17px;font-weight:600;display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.fw{font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;padding:2px 7px;border-radius:4px;background:color-mix(in srgb,var(--ai) 14%,var(--surface2));color:var(--ai);white-space:nowrap}
+.persona p{margin:0;color:var(--muted);line-height:1.45}
+.meta{font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 12px}
+.meta b{color:var(--ink);font-weight:500}
+.guards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:48px}
+.agentsbox{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px;margin-bottom:48px}
+.reglist{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.reg{display:grid;grid-template-columns:150px 1fr auto;gap:12px;align-items:center;padding:9px 14px;border-top:1px solid var(--line);font-size:13px}
+.reg:first-child{border-top:0}
+.reg b{font-family:var(--mono);font-size:12px;color:var(--ai);font-weight:600}
+.reg i{font-style:normal;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.regnote{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--ai);border-radius:12px;padding:14px 16px;font-size:13px;color:var(--muted)}
+.regnote b{display:block;color:var(--ink);font-size:14px;margin-bottom:4px}
+.regnote p{margin:0 0 8px}
+.guard{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--gw);border-radius:10px;padding:12px 14px;font-size:12.5px;color:var(--muted)}
+.guard b{display:block;color:var(--ink);font-size:13.5px;margin-bottom:3px}
+.guard code,.op code{font-family:var(--mono);font-size:11.5px;color:var(--ink);background:var(--surface2);padding:0 4px;border-radius:3px}
+
+.ops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.op{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;font-size:13px}
+.op h3{font-size:15px;font-weight:600;margin-bottom:6px}
+.op ul{margin:0;padding-left:18px;color:var(--muted)}
+.op li{margin:3px 0}
+.op.bad{border-color:color-mix(in srgb,var(--warn) 45%,var(--line))}
+.op.bad h3{color:var(--warn)}
+footer{margin-top:36px;font-size:12px;color:var(--muted);font-family:var(--mono)}
+.mt{margin-top:48px}
+
+@media (max-width:1000px){.agentsbox{grid-template-columns:1fr} .hosts,.ops,.personas,.guards{grid-template-columns:repeat(2,minmax(0,1fr))} .steps{grid-template-columns:repeat(2,minmax(0,1fr))} header{grid-template-columns:1fr}}
+@media (max-width:640px){
+  .hosts,.ops,.personas,.guards,.steps{grid-template-columns:1fr}
+  .reg{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(3){border-left:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+  .wrap{padding-inline:16px}
+  .rail .r{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div>
+    <div class="eyebrow">Verified live via SSH · 2026-10-07</div>
+    <h1>Home Lab <span>192.168.1.x</span></h1>
+    <p class="lede">A Raspberry Pi 5 control node, eight Rocky Linux Hyper-V VMs and four more Pi 5s: an observability hub, two Kubernetes clusters, API-security targets watched by eBPF sensors, an RHCSA practice lab, and a LiteLLM AI gateway that four scheduled ops agents on .98 use every morning to reach the local model.</p>
+  </div>
+  <div class="stats" aria-label="Lab totals">
+    <div class="stat"><b>13</b><small>Hosts</small></div>
+    <div class="stat"><b>27</b><small>Containers</small></div>
+    <div class="stat"><b>4</b><small>AI agents</small></div>
+    <div class="stat"><b>2</b><small>K8s clusters</small></div>
+  </div>
+</header>
+
+<div class="flags">
+  <div class="flag new"><span class="dot"></span>New: 4 lab agents on .98 (secnews · labwatch · cvewatch · patchwatch) via LiteLLM → local qwen3.8-27b · Agent Lab retired</div>
+  <div class="flag"><span class="dot"></span>Security patches applied to all 11 managed hosts 2026-10-07 · reboots from 22:05</div>
+  <div class="flag bad"><span class="dot"></span>Alertmanager receiver is <b class="mono">null</b>: alerts go nowhere</div>
+  <div class="flag bad"><span class="dot"></span><span class="mono">gen_dashboards.py</span> deploy would delete 2 Grafana folders</div>
+  <div class="flag"><span class="dot"></span>All 13 hosts now shipping metrics + logs</div>
+</div>
+
+<div class="sec"><h2>Network &amp; services</h2><p>Dashed chips are internal-only ports · pink chips are AI agents</p></div>
+
+<div class="edge">
+  <div class="tunnel"><span class="ico" style="background:var(--pi)">TG</span><div><b>Twingate connector</b> <em>remote access → .85</em></div></div>
+  <div class="tunnel"><span class="ico" style="background:var(--ai)">LM</span><div><b>LM Studio · RTX 5090</b> <em>.194:1234 → LiteLLM on .101</em></div></div>
+  <div class="tunnel"><span class="ico" style="background:var(--k8s)">CF</span><div><b>Cloudflare Tunnel</b> <em>external ingress → .99</em></div></div>
+</div>
+<div class="rail"><span>LAN · 192.168.1.0/24</span><span class="r">Hyper-V · Intel i9-9900K @ 3.60 GHz · Raspberry Pi 5 ×5</span></div>
+
+<div class="group">Rocky Linux 9.8 fleet · Hyper-V</div>
+<section class="hosts">
+  <article class="host obs">
+    <div class="hh"><div class="ip">.98</div><div class="hn">hv-rocky-linux-1 <span class="hub">HUB</span></div><div class="role">Observability hub + lab agents + VulnNotes API + MCP session host</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Docker Compose · /opt/monitoring</div><div class="chips">
+        <span class="chip key"><b>grafana</b><i>3000</i></span><span class="chip key"><b>prometheus</b><i>9090</i></span><span class="chip key"><b>alertmanager</b><i>9093</i></span><span class="chip key"><b>loki</b><i>3100</i></span><span class="chip"><b>cadvisor</b><i>8081</i></span></div></div>
+      <div class="grp"><div class="rt">Docker</div><div class="chips">
+        <span class="chip"><b>vnotes</b><i>8000</i></span><span class="chip off"><b>vulnnotes</b><i>exited</i></span></div></div>
+      <div class="grp"><div class="rt">Systemd</div><div class="chips">
+        <span class="chip"><b>mcp-heartbeat</b><i>svc</i></span><span class="chip"><b>mcp-sweep</b><i>svc</i></span></div></div>
+      <div class="grp"><div class="rt ai">Lab agents · podman + systemd timers</div><div class="chips">
+        <span class="chip agent"><b>secnews</b><i>06:00</i></span><span class="chip agent"><b>labwatch</b><i>06:15</i></span><span class="chip agent"><b>cvewatch</b><i>06:30</i></span><span class="chip agent"><b>patchwatch</b><i>Mon 06:45</i></span><span class="chip"><b>labinventory</b><i>05:30 · ssh</i></span></div></div>
+      <div class="note">Agents: <span class="mono">/opt/secnews</span>, <span class="mono">/opt/labagents</span> · repo <span class="mono">~/mikes-agents</span></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>19 / 70 G</b><div class="bar"><i style="width:27%"></i></div></div><div>RAM<b>7.5 Gi</b></div><div>Up<b>4d</b></div></div>
+  </article>
+
+  <article class="host k8s">
+    <div class="hh"><div class="ip">.99</div><div class="hn">hv-rocky-linux-2</div><div class="role">k3s v1.36.3 single-node cluster + Cloudflare ingress</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">k3s workloads · NodePort</div><div class="chips">
+        <span class="chip key"><b>juice-shop</b><i>30300</i></span><span class="chip key"><b>vampi</b><i>30500</i></span><span class="chip key"><b>nginx</b><i>30453</i></span></div></div>
+      <div class="grp"><div class="rt">k3s system</div><div class="chips">
+        <span class="chip"><b>ingress-nginx</b><i>80·443·8443</i></span><span class="chip"><b>k3s API</b><i>6443</i></span><span class="chip int"><b>coredns</b><i>—</i></span><span class="chip int"><b>metrics-server</b><i>—</i></span><span class="chip int"><b>local-path</b><i>—</i></span></div></div>
+      <div class="grp"><div class="rt">Systemd</div><div class="chips"><span class="chip"><b>cloudflared</b><i>tunnel</i></span></div></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>kubelet :10250</span><span>alloy (pod logs)</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>15 / 70 G</b><div class="bar"><i style="width:21%"></i></div></div><div>RAM<b>3.6 Gi</b></div><div>Up<b>4d</b></div></div>
+  </article>
+
+  <article class="host gw">
+    <div class="hh"><div class="ip">.100</div><div class="hn">hv-rocky-linux-3</div><div class="role">Kong API Gateway + Jenkins CI/CD</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Podman</div><div class="chips"><span class="chip key"><b>kong 3.6</b><i>80·8001</i></span></div></div>
+      <div class="grp"><div class="rt">Docker</div><div class="chips">
+        <span class="chip key"><b>jenkins</b><i>8080·50000</i></span><span class="chip"><b>jenkins-docker (dind)</b><i>2376</i></span><span class="chip"><b>cadvisor</b><i>8081</i></span></div></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>podman-exp :9882</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>15 / 70 G</b><div class="bar"><i style="width:21%"></i></div></div><div>RAM<b>7.5 Gi</b></div><div>Up<b>12h</b></div></div>
+  </article>
+
+  <article class="host crapi">
+    <div class="hh"><div class="ip">.101</div><div class="hn">hv-rocky-linux-4 <span class="hub">AI GW</span></div><div class="role">LiteLLM AI gateway + crAPI vulnerable-app lab + Noname sensor</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt ai">Podman · AI gateway</div><div class="chips">
+        <span class="chip agent"><b>litellm v1.104.0</b><i>4000</i></span><span class="chip agent"><b>Agents page</b><i>4 registered</i></span><span class="chip int"><b>litellm-db</b><i>postgres 16 · quadlet</i></span><span class="chip"><b>basic-safety-filter</b><i>guardrail</i></span></div></div>
+      <div class="grp"><div class="rt">Podman · crAPI stack</div><div class="chips">
+        <span class="chip key"><b>crapi-web</b><i>8888·8443</i></span><span class="chip"><b>crapi-chatbot</b><i>5500</i></span><span class="chip"><b>mailhog</b><i>8025</i></span><span class="chip int"><b>gateway-svc</b><i>443</i></span><span class="chip int"><b>identity</b><i>8080</i></span><span class="chip int"><b>community</b><i>6060</i></span><span class="chip int"><b>workshop</b><i>—</i></span><span class="chip int"><b>postgres</b><i>5432</i></span><span class="chip int"><b>mongodb</b><i>27017</i></span><span class="chip int"><b>chromadb</b><i>8000</i></span></div></div>
+      <div class="grp"><div class="rt">Podman · extras · systemd</div><div class="chips">
+        <span class="chip key"><b>juice-shop</b><i>3000</i></span><span class="chip key"><b>dvga</b><i>5013</i></span><span class="chip"><b>searxng</b><i>8080</i></span><span class="chip"><b>noname-sensor</b><i>eBPF</i></span></div></div>
+      <div class="note warn">Noname sensor dnf repo credential expired: repo skipped (also .102)</div>
+      <div class="note warn">RAM now 3.6 Gi (was 8.1 Gi): keep new workloads off this host</div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>podman-exp :9882</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>19 / 70 G</b><div class="bar"><i style="width:27%"></i></div></div><div>RAM<b>3.6 Gi</b></div><div>Up<b>4d</b></div></div>
+  </article>
+
+  <article class="host mcp">
+    <div class="hh"><div class="ip">.102</div><div class="hn">hv-rocky-linux-5</div><div class="role">Noname sensor + MCP servers + AI simulator</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Systemd · /opt</div><div class="chips">
+        <span class="chip key"><b>crapi-mcp</b><i>8009</i></span><span class="chip key"><b>noname-mcp</b><i>8013</i></span><span class="chip"><b>ai-sim LLM</b><i>8011</i></span><span class="chip"><b>ai-sim GenAI</b><i>8012</i></span><span class="chip"><b>noname-sensor</b><i>eBPF</i></span></div></div>
+      <div class="grp"><div class="rt">Podman</div><div class="chips"><span class="chip key"><b>vampi-mcp</b><i>5000</i></span></div></div>
+      <div class="note">Each service runs from <span class="mono">/opt/&lt;name&gt;</span> with its own .venv</div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>podman-exp :9882</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>19 / 70 G</b><div class="bar"><i style="width:27%"></i></div></div><div>RAM<b>3.6 Gi</b></div><div>Up<b>4d</b></div></div>
+  </article>
+
+  <article class="host ai ext">
+    <div class="hh"><div class="ip">.194</div><div class="hn">LM Studio (not managed)</div><div class="role">Local model server on an RTX 5090: the only backend LiteLLM uses</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt ai">Loaded by default</div><div class="chips">
+        <span class="chip agent"><b>qwen3.8-27b</b><i>~78 tok/s</i></span></div></div>
+      <div class="grp"><div class="rt">Also exposed via LiteLLM</div><div class="chips">
+        <span class="chip off"><b>qwen3.6-35b-a3b</b></span><span class="chip off"><b>gemma-4-31b-qat</b></span><span class="chip off"><b>muse-glimmer</b></span><span class="chip"><b>nomic-embed-text</b><i>embed</i></span></div></div>
+      <div class="note">Loading a second big model pushes qwen3.8 partly onto CPU (~0.3 tok/s). Agent keys are locked to qwen3.8.</div>
+    </div>
+    <div class="hf"><div>API<b>:1234 /v1</b></div><div>GPU<b>RTX 5090</b></div><div>Via<b>.101</b></div></div>
+  </article>
+</section>
+
+<div class="group">Control node + Raspberry Pi 5 cluster · Ubuntu 24.04 aarch64</div>
+<section class="hosts">
+  <article class="host pi">
+    <div class="hh"><div class="ip">.85</div><div class="hn">rasp5</div><div class="role">Control node: Claude Code + opencode, runbooks, SSH hub</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Docker</div><div class="chips"><span class="chip key"><b>twingate-jade-limpet</b><i>outbound</i></span></div></div>
+      <div class="grp"><div class="rt">Systemd</div><div class="chips">
+        <span class="chip"><b>glances</b><i>127.0.0.1:61209</i></span><span class="chip"><b>atop</b><i>acct</i></span><span class="chip"><b>cups</b><i>print</i></span></div></div>
+      <div class="note">Passwordless SSH to .98–.102 and rk1–rk4; .103–.105 reject this key</div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>alloy → Loki</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>16 / 117 G</b><div class="bar"><i style="width:14%"></i></div></div><div>RAM<b>7.7 Gi</b></div><div>Up<b>16h</b></div></div>
+  </article>
+
+  <article class="host k8s">
+    <div class="hh"><div class="ip">.75</div><div class="hn">rk1</div><div class="role">microk8s v1.29 node</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">microk8s (rk1 + rk2)</div><div class="chips">
+        <span class="chip key"><b>vampi</b><i>2 pods</i></span><span class="chip"><b>nginx-ingress</b><i>per node</i></span><span class="chip int"><b>calico</b><i>—</i></span><span class="chip int"><b>coredns</b><i>—</i></span><span class="chip int"><b>metrics-server</b><i>—</i></span></div></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>8.6 / 58 G</b><div class="bar"><i style="width:16%"></i></div></div><div>RAM<b>7.8 Gi</b></div><div>Up<b>4d</b></div></div>
+  </article>
+
+  <article class="host k8s">
+    <div class="hh"><div class="ip">.76</div><div class="hn">rk2</div><div class="role">microk8s v1.29 node</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">microk8s (rk1 + rk2)</div><div class="chips">
+        <span class="chip key"><b>vampi</b><i>2 pods</i></span><span class="chip"><b>nginx-ingress</b><i>per node</i></span><span class="chip int"><b>hostpath</b><i>—</i></span></div></div>
+      <div class="note">Add-ons: dns, ha-cluster, helm3, ingress, metrics-server, storage</div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>alloy</span></div>
+    </div>
+    <div class="hf"><div>Disk<b>8.7 / 58 G</b><div class="bar"><i style="width:16%"></i></div></div><div>RAM<b>7.8 Gi</b></div><div>Up<b>4d</b></div></div>
+  </article>
+
+  <article class="host pi">
+    <div class="hh"><div class="ip">.77·.78</div><div class="hn">rk3 · rk4</div><div class="role">Spare Pi 5s, reserved for other plans</div></div>
+    <div class="hb">
+      <div class="grp"><div class="rt">Running</div><div class="chips"><span class="chip"><b>node_exporter</b><i>9100</i></span><span class="chip"><b>alloy</b><i>→ Loki</i></span></div></div>
+      <div class="note">Idle: 7.3 Gi RAM free each. Keep agents off these.</div>
+    </div>
+    <div class="hf"><div>Disk<b>4 / 58 G</b><div class="bar"><i style="width:8%"></i></div></div><div>RAM<b>7.8 Gi ea</b></div><div>Up<b>2d · 4d</b></div></div>
+  </article>
+</section>
+
+<div class="group">RHCSA RHEL10 practice lab · Rocky Linux 10.2 · Hyper-V</div>
+<section class="hosts">
+  <article class="host rh">
+    <div class="hh"><div class="ip">.103</div><div class="hn">hv-rocky-linux-6</div><div class="role">Practice workstation</div></div>
+    <div class="hb"><div class="grp"><div class="rt">Services</div><div class="chips"><span class="chip"><b>GNOME (gdm)</b></span><span class="chip"><b>cockpit</b><i>9090</i></span><span class="chip"><b>cups</b><i>631</i></span></div></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>alloy</span></div></div>
+    <div class="hf"><div>Disk<b>6.5 / 70 G</b><div class="bar"><i style="width:10%"></i></div></div><div>RAM<b>3.6 Gi</b></div><div>Up<b>4d</b></div></div>
+  </article>
+  <article class="host rh">
+    <div class="hh"><div class="ip">.104</div><div class="hn">hv-rocky-linux-7</div><div class="role">Practice workstation</div></div>
+    <div class="hb"><div class="grp"><div class="rt">Services</div><div class="chips"><span class="chip"><b>GNOME (gdm)</b></span><span class="chip"><b>cockpit</b><i>9090</i></span><span class="chip"><b>cups</b><i>631</i></span></div></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>podman-exp :9882</span><span>alloy</span></div></div>
+    <div class="hf"><div>Disk<b>11 / 70 G</b><div class="bar"><i style="width:15%"></i></div></div><div>RAM<b>3.6 Gi</b></div><div>Up<b>4d</b></div></div>
+  </article>
+  <article class="host rh">
+    <div class="hh"><div class="ip">.105</div><div class="hn">utility.lab.example.com</div><div class="role">Utility server for the practice lab</div></div>
+    <div class="hb"><div class="grp"><div class="rt">Services</div><div class="chips"><span class="chip key"><b>httpd dnf repos</b><i>80</i></span><span class="chip key"><b>NFS</b><i>2049</i></span><span class="chip"><b>cockpit</b><i>9090</i></span></div></div>
+      <div class="note">Repos: <span class="mono">/rhel10/</span> BaseOS + AppStream. Exports: <span class="mono">/home/guests /exports/docs /exports/data</span></div>
+      <div class="telemetry"><span>node_exporter :9100</span><span>alloy</span></div></div>
+    <div class="hf"><div>Disk<b>17 / 70 G</b><div class="bar"><i style="width:24%"></i></div></div><div>RAM<b>3.6 Gi</b></div><div>Up<b>4d</b></div></div>
+  </article>
+</section>
+
+<div class="sec mt"><h2>Lab agents</h2><p>Scheduled on .98 · every LLM call goes through LiteLLM on .101 with the agent's own key · one local model, one request at a time</p></div>
+<div class="box">
+  <div class="svgwrap">
+  <svg viewBox="0 0 1000 440" role="img" aria-label="Lab agents on .98 send requests to LiteLLM on .101, which forwards them to LM Studio qwen3.8-27b; reports are saved on .98 and emailed through Gmail">
+    <defs>
+      <marker id="aa" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--ai)"/></marker>
+      <marker id="al2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--log)"/></marker>
+      <marker id="am2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--muted)"/></marker>
+    </defs>
+    <text x="20" y="26" font-size="11" fill="var(--muted)" font-family="var(--mono)" letter-spacing="1.5">.98 · PODMAN + SYSTEMD TIMERS</text>
+    <text x="400" y="26" font-size="11" fill="var(--muted)" font-family="var(--mono)" letter-spacing="1.5">GATEWAY · .101</text>
+    <text x="770" y="26" font-size="11" fill="var(--muted)" font-family="var(--mono)" letter-spacing="1.5">MODEL · .194</text>
+
+    <g fill="none" stroke="var(--ai)" stroke-width="1.8" stroke-dasharray="6 4" class="flowa">
+      <path d="M300,68 C350,68 350,150 398,150"/>
+      <path d="M300,136 C350,136 350,160 398,160"/>
+      <path d="M300,204 C350,204 350,170 398,170"/>
+      <path d="M300,272 C350,272 350,180 398,180" marker-end="url(#aa)"/>
+      <path d="M640,165 H758" marker-end="url(#aa)"/>
+    </g>
+    <text x="700" y="156" font-size="11" fill="var(--ai)" font-family="var(--mono)" text-anchor="middle">1 in flight</text>
+
+    <g font-size="12">
+      <g transform="translate(20,40)"><rect width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--ai)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--ai)">secnews</text><text x="110" y="22" fill="var(--ink)" font-weight="600">06:00 daily</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">9 security RSS feeds + CISA KEV → briefing</text></g>
+      <g transform="translate(20,108)"><rect width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--ai)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--ai)">labwatch</text><text x="110" y="22" fill="var(--ink)" font-weight="600">06:15 daily · tools</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">PromQL / LogQL tool calls → health report</text></g>
+      <g transform="translate(20,176)"><rect width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--ai)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--ai)">cvewatch</text><text x="110" y="22" fill="var(--ink)" font-weight="600">06:30 daily</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">NVD + KEV vs lab inventory → only if hit</text></g>
+      <g transform="translate(20,244)"><rect width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="56" rx="3" fill="var(--ai)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--ai)">patchwatch</text><text x="128" y="22" fill="var(--ink)" font-weight="600">Mon 06:45</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">updates · advisories · image drift → plan</text></g>
+      <g transform="translate(20,322)"><rect width="280" height="56" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-dasharray="4 3"/><rect width="6" height="56" rx="3" fill="var(--muted)"/>
+        <text x="18" y="22" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--ink)">labinventory</text><text x="130" y="22" fill="var(--muted)" font-weight="600">05:30 · no LLM</text>
+        <text x="18" y="43" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">ssh + sudo -n → 11 hosts → latest.json</text></g>
+    </g>
+    <g fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="2 3">
+      <path d="M300,350 C330,350 330,204 302,204" marker-end="url(#am2)"/>
+      <path d="M300,358 C340,358 340,272 302,272" marker-end="url(#am2)"/>
+    </g>
+
+    <g transform="translate(400,40)">
+      <rect width="240" height="290" rx="12" fill="color-mix(in srgb,var(--ai) 7%,var(--surface))" stroke="var(--ai)" stroke-width="1.6"/>
+      <text x="16" y="30" font-family="var(--display)" font-size="20" font-weight="700" fill="var(--ink)">LiteLLM</text>
+      <text x="16" y="48" font-family="var(--mono)" font-size="11" fill="var(--muted)">:4000 · Podman quadlet · v1.104.0</text>
+      <g font-family="var(--mono)" font-size="11" fill="var(--ink)">
+        <text x="16" y="78">1 virtual key per agent</text>
+        <text x="16" y="94" fill="var(--muted)">models: qwen3.8-27b only</text>
+        <text x="16" y="116">max_parallel_requests 1</text>
+        <text x="16" y="132" fill="var(--muted)">rpm 30 per key</text>
+        <text x="16" y="154" fill="var(--ai)" font-weight="600">Agents page · 4 agents</text>
+        <text x="16" y="170" fill="var(--muted)">key agent_id → per-agent view</text>
+        <text x="16" y="192">guardrail basic-safety-filter</text>
+        <text x="16" y="208" fill="var(--muted)">on for all; agent keys opt out</text>
+        <text x="16" y="230">X-Agent-Name header</text>
+        <text x="16" y="246" fill="var(--muted)">tags + user = agent@.98</text>
+      </g>
+    </g>
+
+    <g transform="translate(760,110)">
+      <rect width="220" height="110" rx="12" fill="var(--ink)"/>
+      <text x="16" y="32" font-family="var(--display)" font-size="19" font-weight="700" fill="var(--ground)">LM Studio</text>
+      <text x="16" y="54" font-family="var(--mono)" font-size="11.5" fill="var(--ground)">qwen3.8-27b (loaded)</text>
+      <text x="16" y="74" font-family="var(--mono)" font-size="11" fill="var(--ground)" opacity=".7">RTX 5090 · ~78 tok/s</text>
+      <text x="16" y="94" font-family="var(--mono)" font-size="11" fill="var(--ground)" opacity=".7">192.168.1.194:1234</text>
+    </g>
+
+    <g transform="translate(760,250)"><rect width="220" height="58" rx="9" fill="var(--surface)" stroke="var(--line)"/>
+      <text x="14" y="24" font-size="13" font-weight="600" fill="var(--ink)">Postgres · litellm-db</text>
+      <text x="14" y="44" font-size="11" fill="var(--muted)" font-family="var(--mono)">keys · agents · spend logs</text></g>
+    <path d="M640,279 H756" fill="none" stroke="var(--muted)" stroke-width="1.6" marker-end="url(#am2)"/>
+
+    <g fill="none" stroke="var(--log)" stroke-width="1.6" stroke-dasharray="3 4" class="flowl">
+      <path d="M160,378 V408 H398" marker-end="url(#al2)"/>
+    </g>
+    <text x="172" y="400" font-size="11" fill="var(--log)" font-family="var(--mono)">HTML + JSON report</text>
+    <g transform="translate(400,388)"><rect width="250" height="40" rx="8" fill="var(--surface)" stroke="var(--log)"/>
+      <text x="14" y="25" font-size="12.5" font-weight="600" fill="var(--ink)">.98 data/reports/&lt;agent&gt;/</text></g>
+    <path d="M650,408 H676" fill="none" stroke="var(--log)" stroke-width="1.6" marker-end="url(#al2)"/>
+    <g transform="translate(680,388)"><rect width="300" height="40" rx="8" fill="var(--ink)"/>
+      <text x="14" y="25" font-size="12.5" font-weight="600" fill="var(--ground)">Gmail SMTPS → mcropsey@gmail.com</text></g>
+  </svg>
+  </div>
+  <div class="legend">
+    <span><svg viewBox="0 0 34 10"><path d="M0,5H34" stroke="var(--ai)" stroke-width="2" stroke-dasharray="6 4"/></svg>LLM requests (OpenAI-compatible, per-agent key)</span>
+    <span><svg viewBox="0 0 34 10"><path d="M0,5H34" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 3"/></svg>Inventory feeds cvewatch + patchwatch</span>
+    <span><svg viewBox="0 0 34 10"><path d="M0,5H34" stroke="var(--log)" stroke-width="2" stroke-dasharray="3 4"/></svg>Reports + email</span>
+  </div>
+</div>
+
+<div class="sec"><h2>How the agents work</h2><p>Code in <span class="mono">~/mikes-agents</span> on .98 · <span class="mono">github.com/mcropsey/mikes-agents</span></p></div>
+<div class="steps">
+  <div class="step"><span class="n">1</span><b>Schedule</b>systemd timers on .98 start each agent before the workday (05:30–06:45). Every agent can also be run by hand: <code>secnews</code>, <code>labwatch</code>, <code>cvewatch</code>, <code>patchwatch</code>.</div>
+  <div class="step"><span class="n">2</span><b>Gather</b>Real data only: security feeds and CISA KEV, Prometheus/Loki/Alertmanager, the NVD API, the SSH inventory of every host, container registries.</div>
+  <div class="step"><span class="n">3</span><b>Reason + tools</b>The model ranks and explains. labwatch runs a real tool loop: it writes its own PromQL and LogQL to confirm problems before reporting.</div>
+  <div class="step"><span class="n">4</span><b>Through LiteLLM</b>Each agent uses its own key, linked to its LiteLLM agent entry, locked to qwen3.8-27b with 1 request in flight.</div>
+  <div class="step"><span class="n">5</span><b>Report</b>HTML + JSON saved on .98 and emailed. cvewatch only emails when the lab is affected. Nothing is changed on any host.</div>
+</div>
+<div class="personas">
+  <div class="persona"><h3>secnews <span class="fw">06:00</span></h3>
+    <p>BleepingComputer, The Hacker News, Krebs, SecurityWeek, Dark Reading, The Record, SANS ISC, CISA advisories, Schneier + new KEV entries. Dedupes and ranks 8–15 stories with severity, CVEs and an action.</p>
+    <div class="meta"><span>key <b>secnews-agent</b></span><span>1 call · ~1.5 min</span></div></div>
+  <div class="persona"><h3>labwatch <span class="fw">06:15</span></h3>
+    <p>14 PromQL checks, Loki error counts and Alertmanager, then up to 8 rounds of its own queries. GREEN / YELLOW / RED briefing with per-issue actions.</p>
+    <div class="meta"><span>key <b>labwatch-agent</b></span><span>~10 tool calls · ~1.5 min</span></div></div>
+  <div class="persona"><h3>cvewatch <span class="fw">06:30</span></h3>
+    <p>New NVD CVEs + KEV matched to installed packages, container and k8s images, grouped per product. Verdict per group: affected / possibly / not affected, with the Rocky fix if one exists.</p>
+    <div class="meta"><span>key <b>cvewatch-agent</b></span><span>1 call · email only on a hit</span></div></div>
+  <div class="persona"><h3>patchwatch <span class="fw">Mon 06:45</span></h3>
+    <p>Pending updates, Rocky security advisories with CVEs, reboot-needed hosts, broken repos, and images whose registry tag has a newer build. Prioritised plan with commands. Reports only.</p>
+    <div class="meta"><span>key <b>patchwatch-agent</b></span><span>1 call · ~3.5 min</span></div></div>
+  <div class="persona"><h3>labinventory <span class="fw">05:30</span></h3>
+    <p>No LLM. SSH + <code>sudo -n</code> from .98 to the 11 managed hosts (not .77/.78): packages, updates, advisories, containers with digests, k3s/microk8s pod images.</p>
+    <div class="meta"><span>runs as <b>mcropsey</b></span><span>~25 s</span></div></div>
+</div>
+<div class="guards">
+  <div class="guard"><b>One model only</b>Every agent key allows only <code>qwen3.8-27b</code>, so LM Studio never loads a second model next to it.</div>
+  <div class="guard"><b>One request at a time</b><code>max_parallel_requests: 1</code> and 30 rpm per key. LiteLLM queues calls instead of stacking them on the GPU.</div>
+  <div class="guard"><b>Before the workday</b>All schedules finish before 07:00: about 5 GPU-minutes a morning, plus ~3.5 on Mondays.</div>
+  <div class="guard"><b>Guardrail opt-out, per key</b><code>basic-safety-filter</code> stays on for everything else; only the 4 agent keys opt out (security vocabulary trips it).</div>
+  <div class="guard"><b>Read-only</b>The agents never change hosts. Patching and reboots are separate, done on request (2026-10-07).</div>
+  <div class="guard"><b>No secrets in git</b>Keys and the Gmail app password live only in root-only env files on .98.</div>
+</div>
+
+<div class="sec"><h2>LiteLLM Agents page</h2><p>UI → Agents at <span class="mono">192.168.1.101:4000/ui</span> · registered by <span class="mono">mikes-agents/litellm/register_agent.py</span></p></div>
+<div class="agentsbox">
+  <div class="reglist">
+      <div class="reg"><b>secnews-agent</b><span>Cybersecurity News Digest</span><i>httpx · .98</i></div>
+      <div class="reg"><b>labwatch-agent</b><span>Lab Health Watch</span><i>OpenAI SDK + tools · .98</i></div>
+      <div class="reg"><b>cvewatch-agent</b><span>CVE-to-Lab Matcher</span><i>OpenAI SDK · .98</i></div>
+      <div class="reg"><b>patchwatch-agent</b><span>Patch &amp; Image Drift Watch</span><i>OpenAI SDK · .98</i></div>
+  </div>
+  <div class="regnote">
+    <b>How the registry fits in</b>
+    <p>Each agent has an entry in LiteLLM's agent registry (<span class="mono">/v1/agents</span>) with an agent card: description, host, schedule and skills. Its virtual key carries the matching <span class="mono">agent_id</span>, so every request is attributed to the agent on the Agents page.</p>
+    <p>No A2A URL: these are scheduled clients, not A2A servers. The 7 Agent Lab personas were removed when the Agent Lab was retired (~2026-10-05).</p>
+  </div>
+</div>
+
+<div class="sec"><h2>Observability flow</h2><p>Metrics are pulled by Prometheus · logs are pushed by Alloy · all 13 hosts covered</p></div>
+<div class="box">
+  <div class="svgwrap">
+  <svg viewBox="0 0 1000 420" role="img" aria-label="Metrics and log flows from all 13 hosts into the observability hub on .98">
+    <defs>
+      <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--metric)"/></marker>
+      <marker id="al" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--log)"/></marker>
+      <marker id="ai" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--muted)"/></marker>
+      <marker id="aw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0L10,5L0,10z" fill="var(--warn)"/></marker>
+    </defs>
+    <g fill="none" stroke-width="1.8">
+      <g stroke="var(--metric)" stroke-dasharray="6 4" class="flowm">
+        <path d="M300,62 C375,62 375,112 448,112" marker-end="url(#am)"/>
+        <path d="M300,138 C375,138 375,118 448,118"/>
+        <path d="M300,214 C375,214 375,124 448,124"/>
+        <path d="M300,290 C375,290 375,130 448,130"/>
+        <path d="M300,366 C375,366 375,136 448,136"/>
+      </g>
+      <g stroke="var(--log)" stroke-dasharray="3 4" class="flowl">
+        <path d="M300,82 C385,82 385,330 448,330"/>
+        <path d="M300,158 C385,158 385,336 448,336"/>
+        <path d="M300,234 C385,234 385,342 448,342"/>
+        <path d="M300,310 C385,310 385,348 448,348"/>
+        <path d="M300,386 C385,386 385,354 448,354" marker-end="url(#al)"/>
+      </g>
+    </g>
+    <text x="300" y="24" font-size="11" fill="var(--muted)" font-family="var(--mono)" text-anchor="end">SOURCES</text>
+    <g font-size="12">
+      <g transform="translate(20,40)"><rect width="280" height="58" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="58" rx="3" fill="var(--obs)"/>
+        <text x="18" y="23" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--obs)">.98–.102</text><text x="104" y="23" fill="var(--ink)" font-weight="600">Rocky 9 fleet</text>
+        <text x="18" y="45" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node · cAdvisor · podman · kubelet · alloy</text></g>
+      <g transform="translate(20,116)"><rect width="280" height="58" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="58" rx="3" fill="var(--pi)"/>
+        <text x="18" y="23" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--pi)">.85</text><text x="104" y="23" fill="var(--ink)" font-weight="600">rasp5</text>
+        <text x="18" y="45" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node · alloy journal + docker</text></g>
+      <g transform="translate(20,192)"><rect width="280" height="58" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="58" rx="3" fill="var(--k8s)"/>
+        <text x="18" y="23" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--k8s)">rk1–rk4</text><text x="104" y="23" fill="var(--ink)" font-weight="600">Raspberry Pi 5 ×4</text>
+        <text x="18" y="45" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node · alloy journal</text></g>
+      <g transform="translate(20,268)"><rect width="280" height="58" rx="8" fill="var(--surface)" stroke="var(--line)"/><rect width="6" height="58" rx="3" fill="var(--rh)"/>
+        <text x="18" y="23" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--rh)">.103–.105</text><text x="104" y="23" fill="var(--ink)" font-weight="600">RHCSA lab</text>
+        <text x="18" y="45" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">node · podman (.104) · alloy</text></g>
+      <g transform="translate(20,344)"><rect width="280" height="58" rx="8" fill="var(--surface)" stroke="var(--ai)"/><rect width="6" height="58" rx="3" fill="var(--ai)"/>
+        <text x="18" y="23" font-family="var(--display)" font-weight="700" font-size="16" fill="var(--ai)">lab agents</text><text x="118" y="23" fill="var(--ink)" font-weight="600">.98 · read-only</text>
+        <text x="18" y="45" fill="var(--muted)" font-family="var(--mono)" font-size="10.5">labwatch queries Prometheus / Loki</text></g>
+    </g>
+
+    <rect x="435" y="34" width="360" height="372" rx="14" fill="color-mix(in srgb,var(--obs) 7%,var(--surface))" stroke="var(--obs)" stroke-dasharray="2 5" stroke-width="1.5"/>
+    <text x="452" y="58" font-family="var(--mono)" font-size="11" letter-spacing="1.5" fill="var(--obs)" font-weight="600">.98  /opt/monitoring  · network_mode: host</text>
+    <g font-size="12">
+      <g transform="translate(450,84)"><rect width="150" height="72" rx="9" fill="var(--surface)" stroke="var(--metric)" stroke-width="1.6"/>
+        <text x="14" y="28" font-family="var(--display)" font-size="17" font-weight="700" fill="var(--ink)">Prometheus</text><text x="14" y="50" font-family="var(--mono)" font-size="11" fill="var(--muted)">:9090 · 24 targets up</text></g>
+      <g transform="translate(450,304)"><rect width="150" height="72" rx="9" fill="var(--surface)" stroke="var(--log)" stroke-width="1.6"/>
+        <text x="14" y="28" font-family="var(--display)" font-size="17" font-weight="700" fill="var(--ink)">Loki</text><text x="14" y="50" font-family="var(--mono)" font-size="11" fill="var(--muted)">:3100 · 13 hosts</text></g>
+      <g transform="translate(625,84)"><rect width="150" height="72" rx="9" fill="var(--surface)" stroke="var(--warn)" stroke-width="1.6"/>
+        <text x="14" y="28" font-family="var(--display)" font-size="15" font-weight="700" fill="var(--ink)">Alertmanager</text><text x="14" y="50" font-family="var(--mono)" font-size="11" fill="var(--muted)">:9093</text></g>
+      <g transform="translate(625,196)"><rect width="150" height="72" rx="9" fill="var(--ink)"/>
+        <text x="14" y="28" font-family="var(--display)" font-size="17" font-weight="700" fill="var(--ground)">Grafana</text><text x="14" y="50" font-family="var(--mono)" font-size="11" fill="var(--ground)" opacity=".75">:3000 · 13.2</text></g>
+      <g transform="translate(625,370)"><rect width="150" height="26" rx="6" fill="var(--surface2)" stroke="var(--line)"/>
+        <text x="12" y="17" font-family="var(--mono)" font-size="10.5" fill="var(--muted)">cAdvisor :8081 local</text></g>
+    </g>
+    <g fill="none" stroke-width="1.6">
+      <path d="M600,120 H621" stroke="var(--muted)" marker-end="url(#ai)"/>
+      <path d="M490,304 V160" stroke="var(--log)" marker-end="url(#al)"/>
+      <path d="M600,340 H790 V170 H700 V160" stroke="var(--log)" marker-end="url(#al)"/>
+      <path d="M625,222 C590,222 590,170 572,160" stroke="var(--muted)" stroke-dasharray="2 3" marker-end="url(#ai)"/>
+      <path d="M625,244 C590,244 590,294 572,302" stroke="var(--muted)" stroke-dasharray="2 3" marker-end="url(#ai)"/>
+    </g>
+    <text x="498" y="228" font-size="11" fill="var(--log)" font-family="var(--mono)">remote-write</text>
+    <text x="498" y="243" font-size="10.5" fill="var(--muted)">log-derived series</text>
+    <text x="786" y="290" font-size="11" fill="var(--log)" font-family="var(--mono)" text-anchor="end">ruler</text>
+    <path d="M775,106 H842" fill="none" stroke="var(--warn)" stroke-width="1.8" stroke-dasharray="4 4" marker-end="url(#aw)"/>
+    <g transform="translate(846,76)"><rect width="140" height="64" rx="9" fill="var(--warn-bg)" stroke="var(--warn)" stroke-dasharray="4 3"/>
+      <text x="12" y="26" font-family="var(--mono)" font-size="13" font-weight="600" fill="var(--warn)">receiver: null</text>
+      <text x="12" y="46" font-size="11" fill="var(--warn)">alerts not delivered</text></g>
+    <path d="M775,232 H842" fill="none" stroke="var(--ink)" stroke-width="1.8" marker-end="url(#ai)"/>
+    <g transform="translate(846,188)"><rect width="140" height="88" rx="9" fill="var(--surface)" stroke="var(--line)"/>
+      <text x="12" y="24" font-size="13" font-weight="600" fill="var(--ink)">Dashboards</text>
+      <text x="12" y="44" font-size="10.5" fill="var(--muted)" font-family="var(--mono)">gen_dashboards.py</text>
+      <text x="12" y="60" font-size="10.5" fill="var(--muted)" font-family="var(--mono)">+ Raspberry Pi Cluster</text>
+      <text x="12" y="76" font-size="10.5" fill="var(--muted)" font-family="var(--mono)">+ Agent Lab (retired)</text></g>
+  </svg>
+  </div>
+  <div class="legend">
+    <span><svg viewBox="0 0 34 10"><path d="M0,5H34" stroke="var(--metric)" stroke-width="2" stroke-dasharray="6 4"/></svg>Metrics · Prometheus scrapes (pull)</span>
+    <span><svg viewBox="0 0 34 10"><path d="M0,5H34" stroke="var(--log)" stroke-width="2" stroke-dasharray="3 4"/></svg>Logs · Alloy ships journal, auditd, docker, pod logs (push)</span>
+    <span><svg viewBox="0 0 34 10"><path d="M0,5H34" stroke="var(--muted)" stroke-width="2" stroke-dasharray="2 3"/></svg>Grafana queries</span>
+  </div>
+</div>
+
+<div class="ops">
+  <div class="op bad"><h3>Open items</h3><ul>
+    <li>Alertmanager receiver is still <code>null</code>: wire up a destination</li>
+    <li><code>gen_dashboards.py</code> doesn't produce the <b>Raspberry Pi Cluster</b> or <b>Agent Lab</b> folders, and its deploy step wipes the dashboards dir</li>
+    <li>.99 / .101 report 3.6 Gi RAM (was 6.0 / 8.1): cause unverified</li>
+    <li>Grafana admin password in <code>/opt/monitoring/.env</code> is stale</li>
+    <li>Noname sensor dnf repo (.101/.102) credential expired: get a new repo file from the portal</li>
+    <li>Rocky hosts reboot 2026-10-07 from 22:05 (one at a time); check <code>~/patching/2026-10-07/reboots.log</code> on .98</li></ul></div>
+  <div class="op"><h3>Running the lab agents</h3><ul>
+    <li>Run now on .98: <code>secnews</code> · <code>labwatch</code> · <code>cvewatch</code> · <code>patchwatch</code> · <code>labinventory</code></li>
+    <li>Options: <code>--no-email</code>, <code>--to ADDR</code>; cvewatch <code>--always-email</code>, <code>--hours N</code></li>
+    <li>Schedules: <code>systemctl list-timers 'secnews*' 'lab*' 'cvewatch*' 'patchwatch*'</code></li>
+    <li>Reports: <code>/opt/secnews/data/reports/</code>, <code>/opt/labagents/data/reports/&lt;agent&gt;/latest.html</code></li>
+    <li>Per agent: LiteLLM UI → <b>Agents</b> · logs: <code>journalctl -u &lt;agent&gt;</code></li></ul></div>
+  <div class="op"><h3>Where things live</h3><ul>
+    <li>Lab agents: <code>~/mikes-agents</code> on .98 · runtime <code>/opt/secnews</code>, <code>/opt/labagents</code></li>
+    <li>Lab docs: <code>~/cropsey-lab</code> on .98 (<code>lab-inventory.md</code> + this page); PNGs rendered on .101</li>
+    <li>GitHub (all public): <code>cropsey-lab</code> · <code>mikes-agents</code> · <code>agent-lab</code> (retired) · <code>vnotes</code>; push from .98 over HTTPS</li>
+    <li>LiteLLM: quadlets <code>/etc/containers/systemd/litellm*.container</code>, config <code>/opt/litellm/config.yaml</code></li>
+    <li>Monitoring runbook: <code>~/MONITORING_SETUP.md</code> on rasp5</li>
+    <li>Firewalld on .98/.101/.102: <b>never</b> <code>firewall-cmd --reload</code>; .99/.100 use nft <code>monitoring_acl</code></li></ul></div>
+</div>
+
+<footer>Source: lab-inventory.md · lab agents: github.com/mcropsey/mikes-agents · updated 2026-10-07 · Rocky Linux 9.8 / 10.2 on Hyper-V · Raspberry Pi 5 on Ubuntu 24.04 aarch64 · LM Studio on RTX 5090</footer>
+</div>
