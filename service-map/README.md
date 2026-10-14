@@ -1,12 +1,14 @@
 # Lab service map
 
-Generated **2026-10-13 11:12** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-10-14 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- ➕ `agenthub` (systemd on hv-rocky-linux-1)
-- ➕ `servicemap-web` (systemd on hv-rocky-linux-1)
-- ➕ `servicemap` (systemd on hv-rocky-linux-1)
+- ➖ `claude` (process on hv-rocky-linux-1)
+- ➖ `mcp-remote` (process on hv-rocky-linux-1)
+- ➖ `mcp-searxng` (process on hv-rocky-linux-1)
+- ➖ `opencode` (process on hv-rocky-linux-1)
+- `servicemap` on hv-rocky-linux-1: schedule  → *-*-* 05:40:00 America/Chicago
 
 ## AI agents & dependencies
 
@@ -16,20 +18,17 @@ Solid arrows: live connections seen at collection time. Dotted: configured in th
 flowchart LR
   subgraph ned5a715a["hv-rocky-linux-1 (192.168.1.98)"]
     n8f651301["alertmanager<br/><small>docker</small>"]
-    neb1af482["claude<br/><small>process</small>"]
     n8dc796a2["cvewatch<br/><small>timer</small>"]
     n48c4898e["generate_traffic.py<br/><small>process</small>"]
     nd6fb9104["labwatch<br/><small>timer</small>"]
     n941b31c1["loki<br/><small>docker</small>"]
     n5b143553["mcp-heartbeat<br/><small>systemd</small>"]
-    n7a268ec1["mcp-remote<br/><small>process</small>"]
-    nc17e9383["mcp-searxng<br/><small>process</small>"]
     n58c79f44["mcp-sweep<br/><small>systemd</small>"]
-    n78202db4["opencode<br/><small>process</small>"]
     nce8753db["patchwatch<br/><small>timer</small>"]
     n02586a2d["prometheus<br/><small>docker</small>"]
     n6d57d599["secnews<br/><small>timer</small>"]
-    n6a5837e4["servicemap<br/><small>systemd</small>"]
+    n6a5837e4["servicemap<br/><small>timer</small>"]
+    na22c2867["servicemap-web<br/><small>systemd</small>"]
   end
   subgraph n36ab8e4d["hv-rocky-linux-4 (192.168.1.101)"]
     n0461fc1d["chromadb<br/><small>root podman</small>"]
@@ -48,8 +47,8 @@ flowchart LR
   subgraph n27d5482e["outside the map"]
     nda547473["LM Studio (qwen3.8-27b, RTX 5090)<br/><small>external</small>"]
   end
-  n78202db4 -->|1234| nda547473
   n48c4898e -->|8011,8012| nfaf72a42
+  n5b143553 -->|8009| n0286a0d8
   n8dc796a2 -.->|4000| ne2915bec
   n8dc796a2 -.->|3100| n941b31c1
   n8dc796a2 -.->|9090| n02586a2d
@@ -58,7 +57,6 @@ flowchart LR
   nd6fb9104 -.->|3100| n941b31c1
   nd6fb9104 -.->|9090| n02586a2d
   nd6fb9104 -.->|9093| n8f651301
-  n5b143553 -.->|8009| n0286a0d8
   n58c79f44 -.->|8009| n0286a0d8
   nce8753db -.->|4000| ne2915bec
   nce8753db -.->|3100| n941b31c1
@@ -79,7 +77,7 @@ flowchart LR
 | **rk1** `192.168.1.75` | Raspberry Pi 5 microk8s node running nginx ingress, vampi | 7 | 1 | 0 | 2 | alloy, node_exporter, nginx-ingress-microk8s-controller, scheduled-reboot, microk8s (snap) ×5, vampi |
 | **rk2** `192.168.1.76` | Raspberry Pi 5 microk8s node running nginx ingress, vampi | 7 | 1 | 0 | 2 | alloy, node_exporter, nginx-ingress-microk8s-controller, scheduled-reboot, microk8s (snap) ×5, vampi |
 | **rasp5** `192.168.1.85` | Raspberry Pi 5 control node with Docker, Apache, Twingate | 6 | 1 | 1 | 0 | alloy, glances, node_exporter, apache2, twingate-jade-limpet, scheduled-reboot, containerd, docker |
-| **hv-rocky-linux-1** `192.168.1.98` | Observability hub: Prometheus, Grafana, Loki, Alertmanager, VulnNotes API, agents | 9 | 5 | 7 | 0 | 🤖 claude, 🤖 cvewatch, 🤖 generate_traffic.py ×2, 🤖 labwatch, 🤖 mcp-heartbeat, 🤖 mcp-remote ×2, 🤖 mcp-sweep, 🤖 opencode, 🤖 patchwatch, 🤖 secnews, 🤖 servicemap, 🤖 mcp-searxng, agenthub, alloy, monitoring stack ×5, node_exporter, servicemap-web, vnotes, vulnnotes, labinventory, containerd, docker |
+| **hv-rocky-linux-1** `192.168.1.98` | observability hub with Prometheus, Grafana, Loki, Alertmanager, VulnNotes | 8 | 6 | 7 | 0 | 🤖 cvewatch, 🤖 generate_traffic.py ×2, 🤖 labwatch, 🤖 mcp-heartbeat, 🤖 mcp-sweep, 🤖 patchwatch, 🤖 secnews, 🤖 servicemap, agenthub, alloy, monitoring stack ×5, node_exporter, 🤖 servicemap-web, vnotes, vulnnotes, labinventory, containerd, docker |
 | **hv-rocky-linux-2** `192.168.1.99` | k3s cluster with Cloudflare tunnel, nginx, Juice Shop, vampi | 4 | 0 | 0 | 4 | alloy, node_exporter, vampi, cloudflared, ingress-nginx-controller, nginx, k3s, juice-shop |
 | **hv-rocky-linux-3** `192.168.1.100` | Kong gateway hosting Jenkins CI and Docker | 5 | 0 | 4 | 0 | alloy, cadvisor, node_exporter, prometheus-podman-exporter, kong, jenkins, jenkins-docker, containerd, docker |
 | **hv-rocky-linux-4** `192.168.1.101` | LiteLLM gateway with crAPI, Juice Shop, Noname sensor | 4 | 1 | 15 | 0 | 🤖 litellm, 🤖 searxng, alloy, node_exporter, prometheus-podman-exporter, noname-sensor, 🤖 litellm-backup, 🤖 litellm-db, 🤖 crapi stack ×10, dvga, juice-shop |
@@ -92,19 +90,15 @@ flowchart LR
 
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
-| claude | hv-rocky-linux-1 | process | AI agents | Runs a Claude AI assistant session. |  |
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Generates simulated AI traffic for lab testing. |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator for lab testing |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
-| mcp-remote | hv-rocky-linux-1 | process | AI agents | Runs an MCP client connection. |  |
 | mcp-sweep | hv-rocky-linux-1 | systemd | AI agents | Runs read-only MCP sweeps. |  |
-| opencode | hv-rocky-linux-1 | process | AI agents | Runs an AI coding assistant session. |  |
 | patchwatch | hv-rocky-linux-1 | timer | AI agents | Plans weekly patch and image drift. | Mon *-*-* 06:45:00 America/Chicago |
 | secnews | hv-rocky-linux-1 | timer | AI agents | Creates daily cybersecurity news digest. | *-*-* 06:00:00 America/Chicago |
-| servicemap | hv-rocky-linux-1 | systemd | AI agents | Inventories lab services and labels them with LLM. |  |
+| servicemap | hv-rocky-linux-1 | timer | AI agents | Daily SSH inventory and LLM labeling for lab service map | *-*-* 05:40:00 America/Chicago |
 | ai-sim | hv-rocky-linux-5 | systemd | AI agents | AI traffic simulator for sensor discovery |  |
-| mcp-searxng | hv-rocky-linux-1 | process | AI platform | Serves SearXNG search through MCP. |  |
 | chromadb | hv-rocky-linux-4 | root podman | AI platform | Vector database for AI embeddings |  |
 | litellm | hv-rocky-linux-4 | root podman | AI platform | LiteLLM gateway for LLM API access | 4000->4000/tcp |
 | searxng | hv-rocky-linux-4 | root podman | AI platform | Web search backend for AI agents | 8080->8080/tcp |
@@ -112,6 +106,7 @@ flowchart LR
 | noname-mcp | hv-rocky-linux-5 | systemd | AI platform | Noname management API MCP server |  |
 | vampi-mcp | hv-rocky-linux-5 | root podman | AI platform | VAmPI MCP server for AI tool access | 5000->5000/tcp |
 | LM Studio (qwen3.8-27b, RTX 5090) |  | external | AI platform | Local LLM model server for lab AI work |  |
+| servicemap-web | hv-rocky-linux-1 | systemd | Observability | Web server for LLM-labeled lab service map reports |  |
 | litellm-backup | hv-rocky-linux-4 | timer | Ops & CI | Nightly backup of LiteLLM database and config | *-*-* 02:30:00 |
 | litellm-db | hv-rocky-linux-4 | root podman | Platform & data | PostgreSQL database for LiteLLM gateway |  |
 | crapi-chatbot | hv-rocky-linux-4 | root podman | Lab target apps | crAPI chatbot service using LLM | 5500->5500/tcp |
@@ -167,22 +162,18 @@ flowchart LR
 
 </details>
 
-<details><summary><b>hv-rocky-linux-1</b> (192.168.1.98): 26 components</summary>
+<details><summary><b>hv-rocky-linux-1</b> (192.168.1.98): 22 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| claude | process | AI agents (AI) | Runs a Claude AI assistant session. | running |  | `claude` |
-| generate_traffic.py | process | AI agents (AI) | Generates simulated AI traffic for lab testing. | running |  | `~/ai-sim/generate_traffic.py` |
-| mcp-remote | process | AI agents (AI) | Runs an MCP client connection. | running |  | `~/.npm/_npx/705d23756ff7dacc/node_modules/.bin/mcp-remote` |
-| opencode | process | AI agents (AI) | Runs an AI coding assistant session. | running |  | `opencode` |
+| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator for lab testing | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
-| servicemap | systemd | AI agents (AI) | Inventories lab services and labels them with LLM. | activating |  | `/usr/sbin/runuser mcropsey` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | inactive | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
 | labwatch | timer | AI agents (AI) | Generates lab health briefings. | inactive | *-*-* 06:15:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
 | patchwatch | timer | AI agents (AI) | Plans weekly patch and image drift. | inactive | Mon *-*-* 06:45:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
 | secnews | timer | AI agents (AI) | Creates daily cybersecurity news digest. | inactive | *-*-* 06:00:00 America/Chicago | `/usr/bin/podman run localhost/secnews:latest` |
-| mcp-searxng | process | AI platform (AI) | Serves SearXNG search through MCP. | running |  | `~/.npm/_npx/c0fd79eb7f6ccc1e/node_modules/.bin/mcp-searxng` |
+| servicemap | timer | AI agents (AI) | Daily SSH inventory and LLM labeling for lab service map | activating | *-*-* 05:40:00 America/Chicago | `/usr/sbin/runuser mcropsey` |
 | alertmanager | docker | Observability | Routes lab monitoring alerts. | running |  | `prom/alertmanager:v0.34.1` |
 | cadvisor | docker | Observability | Container metrics exporter for Prometheus | running |  | `ghcr.io/google/cadvisor:v0.60.6` |
 | grafana | docker | Observability | Dashboards for lab metrics and logs. | running |  | `grafana/grafana:13.2.2` |
@@ -191,7 +182,7 @@ flowchart LR
 | agenthub | systemd | Observability | Exports agent reports to Prometheus and Loki. | running |  | `/usr/bin/python3 /opt/agenthub/agenthub.py` |
 | alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
-| servicemap-web | systemd | Observability | Serves lab service map page for Grafana. | running |  | `/usr/bin/python3 /opt/labagents/data/servicemap/site` |
+| servicemap-web | systemd | Observability (AI) | Web server for LLM-labeled lab service map reports | running |  | `/usr/bin/python3 /opt/labagents/app/servicemap_web.py` |
 | vnotes | docker | API security | Vulnerability notes web interface. | running | 0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp | `vnotes:latest` |
 | vulnnotes | docker | API security | Vulnerability notes API. | exited |  | `vulnnotes:latest` |
 | labinventory | timer | Ops & CI | Collects lab software inventory over SSH. | inactive | *-*-* 05:30:00 America/Chicago | `/usr/bin/python3 /opt/labagents/app/labinventory.py` |
@@ -305,4 +296,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint 00cbe4af92f729e3 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint bd6d54996bb0133d · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>

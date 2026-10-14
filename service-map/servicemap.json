@@ -1,34 +1,50 @@
 {
- "generated_at": "2026-10-13T11:12:30",
- "fingerprint": "00cbe4af92f729e3",
- "change_summary": "+3 (agenthub, servicemap-web, servicemap)",
+ "generated_at": "2026-10-14T05:40:13",
+ "fingerprint": "bd6d54996bb0133d",
+ "change_summary": "-4 (claude, mcp-remote, mcp-searxng, opencode); 1 changed",
  "changes": {
   "first_run": false,
-  "added": [
+  "added": [],
+  "removed": [
    {
-    "id": "192.168.1.98/unit/agenthub.service",
-    "name": "agenthub",
+    "id": "192.168.1.98/proc/mcropsey/claude",
+    "name": "claude",
     "host": "192.168.1.98",
-    "kind": "systemd",
-    "category": "observability"
+    "kind": "process",
+    "category": "ai-agent"
    },
    {
-    "id": "192.168.1.98/unit/servicemap-web.service",
-    "name": "servicemap-web",
+    "id": "192.168.1.98/proc/mcropsey/mcp-remote",
+    "name": "mcp-remote",
     "host": "192.168.1.98",
-    "kind": "systemd",
-    "category": "observability"
+    "kind": "process",
+    "category": "ai-agent"
    },
+   {
+    "id": "192.168.1.98/proc/mcropsey/mcp-searxng",
+    "name": "mcp-searxng",
+    "host": "192.168.1.98",
+    "kind": "process",
+    "category": "ai-platform"
+   },
+   {
+    "id": "192.168.1.98/proc/mcropsey/opencode",
+    "name": "opencode",
+    "host": "192.168.1.98",
+    "kind": "process",
+    "category": "ai-agent"
+   }
+  ],
+  "changed": [
    {
     "id": "192.168.1.98/unit/servicemap.service",
     "name": "servicemap",
     "host": "192.168.1.98",
-    "kind": "systemd",
-    "category": "ai-agent"
+    "field": "schedule",
+    "old": "",
+    "new": "*-*-* 05:40:00 America/Chicago"
    }
   ],
-  "removed": [],
-  "changed": [],
   "hosts": []
  },
  "hosts": {
@@ -267,7 +283,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-13 04:00:34",
+   "booted": "2026-10-14 04:00:26",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -309,7 +325,7 @@
      "component": "alloy"
     },
     {
-     "port": 44237,
+     "port": 39625,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -328,7 +344,7 @@
    "name": "hv-rocky-linux-1",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
    "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:11:26",
+   "booted": "2026-10-07 22:18:19",
    "cpus": 8,
    "mem_gb": 7.5,
    "error": "",
@@ -412,14 +428,14 @@
      "component": "alloy"
     }
    ],
-   "role": "Observability hub: Prometheus, Grafana, Loki, Alertmanager, VulnNotes API, agents"
+   "role": "observability hub with Prometheus, Grafana, Loki, Alertmanager, VulnNotes"
   },
   "192.168.1.99": {
    "ip": "192.168.1.99",
    "name": "hv-rocky-linux-2",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
    "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:08:37",
+   "booted": "2026-10-07 22:15:26",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -570,7 +586,7 @@
    "name": "hv-rocky-linux-3",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
    "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:07:43",
+   "booted": "2026-10-07 22:14:36",
    "cpus": 8,
    "mem_gb": 7.5,
    "error": "",
@@ -649,7 +665,7 @@
    "name": "hv-rocky-linux-4",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
    "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:09:24",
+   "booted": "2026-10-07 22:16:12",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -758,7 +774,7 @@
    "name": "hv-rocky-linux-5",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
    "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:07:04",
+   "booted": "2026-10-07 22:13:53",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -831,7 +847,7 @@
    "name": "hv-rocky-linux-6",
    "os": "Rocky Linux 10.2 (Red Quartz)",
    "kernel": "6.12.0-211.55.1.el10_2.x86_64",
-   "booted": "2026-10-08 21:25:14",
+   "booted": "2026-10-08 21:32:03",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -874,7 +890,7 @@
    "name": "hv-rocky-linux-7",
    "os": "Rocky Linux 10.2 (Red Quartz)",
    "kernel": "6.12.0-211.55.1.el10_2.x86_64",
-   "booted": "2026-10-06 23:41:18",
+   "booted": "2026-10-06 23:48:07",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -941,7 +957,7 @@
    "name": "utility.lab",
    "os": "Rocky Linux 10.2 (Red Quartz)",
    "kernel": "6.12.0-211.55.1.el10_2.x86_64",
-   "booted": "2026-09-30 15:12:53",
+   "booted": "2026-09-30 15:19:42",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -1142,10 +1158,11 @@
    ]
   },
   {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.102/unit/node_exporter.service",
+   "src": "192.168.1.98/proc/mcropsey/generate_traffic.py",
+   "dst": "192.168.1.102/unit/ai-sim.service",
    "ports": [
-    9100
+    8011,
+    8012
    ],
    "how": [
     "observed"
@@ -1153,9 +1170,9 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.76/unit/node_exporter.service",
+   "dst": "192.168.1.101/unit/prometheus-podman-exporter.service",
    "ports": [
-    9100
+    9882
    ],
    "how": [
     "observed"
@@ -1164,86 +1181,6 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.105/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.101/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.103/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.100/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.99/unit/k3s.service",
-   "ports": [
-    10250
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.104/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.100/docker/root/cadvisor",
-   "ports": [
-    8081
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.98/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1262,69 +1199,19 @@
    ]
   },
   {
-   "src": "192.168.1.98/proc/mcropsey/opencode",
-   "dst": "ext/192.168.1.194:1234",
+   "src": "192.168.1.98/unit/mcp-heartbeat.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
    "ports": [
-    1234
+    8009
    ],
    "how": [
+    "configured",
     "observed"
    ]
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.101/unit/prometheus-podman-exporter.service",
-   "ports": [
-    9882
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/proc/mcropsey/generate_traffic.py",
-   "dst": "192.168.1.102/unit/ai-sim.service",
-   "ports": [
-    8011,
-    8012
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.99/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.98/docker/root/cadvisor",
-   "ports": [
-    8081
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "ext/192.168.1.78:9100",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.75/unit/node_exporter.service",
+   "dst": "192.168.1.100/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1344,6 +1231,136 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.85/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.76/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.104/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.99/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.98/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.98/docker/root/cadvisor",
+   "ports": [
+    8081
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.75/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.100/docker/root/cadvisor",
+   "ports": [
+    8081
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.99/unit/k3s.service",
+   "ports": [
+    10250
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.101/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.102/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "ext/192.168.1.78:9100",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.102/unit/prometheus-podman-exporter.service",
    "ports": [
     9882
@@ -1354,7 +1371,7 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
+   "dst": "192.168.1.103/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1437,16 +1454,6 @@
    "dst": "192.168.1.98/docker/root/alertmanager",
    "ports": [
     9093
-   ],
-   "how": [
-    "configured"
-   ]
-  },
-  {
-   "src": "192.168.1.98/unit/mcp-heartbeat.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
    ],
    "how": [
     "configured"
@@ -1550,6 +1557,16 @@
    ],
    "how": [
     "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.101/podman-root/root/dvga",
+   "ports": [
+    5013
+   ],
+   "how": [
+    "observed"
    ]
   },
   {
@@ -1870,6 +1887,25 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
+   "classified_by": "rules"
+  },
+  "192.168.1.75/unit/fwupd.service": {
+   "id": "192.168.1.75/unit/fwupd.service",
+   "host": "192.168.1.75",
+   "hosts": [
+    "192.168.1.75"
+   ],
+   "kind": "systemd",
+   "name": "fwupd",
+   "category": "ops",
+   "ai": false,
+   "purpose": "Firmware update daemon",
+   "state": "running",
+   "schedule": "",
+   "detail": "/usr/libexec/fwupd/fwupd",
+   "user": "root",
+   "baseline": true,
+   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.75/unit/getty@tty1.service": {
@@ -6074,7 +6110,7 @@
    "user": "root",
    "baseline": false,
    "description": "mikes-agents report exporter (Prometheus metrics + Loki report logs)",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.98/unit/alloy.service": {
    "id": "192.168.1.98/unit/alloy.service",
@@ -6747,13 +6783,13 @@
    "hosts": [
     "192.168.1.98"
    ],
-   "kind": "systemd",
+   "kind": "timer",
    "name": "servicemap",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Inventories lab services and labels them with LLM.",
+   "purpose": "Daily SSH inventory and LLM labeling for lab service map",
    "state": "activating",
-   "schedule": "",
+   "schedule": "*-*-* 05:40:00 America/Chicago",
    "detail": "/usr/sbin/runuser mcropsey",
    "user": "root",
    "baseline": false,
@@ -6769,14 +6805,14 @@
    "kind": "systemd",
    "name": "servicemap-web",
    "category": "observability",
-   "ai": false,
-   "purpose": "Serves lab service map page for Grafana.",
+   "ai": true,
+   "purpose": "Web server for LLM-labeled lab service map reports",
    "state": "running",
    "schedule": "",
-   "detail": "/usr/bin/python3 /opt/labagents/data/servicemap/site",
+   "detail": "/usr/bin/python3 /opt/labagents/app/servicemap_web.py",
    "user": "servicemap-web",
    "baseline": false,
-   "description": "Serve the lab service map page on :9440 (embedded in Grafana)",
+   "description": "Lab service map + agent reports web server on :9440 (embedded/linked from Grafana)",
    "classified_by": "llm"
   },
   "192.168.1.98/unit/sshd.service": {
@@ -7127,89 +7163,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Generates simulated AI traffic for lab testing.",
+   "purpose": "Long-running AI traffic simulator for lab testing",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 133.0h)",
-   "classified_by": "llm"
-  },
-  "192.168.1.98/proc/mcropsey/opencode": {
-   "id": "192.168.1.98/proc/mcropsey/opencode",
-   "host": "192.168.1.98",
-   "hosts": [
-    "192.168.1.98"
-   ],
-   "kind": "process",
-   "name": "opencode",
-   "category": "ai-agent",
-   "ai": true,
-   "purpose": "Runs an AI coding assistant session.",
-   "state": "running",
-   "detail": "opencode",
-   "user": "mcropsey",
-   "baseline": false,
-   "count": 1,
-   "description": "long-running opencode outside any service (up 2.2h)",
-   "classified_by": "llm"
-  },
-  "192.168.1.98/proc/mcropsey/mcp-remote": {
-   "id": "192.168.1.98/proc/mcropsey/mcp-remote",
-   "host": "192.168.1.98",
-   "hosts": [
-    "192.168.1.98"
-   ],
-   "kind": "process",
-   "name": "mcp-remote",
-   "category": "ai-agent",
-   "ai": true,
-   "purpose": "Runs an MCP client connection.",
-   "state": "running",
-   "detail": "~/.npm/_npx/705d23756ff7dacc/node_modules/.bin/mcp-remote",
-   "user": "mcropsey",
-   "baseline": false,
-   "count": 2,
-   "description": "long-running node outside any service (up 2.2h)",
-   "classified_by": "llm"
-  },
-  "192.168.1.98/proc/mcropsey/mcp-searxng": {
-   "id": "192.168.1.98/proc/mcropsey/mcp-searxng",
-   "host": "192.168.1.98",
-   "hosts": [
-    "192.168.1.98"
-   ],
-   "kind": "process",
-   "name": "mcp-searxng",
-   "category": "ai-platform",
-   "ai": true,
-   "purpose": "Serves SearXNG search through MCP.",
-   "state": "running",
-   "detail": "~/.npm/_npx/c0fd79eb7f6ccc1e/node_modules/.bin/mcp-searxng",
-   "user": "mcropsey",
-   "baseline": false,
-   "count": 1,
-   "description": "long-running node outside any service (up 2.2h)",
-   "classified_by": "llm"
-  },
-  "192.168.1.98/proc/mcropsey/claude": {
-   "id": "192.168.1.98/proc/mcropsey/claude",
-   "host": "192.168.1.98",
-   "hosts": [
-    "192.168.1.98"
-   ],
-   "kind": "process",
-   "name": "claude",
-   "category": "ai-agent",
-   "ai": true,
-   "purpose": "Runs a Claude AI assistant session.",
-   "state": "running",
-   "detail": "claude",
-   "user": "mcropsey",
-   "baseline": false,
-   "count": 1,
-   "description": "long-running claude outside any service (up 0.4h)",
+   "description": "long-running python3 outside any service (up 151.4h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -14655,20 +14615,6 @@
    "baseline": false,
    "classified_by": "llm-cache"
   },
-  "ext/192.168.1.194:1234": {
-   "id": "ext/192.168.1.194:1234",
-   "host": "",
-   "hosts": [],
-   "kind": "external",
-   "name": "LM Studio (qwen3.8-27b, RTX 5090)",
-   "category": "ai-platform",
-   "ai": true,
-   "purpose": "Local LLM model server for lab AI work",
-   "state": "",
-   "detail": "192.168.1.194:1234",
-   "baseline": false,
-   "classified_by": "llm-cache"
-  },
   "ext/192.168.1.78:9100": {
    "id": "ext/192.168.1.78:9100",
    "host": "",
@@ -14680,6 +14626,20 @@
    "purpose": "Reserved lab endpoint not mapped to software",
    "state": "",
    "detail": "192.168.1.78:9100",
+   "baseline": false,
+   "classified_by": "llm-cache"
+  },
+  "ext/192.168.1.194:1234": {
+   "id": "ext/192.168.1.194:1234",
+   "host": "",
+   "hosts": [],
+   "kind": "external",
+   "name": "LM Studio (qwen3.8-27b, RTX 5090)",
+   "category": "ai-platform",
+   "ai": true,
+   "purpose": "Local LLM model server for lab AI work",
+   "state": "",
+   "detail": "192.168.1.194:1234",
    "baseline": false,
    "classified_by": "llm-cache"
   }
