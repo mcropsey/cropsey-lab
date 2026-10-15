@@ -1,50 +1,12 @@
 {
- "generated_at": "2026-10-14T05:40:13",
- "fingerprint": "bd6d54996bb0133d",
- "change_summary": "-4 (claude, mcp-remote, mcp-searxng, opencode); 1 changed",
+ "generated_at": "2026-10-15T05:40:14",
+ "fingerprint": "2ce72b6af07a0501",
+ "change_summary": "no component changes",
  "changes": {
   "first_run": false,
   "added": [],
-  "removed": [
-   {
-    "id": "192.168.1.98/proc/mcropsey/claude",
-    "name": "claude",
-    "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-agent"
-   },
-   {
-    "id": "192.168.1.98/proc/mcropsey/mcp-remote",
-    "name": "mcp-remote",
-    "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-agent"
-   },
-   {
-    "id": "192.168.1.98/proc/mcropsey/mcp-searxng",
-    "name": "mcp-searxng",
-    "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-platform"
-   },
-   {
-    "id": "192.168.1.98/proc/mcropsey/opencode",
-    "name": "opencode",
-    "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-agent"
-   }
-  ],
-  "changed": [
-   {
-    "id": "192.168.1.98/unit/servicemap.service",
-    "name": "servicemap",
-    "host": "192.168.1.98",
-    "field": "schedule",
-    "old": "",
-    "new": "*-*-* 05:40:00 America/Chicago"
-   }
-  ],
+  "removed": [],
+  "changed": [],
   "hosts": []
  },
  "hosts": {
@@ -283,7 +245,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-14 04:00:26",
+   "booted": "2026-10-15 04:00:30",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -325,7 +287,7 @@
      "component": "alloy"
     },
     {
-     "port": 39625,
+     "port": 35369,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1170,6 +1132,16 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.85/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.101/unit/prometheus-podman-exporter.service",
    "ports": [
     9882
@@ -1199,17 +1171,6 @@
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-heartbeat.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
-   ],
-   "how": [
-    "configured",
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/node_exporter.service",
    "ports": [
@@ -1224,16 +1185,6 @@
    "dst": "192.168.1.104/unit/prometheus-podman-exporter.service",
    "ports": [
     9882
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
-   "ports": [
-    9100
    ],
    "how": [
     "observed"
@@ -1460,6 +1411,16 @@
    ]
   },
   {
+   "src": "192.168.1.98/unit/mcp-heartbeat.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
    "src": "192.168.1.98/unit/mcp-sweep.service",
    "dst": "192.168.1.102/unit/crapi-mcp.service",
    "ports": [
@@ -1621,16 +1582,6 @@
   },
   {
    "src": "192.168.1.102/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.103/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
@@ -1887,25 +1838,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.75/unit/fwupd.service": {
-   "id": "192.168.1.75/unit/fwupd.service",
-   "host": "192.168.1.75",
-   "hosts": [
-    "192.168.1.75"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.75/unit/getty@tty1.service": {
@@ -6794,7 +6726,7 @@
    "user": "root",
    "baseline": false,
    "description": "Lab service map (servicemap-agent): SSH inventory -> LLM labels -> Grafana page + GitHub",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.98/unit/servicemap-web.service": {
    "id": "192.168.1.98/unit/servicemap-web.service",
@@ -6813,7 +6745,7 @@
    "user": "servicemap-web",
    "baseline": false,
    "description": "Lab service map + agent reports web server on :9440 (embedded/linked from Grafana)",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.98/unit/sshd.service": {
    "id": "192.168.1.98/unit/sshd.service",
@@ -7163,13 +7095,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator for lab testing",
+   "purpose": "Long-running AI traffic simulator on hv-rocky-linux-1.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 151.4h)",
+   "description": "long-running python3 outside any service (up 175.4h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {

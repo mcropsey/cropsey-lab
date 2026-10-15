@@ -1,14 +1,10 @@
 # Lab service map
 
-Generated **2026-10-14 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-10-15 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- ➖ `claude` (process on hv-rocky-linux-1)
-- ➖ `mcp-remote` (process on hv-rocky-linux-1)
-- ➖ `mcp-searxng` (process on hv-rocky-linux-1)
-- ➖ `opencode` (process on hv-rocky-linux-1)
-- `servicemap` on hv-rocky-linux-1: schedule  → *-*-* 05:40:00 America/Chicago
+No changes.
 
 ## AI agents & dependencies
 
@@ -48,7 +44,6 @@ flowchart LR
     nda547473["LM Studio (qwen3.8-27b, RTX 5090)<br/><small>external</small>"]
   end
   n48c4898e -->|8011,8012| nfaf72a42
-  n5b143553 -->|8009| n0286a0d8
   n8dc796a2 -.->|4000| ne2915bec
   n8dc796a2 -.->|3100| n941b31c1
   n8dc796a2 -.->|9090| n02586a2d
@@ -57,6 +52,7 @@ flowchart LR
   nd6fb9104 -.->|3100| n941b31c1
   nd6fb9104 -.->|9090| n02586a2d
   nd6fb9104 -.->|9093| n8f651301
+  n5b143553 -.->|8009| n0286a0d8
   n58c79f44 -.->|8009| n0286a0d8
   nce8753db -.->|4000| ne2915bec
   nce8753db -.->|3100| n941b31c1
@@ -91,7 +87,7 @@ flowchart LR
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator for lab testing |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator on hv-rocky-linux-1. |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
 | mcp-sweep | hv-rocky-linux-1 | systemd | AI agents | Runs read-only MCP sweeps. |  |
@@ -166,7 +162,7 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator for lab testing | running |  | `~/ai-sim/generate_traffic.py` |
+| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator on hv-rocky-linux-1. | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | inactive | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
@@ -296,4 +292,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint bd6d54996bb0133d · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint 2ce72b6af07a0501 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
