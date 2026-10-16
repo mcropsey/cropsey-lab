@@ -64,7 +64,7 @@ No cloud models. Code, install docs and diagrams: `~/mikes-agents` on .98 = `git
  06:00 secnews     ─┐                                  ┌──────────────┐              │ LM Studio :1234   │
  06:15 labwatch    ─┼── one virtual key + agent ──────►│ LiteLLM :4000├─────────────►│ qwen3.8-27b       │
  06:30 cvewatch    ─┤   registry entry per agent       │ qwen3.8-27b  │              │ RTX 5090          │
- Mon 06:45 patchwatch┘                                  └──────────────┘              └───────────────────┘
+ 06:45 patchwatch  ─┘                                  └──────────────┘              └───────────────────┘
        └──► HTML reports on .98 + email to mcropsey@gmail.com (Gmail SMTP, app password)
 ```
 
@@ -73,7 +73,7 @@ No cloud models. Code, install docs and diagrams: `~/mikes-agents` on .98 = `git
 | secnews-agent | daily 06:00 | Cybersecurity news briefing: 9 security RSS feeds + new CISA KEV entries, ranked and summarised | `secnews` |
 | labwatch-agent | daily 06:15 | Lab health briefing (GREEN/YELLOW/RED). Snapshot of Prometheus/Loki/Alertmanager, then **its own PromQL/LogQL tool calls** to investigate | `labwatch` |
 | cvewatch-agent | daily 06:30 | Matches CVEs newly published on NVD + KEV against the software inventory; **emails only if the lab is affected** | `cvewatch` |
-| patchwatch-agent | Mon 06:45 | Patch plan: pending updates, Rocky security advisories + CVEs, reboot-needed hosts, broken repos, container images with newer builds. **Reports only; never installs.** | `patchwatch` |
+| patchwatch-agent | daily 06:45 | Patch plan: pending updates, Rocky security advisories + CVEs, reboot-needed hosts, broken repos, container images with newer builds. **Reports only; never installs.** | `patchwatch` |
 | labinventory | daily 05:30 | (no LLM) SSH inventory of all 11 managed hosts: packages, updates, advisories, containers, k8s images → `/opt/labagents/data/inventory/latest.json` | `labinventory` |
 
 - Files on .98: `/opt/secnews/` and `/opt/labagents/` (code, root-only env files with keys + Gmail app password,
@@ -84,8 +84,8 @@ No cloud models. Code, install docs and diagrams: `~/mikes-agents` on .98 = `git
 - **Guardrail:** LiteLLM's default-on `basic-safety-filter` (content filter, created 2026-10-03) blocks normal
   security vocabulary ("attack"). The 4 agent keys carry `metadata.opted_out_global_guardrails:
   ["basic-safety-filter"]`; the filter still applies to every other key.
-- GPU use: about 5 min per morning in total (secnews ~1.5 min, labwatch ~1.5 min, cvewatch ~1.5 min), all
-  before 07:00; patchwatch adds ~3.5 min on Mondays.
+- GPU use: about 8 min per morning in total (secnews ~1.5 min, labwatch ~1.5 min, cvewatch ~1.5 min,
+  patchwatch ~3.5 min), all before 07:00.
 
 ### Agent Lab (retired)
 
@@ -204,7 +204,7 @@ Systemd: `docker`, `containerd`, `node_exporter`, `alloy`, `mcp-heartbeat`, `mcp
 |---|---|---|
 | `labinventory.timer` 05:30 | `/opt/labagents/app/labinventory.py` on the host as mcropsey (SSH + `sudo -n` to all managed hosts) | `/opt/labagents/data/inventory/` |
 | `secnews.timer` 06:00 | `localhost/secnews` | `/opt/secnews/data/reports/` |
-| `labwatch.timer` 06:15 · `cvewatch.timer` 06:30 · `patchwatch.timer` Mon 06:45 | `localhost/labagents` (`python -m labagents.<agent>`, `--network host`) | `/opt/labagents/data/reports/<agent>/` |
+| `labwatch.timer` 06:15 · `cvewatch.timer` 06:30 · `patchwatch.timer` 06:45 | `localhost/labagents` (`python -m labagents.<agent>`, `--network host`) | `/opt/labagents/data/reports/<agent>/` |
 
 Secrets: `/opt/secnews/secnews.env`, `/opt/labagents/labagents.env` (root, 600: LiteLLM keys, Gmail app password).
 Git clones here: `~/mikes-agents`, `~/cropsey-lab`, `~/vnotes` (push over HTTPS, token in `~/.git-credentials`).
@@ -387,6 +387,7 @@ All three: `node_exporter` + `alloy` running and scraped/shipped to .98. No cont
 |------|------|--------|
 | 2026-10-13 | .98 | **Grafana fix:** *Fleet Overview* per-host rows used `host="$host"`; Grafana regex-escapes multi-value variables, so `utility.lab.example.com` (the only host name with dots) matched nothing and its row was blank. Now `host=~"$host"` in the live dashboard and in `gen_dashboards.py` (.98 `/opt/monitoring/grafana/src/` and rasp5 `~/monitoring/`). The live JSON has hand edits the generator lacks, so it was edited in place, not regenerated. |
 | 2026-10-13 | .98 | **Grafana:** new folder *Lab Service Map* (`/d/lab-service-map`); *Agent Lab · Daily Reports* gains servicemap panels, a *Full reports* panel and links from every report log to its HTML report. Prometheus job `servicemap` (`localhost:9440`, 5m, `honor_labels`). **agenthub** (opencode, report exporter :9430) now also covers servicemap. `servicemap-web` serves `/reports/` for all agents (read-only bind mounts; `/opt/secnews` stays root-only). |
+| 2026-10-16 | .98 | **patchwatch** now runs daily at 06:45 (was Mondays only). |
 | 2026-10-13 | rasp5 | cropseyit.com page: footer link *Lab Agent Reports (LAN only)* → `http://192.168.1.98:9440/reports/` (repo `cropseyit-site`, deployed to `/var/www/html`). |
 | 2026-10-13 | .98 | **servicemap-agent** added (mikes-agents): daily 05:40 SSH inventory of every host Grafana monitors (systemd/user units, timers, cron, podman rootless+root, docker, k3s/microk8s, ad-hoc scripts, sockets), labelled by qwen3.8 via its own LiteLLM key; page served by `servicemap-web.service` on **:9440** (firewalld port opened), published to [`service-map/`](service-map/) here. rk3/rk4 (reserved) skipped. |
 | 2026-10-13 | .101 | LiteLLM: key + Agents-page entry `servicemap-agent` (qwen3.8-27b only, guardrail opt-out like the other agents). |
