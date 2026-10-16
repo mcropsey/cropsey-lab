@@ -1,10 +1,16 @@
 # Lab service map
 
-Generated **2026-10-15 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-10-16 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-No changes.
+- ➕ `k3s` (systemd on hv-rocky-linux-6)
+- ➕ `k3s-agent` (systemd on hv-rocky-linux-7)
+- ➕ `k3s-agent` (systemd on utility.lab)
+- ➕ `node-display-blue` (k8s on hv-rocky-linux-6)
+- ➕ `node-display-green` (k8s on utility.lab)
+- ➕ `node-display-red` (k8s on hv-rocky-linux-7)
+- ➖ `httpd` (systemd on utility.lab)
 
 ## AI agents & dependencies
 
@@ -78,16 +84,16 @@ flowchart LR
 | **hv-rocky-linux-3** `192.168.1.100` | Kong gateway hosting Jenkins CI and Docker | 5 | 0 | 4 | 0 | alloy, cadvisor, node_exporter, prometheus-podman-exporter, kong, jenkins, jenkins-docker, containerd, docker |
 | **hv-rocky-linux-4** `192.168.1.101` | LiteLLM gateway with crAPI, Juice Shop, Noname sensor | 4 | 1 | 15 | 0 | 🤖 litellm, 🤖 searxng, alloy, node_exporter, prometheus-podman-exporter, noname-sensor, 🤖 litellm-backup, 🤖 litellm-db, 🤖 crapi stack ×10, dvga, juice-shop |
 | **hv-rocky-linux-5** `192.168.1.102` | Noname sensor running crAPI, Noname, vampi MCP, AI sim | 7 | 0 | 1 | 0 | 🤖 ai-sim, 🤖 crapi-mcp, 🤖 noname-mcp, 🤖 vampi-mcp, alloy, node_exporter, prometheus-podman-exporter, noname-sensor |
-| **hv-rocky-linux-6** `192.168.1.103` | RHCSA practice workstation | 2 | 0 | 0 | 0 | alloy, node_exporter |
-| **hv-rocky-linux-7** `192.168.1.104` | RHCSA practice workstation | 3 | 0 | 0 | 0 | alloy, node_exporter, prometheus-podman-exporter |
-| **utility.lab** `192.168.1.105` | RHCSA utility server with dnf mirror, DNS, NFS | 5 | 0 | 0 | 0 | alloy, node_exporter, dnsmasq, httpd, nfs-mountd |
+| **hv-rocky-linux-6** `192.168.1.103` | RHCSA practice workstation running k3s and node-display-blue | 3 | 0 | 0 | 1 | alloy, node_exporter, node-display-blue, k3s |
+| **hv-rocky-linux-7** `192.168.1.104` | RHCSA practice workstation running k3s-agent and node-display-red | 4 | 0 | 0 | 1 | alloy, node_exporter, prometheus-podman-exporter, node-display-red, k3s-agent |
+| **utility.lab** `192.168.1.105` | RHCSA utility server running dnsmasq, k3s-agent, NFS, green display | 5 | 0 | 0 | 1 | alloy, node_exporter, dnsmasq, nfs-mountd, node-display-green, k3s-agent |
 
 ## AI components
 
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator on hv-rocky-linux-1. |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator on observability host. |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
 | mcp-sweep | hv-rocky-linux-1 | systemd | AI agents | Runs read-only MCP sweeps. |  |
@@ -162,7 +168,7 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator on hv-rocky-linux-1. | running |  | `~/ai-sim/generate_traffic.py` |
+| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator on observability host. | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | inactive | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
@@ -260,36 +266,41 @@ flowchart LR
 
 </details>
 
-<details><summary><b>hv-rocky-linux-6</b> (192.168.1.103): 2 components</summary>
+<details><summary><b>hv-rocky-linux-6</b> (192.168.1.103): 4 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
 | alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
+| node-display-blue | k8s | Ops & CI | Kubernetes deployment for node display practice | running |  | `python:3.11-slim` |
+| k3s | systemd | Platform & data | Runs lightweight Kubernetes for lab workloads | running |  | `/usr/local/bin/k3s server` |
 
 </details>
 
-<details><summary><b>hv-rocky-linux-7</b> (192.168.1.104): 3 components</summary>
+<details><summary><b>hv-rocky-linux-7</b> (192.168.1.104): 5 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
 | alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
 | prometheus-podman-exporter | systemd | Observability | Exports Podman container metrics for Prometheus | running |  | `/usr/bin/prometheus-podman-exporter $PODMAN_EXPORTER_OPTS` |
+| node-display-red | k8s | Ops & CI | Python deployment for node display | running |  | `python:3.11-slim` |
+| k3s-agent | systemd | Platform & data | Kubernetes agent for lab cluster workloads | running |  | `/usr/local/bin/k3s agent` |
 
 </details>
 
-<details><summary><b>utility.lab</b> (192.168.1.105): 5 components</summary>
+<details><summary><b>utility.lab</b> (192.168.1.105): 6 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
 | alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
 | dnsmasq | systemd | Network & ingress | Provides DNS caching for lab hosts | running |  | `/usr/sbin/dnsmasq` |
-| httpd | systemd | Ops & CI | Serves the dnf repository mirror | running |  | `/usr/sbin/httpd $OPTIONS` |
+| node-display-green | k8s | Ops & CI | Python deployment for node display on utility.lab | running |  | `python:3.11-slim` |
 | nfs-mountd | systemd | Ops & CI | Supports NFS file sharing for lab | running |  | `/usr/sbin/rpc.mountd` |
+| k3s-agent | systemd | Platform & data | Kubernetes agent on utility.lab | running |  | `/usr/local/bin/k3s agent` |
 
 </details>
 
 
-<sub>fingerprint 2ce72b6af07a0501 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint bf65021266883c42 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
