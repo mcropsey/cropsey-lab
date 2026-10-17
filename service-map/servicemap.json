@@ -1,63 +1,21 @@
 {
- "generated_at": "2026-10-16T05:40:15",
- "fingerprint": "bf65021266883c42",
- "change_summary": "+6 (k3s, k3s-agent, k3s-agent, node-display-blue\u2026); -1 (httpd)",
+ "generated_at": "2026-10-17T05:40:14",
+ "fingerprint": "0b80bfe5779305d4",
+ "change_summary": "1 changed",
  "changes": {
   "first_run": false,
-  "added": [
+  "added": [],
+  "removed": [],
+  "changed": [
    {
-    "id": "192.168.1.103/unit/k3s.service",
-    "name": "k3s",
-    "host": "192.168.1.103",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.104/unit/k3s-agent.service",
-    "name": "k3s-agent",
-    "host": "192.168.1.104",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.105/unit/k3s-agent.service",
-    "name": "k3s-agent",
-    "host": "192.168.1.105",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "k8s/k3s-456105/default/Deployment/node-display-blue",
-    "name": "node-display-blue",
-    "host": "192.168.1.103",
-    "kind": "k8s",
-    "category": "ops"
-   },
-   {
-    "id": "k8s/k3s-456105/default/Deployment/node-display-green",
-    "name": "node-display-green",
-    "host": "192.168.1.105",
-    "kind": "k8s",
-    "category": "ops"
-   },
-   {
-    "id": "k8s/k3s-456105/default/Deployment/node-display-red",
-    "name": "node-display-red",
-    "host": "192.168.1.104",
-    "kind": "k8s",
-    "category": "ops"
+    "id": "192.168.1.98/unit/patchwatch.service",
+    "name": "patchwatch",
+    "host": "192.168.1.98",
+    "field": "schedule",
+    "old": "Mon *-*-* 06:45:00 America/Chicago",
+    "new": "*-*-* 06:45:00 America/Chicago"
    }
   ],
-  "removed": [
-   {
-    "id": "192.168.1.105/unit/httpd.service",
-    "name": "httpd",
-    "host": "192.168.1.105",
-    "kind": "systemd",
-    "category": "ops"
-   }
-  ],
-  "changed": [],
   "hosts": []
  },
  "hosts": {
@@ -296,7 +254,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-16 04:01:49",
+   "booted": "2026-10-17 04:00:38",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -309,7 +267,7 @@
     },
     {
      "port": 53,
-     "addr": "127.0.0.54",
+     "addr": "127.0.0.53%lo",
      "process": "systemd-resolve",
      "component": "systemd-resolved"
     },
@@ -338,7 +296,7 @@
      "component": "alloy"
     },
     {
-     "port": 37279,
+     "port": 39225,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1280,16 +1238,6 @@
  ],
  "edges": [
   {
-   "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "ports": [
-    19001
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.75/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
@@ -1300,10 +1248,10 @@
    ]
   },
   {
-   "src": "192.168.1.76/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
-    3100
+    19001
    ],
    "how": [
     "observed"
@@ -1314,6 +1262,16 @@
    "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
     19001
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.76/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
    ],
    "how": [
     "observed"
@@ -1731,6 +1689,16 @@
    ]
   },
   {
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.101/podman-root/root/dvga",
+   "ports": [
+    5013
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.99/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
@@ -1745,16 +1713,6 @@
    "dst": "192.168.1.100/podman-root/root/kong",
    "ports": [
     80
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.101/podman-root/root/dvga",
-   "ports": [
-    5013
    ],
    "how": [
     "observed"
@@ -6864,14 +6822,14 @@
    "name": "patchwatch",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Plans weekly patch and image drift.",
+   "purpose": "Daily AI patch and image drift planning",
    "state": "inactive",
-   "schedule": "Mon *-*-* 06:45:00 America/Chicago",
+   "schedule": "*-*-* 06:45:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
    "baseline": false,
-   "description": "Weekly patch & image drift plan (patchwatch-agent)",
-   "classified_by": "llm-cache"
+   "description": "Daily patch & image drift plan (patchwatch-agent)",
+   "classified_by": "llm"
   },
   "192.168.1.98/unit/polkit.service": {
    "id": "192.168.1.98/unit/polkit.service",
@@ -7354,13 +7312,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator on observability host.",
+   "purpose": "Long-running AI traffic simulator",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 199.4h)",
+   "description": "long-running python3 outside any service (up 223.4h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -12667,7 +12625,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -12837,14 +12795,14 @@
    "name": "k3s-agent",
    "category": "platform",
    "ai": false,
-   "purpose": "Kubernetes agent for lab cluster workloads",
+   "purpose": "Kubernetes agent on utility.lab",
    "state": "running",
    "schedule": "",
    "detail": "/usr/local/bin/k3s agent",
    "user": "root",
    "baseline": false,
    "description": "Lightweight Kubernetes",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.104/unit/libstoragemgmt.service": {
    "id": "192.168.1.104/unit/libstoragemgmt.service",
@@ -13866,7 +13824,7 @@
    "user": "root",
    "baseline": false,
    "description": "Lightweight Kubernetes",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.105/unit/libstoragemgmt.service": {
    "id": "192.168.1.105/unit/libstoragemgmt.service",
@@ -14865,7 +14823,7 @@
    "replicas": 1,
    "ready": 1,
    "baseline": false,
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "k8s/k3s-456105/default/Deployment/node-display-green": {
    "id": "k8s/k3s-456105/default/Deployment/node-display-green",
@@ -14888,7 +14846,7 @@
    "replicas": 1,
    "ready": 1,
    "baseline": false,
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "k8s/k3s-456105/default/Deployment/node-display-red": {
    "id": "k8s/k3s-456105/default/Deployment/node-display-red",
@@ -14911,7 +14869,7 @@
    "replicas": 1,
    "ready": 1,
    "baseline": false,
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "k8s/k3s-456105/kube-system/Deployment/coredns": {
    "id": "k8s/k3s-456105/kube-system/Deployment/coredns",
