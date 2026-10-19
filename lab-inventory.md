@@ -120,12 +120,15 @@ Prometheus: 24 active targets, all **up** (2026-09-29).
 
 **Notes**
 - Grafana dashboard folders on .98: Fleet Overview, k3s Cluster (.99), Gateway + CI Host (.100), crAPI Stack (.101),
-  MCP Host (.102), Logs, **Raspberry Pi Cluster**, **Agent Lab** (incl. *Daily Reports*, hand-written, from mikes-agents),
+  MCP Host (.102), Logs, **Raspberry Pi Cluster**, **Agent Lab** (only *Daily Reports* now, hand-written, from mikes-agents),
   **Lab Service Map** (from mikes-agents/servicemap-agent). Daily Reports, Lab Service Map and today's Fleet Overview fix
   are not produced by `gen_dashboards.py`.
 - ⚠ `gen_dashboards.py` (rasp5) does **not** generate the *Raspberry Pi Cluster* or *Agent Lab* folders, and its
   documented deploy step runs `rm -rf /opt/monitoring/grafana/dashboards/*` — running it as written deletes both.
-  The Agent Lab dashboard has its own generator/installer: `~/agent-lab/grafana/install.sh` (touches only its folder).
+  The retired *Agent Lab: AI agent traffic via LiteLLM* dashboard (`/d/agent-lab`) was removed 2026-10-19; don't
+  re-run `~/agent-lab/grafana/install.sh` (it would bring it back). JSON kept in `/opt/monitoring/grafana/dashboards-retired/`.
+- The provider has `disableDeletion: true`, so deleting a dashboard's JSON file does **not** remove it from Grafana; also
+  delete it via the API (`DELETE /api/dashboards/uid/<uid>`, admin auth).
 - Prometheus config is a mounted **directory** (`prometheus/config/`); reload with `curl -XPOST localhost:9090/-/reload`.
 - Alertmanager receiver is still `null` — alerts fire but are **not delivered anywhere**.
 - The Grafana admin password in `/opt/monitoring/.env` no longer works (changed in the UI since install).
@@ -385,6 +388,7 @@ All three: `node_exporter` + `alloy` running and scraped/shipped to .98. No cont
 
 | Date | Host | Change |
 |------|------|--------|
+| 2026-10-19 | .98 | **Grafana:** removed the stale *Agent Lab: AI agent traffic via LiteLLM* dashboard (`/d/agent-lab`; no `agent-lab` log lines in Loki since the ~10-05 retirement). File moved to `/opt/monitoring/grafana/dashboards-retired/agent-lab.json.retired-20261019` and dashboard deleted via the API (`disableDeletion: true` keeps it otherwise). *Agent Lab* folder now holds only *Daily Reports*. |
 | 2026-10-13 | .98 | **Grafana fix:** *Fleet Overview* per-host rows used `host="$host"`; Grafana regex-escapes multi-value variables, so `utility.lab.example.com` (the only host name with dots) matched nothing and its row was blank. Now `host=~"$host"` in the live dashboard and in `gen_dashboards.py` (.98 `/opt/monitoring/grafana/src/` and rasp5 `~/monitoring/`). The live JSON has hand edits the generator lacks, so it was edited in place, not regenerated. |
 | 2026-10-13 | .98 | **Grafana:** new folder *Lab Service Map* (`/d/lab-service-map`); *Agent Lab · Daily Reports* gains servicemap panels, a *Full reports* panel and links from every report log to its HTML report. Prometheus job `servicemap` (`localhost:9440`, 5m, `honor_labels`). **agenthub** (opencode, report exporter :9430) now also covers servicemap. `servicemap-web` serves `/reports/` for all agents (read-only bind mounts; `/opt/secnews` stays root-only). |
 | 2026-10-16 | .98 | **patchwatch** now runs daily at 06:45 (was Mondays only). |
