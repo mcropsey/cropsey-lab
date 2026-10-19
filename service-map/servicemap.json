@@ -1,62 +1,11 @@
 {
- "generated_at": "2026-10-18T05:40:14",
- "fingerprint": "fc00aa48e15f7ce5",
- "change_summary": "+1 (httpd); -6 (k3s, k3s-agent, k3s-agent, node-display-blue\u2026)",
+ "generated_at": "2026-10-19T05:40:15",
+ "fingerprint": "fe7b7d3e6beca5fe",
+ "change_summary": "no component changes",
  "changes": {
   "first_run": false,
-  "added": [
-   {
-    "id": "192.168.1.105/unit/httpd.service",
-    "name": "httpd",
-    "host": "192.168.1.105",
-    "kind": "systemd",
-    "category": "ops"
-   }
-  ],
-  "removed": [
-   {
-    "id": "192.168.1.103/unit/k3s.service",
-    "name": "k3s",
-    "host": "192.168.1.103",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.104/unit/k3s-agent.service",
-    "name": "k3s-agent",
-    "host": "192.168.1.104",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.105/unit/k3s-agent.service",
-    "name": "k3s-agent",
-    "host": "192.168.1.105",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "k8s/k3s-456105/default/Deployment/node-display-blue",
-    "name": "node-display-blue",
-    "host": "192.168.1.103",
-    "kind": "k8s",
-    "category": "ops"
-   },
-   {
-    "id": "k8s/k3s-456105/default/Deployment/node-display-green",
-    "name": "node-display-green",
-    "host": "192.168.1.105",
-    "kind": "k8s",
-    "category": "ops"
-   },
-   {
-    "id": "k8s/k3s-456105/default/Deployment/node-display-red",
-    "name": "node-display-red",
-    "host": "192.168.1.104",
-    "kind": "k8s",
-    "category": "ops"
-   }
-  ],
+  "added": [],
+  "removed": [],
   "changed": [],
   "hosts": []
  },
@@ -296,7 +245,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-18 04:00:39",
+   "booted": "2026-10-19 04:02:03",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -309,7 +258,7 @@
     },
     {
      "port": 53,
-     "addr": "127.0.0.53%lo",
+     "addr": "127.0.0.54",
      "process": "systemd-resolve",
      "component": "systemd-resolved"
     },
@@ -338,7 +287,7 @@
      "component": "alloy"
     },
     {
-     "port": 37959,
+     "port": 46545,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1293,6 +1242,16 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.85/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/docker/root/cadvisor",
    "ports": [
     8081
@@ -1324,16 +1283,6 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.102/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1572,16 +1521,6 @@
    ]
   },
   {
-   "src": "192.168.1.99/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.99/unit/cloudflared.service",
    "dst": "192.168.1.100/podman-root/root/kong",
    "ports": [
@@ -1596,6 +1535,16 @@
    "dst": "192.168.1.101/podman-root/root/dvga",
    "ports": [
     5013
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.99/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
    ],
    "how": [
     "observed"
@@ -3094,25 +3043,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.76/unit/fwupd.service": {
-   "id": "192.168.1.76/unit/fwupd.service",
-   "host": "192.168.1.76",
-   "hosts": [
-    "192.168.1.76"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.76/unit/getty@tty1.service": {
@@ -6363,7 +6293,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -7194,13 +7124,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "AI traffic simulator on hv-rocky-linux-1.",
+   "purpose": "Long-running AI traffic simulator on hv-rocky-linux-1.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 247.4h)",
+   "description": "long-running python3 outside any service (up 271.4h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -7423,7 +7353,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "failed",
+   "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -10672,7 +10602,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
