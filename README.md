@@ -37,4 +37,4 @@ Solid arrows are live connections seen at collection time; dashed arrows are end
 - [mikes-agents](https://github.com/mcropsey/mikes-agents): the scheduled lab agents (secnews, labwatch, cvewatch,
   patchwatch, labinventory, servicemap) and agenthub, the exporter that puts their reports into Grafana.
 - On the lab network only: live map `http://192.168.1.98:9440/`, all agent reports `http://192.168.1.98:9440/reports/`,
-  Grafana dashboards *Lab Service Map* and *Agent Lab · Daily Reports* on `http://192.168.1.98:3000`.
+  Grafana dashboards *Lab Service Map*, *Agent Lab · Daily Reports* and *Agent Lab · Agents II* on `http://192.168.1.98:3000`.

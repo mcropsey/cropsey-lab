@@ -1,7 +1,10 @@
 # Lab Inventory — 192.168.1.x home lab
-**Updated:** 2026-10-07 | 13 hosts verified live via SSH | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
-New since 2026-09-29: **mikes-agents** (5 scheduled ops agents on .98: secnews, labwatch, cvewatch, patchwatch +
-labinventory) using the local LLM through LiteLLM; the **Agent Lab** traffic generator was retired (~2026-10-05);
+**Updated:** 2026-10-19 | 13 hosts verified live via SSH (2026-10-07) | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
+New since 2026-09-29: **mikes-agents** (lab agents on .98 using the local LLM through LiteLLM): the original
+set (secnews, labwatch, cvewatch, patchwatch, labinventory, servicemap) plus **five added 2026-10-19** —
+alertwatch (event-driven Alertmanager triage), patchrun (approval-gated OS patching), weekrollup (weekly digest
++ agent quality check), agentdemo (safe-vs-hijacked AI agent demo via crAPI MCP) and llmredteam (LiteLLM
+guardrail eval). The **Agent Lab** traffic generator was retired (~2026-10-05);
 **security patching of all 11 managed hosts** on 2026-10-07 (reboots 22:05 the same night).
 
 ### Where the documentation lives
@@ -10,7 +13,7 @@ labinventory) using the local LLM through LiteLLM; the **Agent Lab** traffic gen
 |---|---|---|
 | Lab inventory (this file) | `~/cropsey-lab/lab-inventory.md` (git clone on .98) | every host, service, port and change |
 | **Service map (auto, daily)** | [`service-map/`](service-map/) in this repo · live page `http://192.168.1.98:9440/` | every service, timer, cron job, container, k8s workload and AI agent per host, with dependencies; regenerated 05:40 by servicemap-agent and committed here when it changes |
-| **Agent reports (all agents)** | `http://192.168.1.98:9440/reports/` (LAN only) · Grafana *Agent Lab · Daily Reports* | every labwatch/cvewatch/patchwatch/secnews/servicemap report by date with its headline; linked from the cropseyit.com footer on rasp5 |
+| **Agent reports (all agents)** | `http://192.168.1.98:9440/reports/` (LAN only) · Grafana *Agent Lab · Daily Reports* + *Agent Lab · Agents II* | every agent's reports by date with its headline (the ten agents incl. alertwatch/patchrun/weekrollup/agentdemo/llmredteam); linked from the cropseyit.com footer on rasp5 |
 | Lab agents (mikes-agents) | `~/mikes-agents/` on .98 (git) · per-agent READMEs | what each ops agent does, install, operate, troubleshoot |
 | Patching log | `~/patching/2026-10-07/` on .98 | per-host dnf/apt output, `reboots.log` from the reboot run |
 | Agent Lab (retired) | `~/agent-lab/` on .101 (README, `docs/MANUAL-SETUP.md`, `docs/BUILD-NOTES.md`) | history of the retired traffic generator |
@@ -32,7 +35,8 @@ labinventory) using the local LLM through LiteLLM; the **Agent Lab** traffic gen
 │                                                                                                │
 │  .98  hv-rocky-linux-1  ★ OBSERVABILITY HUB   grafana:3000 prometheus:9090 alertmanager:9093    │
 │                                               loki:3100 cadvisor:8081 · vnotes:8000 (VulnNotes) │
-│                         ★ LAB AGENTS (podman + timers): secnews · labwatch · cvewatch · patchwatch│
+│                         ★ LAB AGENTS (podman+timers): secnews·labwatch·cvewatch·patchwatch      │
+│                           servicemap·alertwatch(:9435)·patchrun·weekrollup·agentdemo·llmredteam │
 │  .99  hv-rocky-linux-2  k3s v1.36 + Cloudflare Tunnel — juice-shop:30300 vampi:30500 nginx      │
 │  .100 hv-rocky-linux-3  Kong:80/8001 (Podman) · Jenkins:8080 (Docker)                           │
 │  .101 hv-rocky-linux-4  ★ LiteLLM AI GATEWAY :4000 (Podman) · crAPI stack · juice-shop · searxng│
@@ -75,17 +79,29 @@ No cloud models. Code, install docs and diagrams: `~/mikes-agents` on .98 = `git
 | cvewatch-agent | daily 06:30 | Matches CVEs newly published on NVD + KEV against the software inventory; **emails only if the lab is affected** | `cvewatch` |
 | patchwatch-agent | daily 06:45 | Patch plan: pending updates, Rocky security advisories + CVEs, reboot-needed hosts, broken repos, container images with newer builds. **Reports only; never installs.** | `patchwatch` |
 | labinventory | daily 05:30 | (no LLM) SSH inventory of all 11 managed hosts: packages, updates, advisories, containers, k8s images → `/opt/labagents/data/inventory/latest.json` | `labinventory` |
+| alertwatch-agent | on alert + daily 07:00 | **Event-driven** triage of Alertmanager alerts (reuses labwatch's Prom/Loki tools); always-on webhook receiver on `:9435`, bounded so it won't fight the interactive GPU | `alertwatch` |
+| patchrun-agent | on demand | Applies patchwatch's OS **security** updates, **approval-gated** (token tied to the plan), dry-run by default, never reboots | `patchrun --approve <token>` |
+| weekrollup-agent | Fri 06:55 | Weekly digest across all agents **+ a quality check** that flags reports contradicting the data | `weekrollup` |
+| agentdemo-agent | on demand | **Demo:** a safe agent vs a prompt-injected ("hijacked") agent driving the same crAPI MCP tools via LiteLLM; shows the cross-account/bulk access pattern a compromised agent produces | `agentdemo --scripted` |
+| llmredteam-agent | Sun 06:50 | Safety/guardrail **eval** of the LiteLLM gateway: OWASP-LLM-style probes, judged pass/fail | `llmredteam` |
+
+(servicemap-agent, daily 05:40, is listed under the service-map doc; the five agents from 2026-10-19 above are
+documented in `mikes-agents/` with per-agent READMEs and `TALKING-POINTS.md`.)
 
 - Files on .98: `/opt/secnews/` and `/opt/labagents/` (code, root-only env files with keys + Gmail app password,
   `data/reports/<agent>/latest.html`), wrappers in `/usr/local/bin/`, units + timers in `/etc/systemd/system/`.
-- **LiteLLM:** each agent has its own virtual key (`secnews-agent`, `labwatch-agent`, `cvewatch-agent`,
-  `patchwatch-agent`) restricted to `qwen3.8-27b`, 1 request in flight, 30 rpm, linked by `agent_id` to its
-  entry on the LiteLLM **Agents** page (4 registered agents).
+- **LiteLLM:** each agent has its own virtual key restricted to `qwen3.8-27b`, 1 request in flight, 30 rpm,
+  linked by `agent_id` to its entry on the LiteLLM **Agents** page. As of 2026-10-19 there are **13 registered
+  agent identities**: the originals (`secnews-agent`, `labwatch-agent`, `cvewatch-agent`, `patchwatch-agent`,
+  `servicemap-agent`) plus `alertwatch-agent`, `weekrollup-agent`, `patchrun-agent`, `agentdemo-baseline`,
+  `agentdemo-anomaly`, `llmredteam-probe`, `llmredteam-judge` (agentdemo and llmredteam each use two keys).
 - **Guardrail:** LiteLLM's default-on `basic-safety-filter` (content filter, created 2026-10-03) blocks normal
-  security vocabulary ("attack"). The 4 agent keys carry `metadata.opted_out_global_guardrails:
-  ["basic-safety-filter"]`; the filter still applies to every other key.
-- GPU use: about 8 min per morning in total (secnews ~1.5 min, labwatch ~1.5 min, cvewatch ~1.5 min,
-  patchwatch ~3.5 min), all before 07:00.
+  security vocabulary ("attack"). Every agent key carries `metadata.opted_out_global_guardrails:
+  ["basic-safety-filter"]` **except `llmredteam-probe`**, which keeps the guardrail on because it is the system
+  under test; the filter still applies to every other key.
+- GPU use: the morning agents total ~8 min, all before 07:00. The 2026-10-19 additions keep the rule —
+  llmredteam (Sun) and weekrollup (Fri) run before 07:00, alertwatch is event-driven but bounded (criticals-only
+  during 08:00-22:00), and agentdemo/patchrun are run by hand.
 
 ### Agent Lab (retired)
 
@@ -120,7 +136,7 @@ Prometheus: 24 active targets, all **up** (2026-09-29).
 
 **Notes**
 - Grafana dashboard folders on .98: Fleet Overview, k3s Cluster (.99), Gateway + CI Host (.100), crAPI Stack (.101),
-  MCP Host (.102), Logs, **Raspberry Pi Cluster**, **Agent Lab** (only *Daily Reports* now, hand-written, from mikes-agents),
+  MCP Host (.102), Logs, **Raspberry Pi Cluster**, **Agent Lab** (*Daily Reports* + *Agents II*, hand-written, from mikes-agents),
   **Lab Service Map** (from mikes-agents/servicemap-agent). Daily Reports, Lab Service Map and today's Fleet Overview fix
   are not produced by `gen_dashboards.py`.
 - ⚠ `gen_dashboards.py` (rasp5) does **not** generate the *Raspberry Pi Cluster* or *Agent Lab* folders, and its
@@ -130,7 +146,10 @@ Prometheus: 24 active targets, all **up** (2026-09-29).
 - The provider has `disableDeletion: true`, so deleting a dashboard's JSON file does **not** remove it from Grafana; also
   delete it via the API (`DELETE /api/dashboards/uid/<uid>`, admin auth).
 - Prometheus config is a mounted **directory** (`prometheus/config/`); reload with `curl -XPOST localhost:9090/-/reload`.
-- Alertmanager receiver is still `null` — alerts fire but are **not delivered anywhere**.
+- Alertmanager now routes firing alerts to the **alertwatch-agent** webhook receiver on `.98:9435` (mikes-agents),
+  which triages them with the LLM and emails a note (changed 2026-10-19; the old `null`-receiver config is backed
+  up at `/opt/monitoring/alertmanager/config/alertmanager.yml.bak-pre-alertwatch-20261019`). v0.34.1 has no
+  lifecycle reload, so the container is restarted after editing.
 - The Grafana admin password in `/opt/monitoring/.env` no longer works (changed in the UI since install).
 - Firewalls: .98/.101/.102 use firewalld rich rules (**never** `firewall-cmd --reload` there);
   .99/.100 use nft table `inet monitoring_acl` via `monitoring-acl.service`.
@@ -293,9 +312,12 @@ As of 2026-10-07 LiteLLM runs as **quadlets** (`/etc/containers/systemd/litellm.
 image pinned to `ghcr.io/berriai/litellm:v1.104.0`; `litellm-db.container` → own Postgres `postgres:16.15`,
 network `litellm.network`).
 
-**Agents page:** 4 registered agents (`secnews-agent`, `labwatch-agent`, `cvewatch-agent`, `patchwatch-agent`,
-the lab agents on .98), each linked to its own virtual key via `agent_id`; keys allow only `qwen3.8-27b`,
-1 request in flight, 30 rpm. Registration script: `~/mikes-agents/litellm/register_agent.py` (runs inside the
+**Agents page:** 13 registered agents (the lab agents on .98) as of 2026-10-19 — `secnews-agent`,
+`labwatch-agent`, `cvewatch-agent`, `patchwatch-agent`, `servicemap-agent`, `alertwatch-agent`,
+`weekrollup-agent`, `patchrun-agent`, `agentdemo-baseline`, `agentdemo-anomaly`, `llmredteam-probe`,
+`llmredteam-judge` — each linked to its own virtual key via `agent_id`; keys allow only `qwen3.8-27b`,
+1 request in flight, 30 rpm. All opt out of `basic-safety-filter` except `llmredteam-probe` (system under test).
+Registration script: `~/mikes-agents/litellm/register_agent.py` (runs inside the
 container, so the master key never leaves it).
 
 **Guardrail:** `basic-safety-filter` (`litellm_content_filter`, pre_call, **default on**, created 2026-10-03):
@@ -388,6 +410,7 @@ All three: `node_exporter` + `alloy` running and scraped/shipped to .98. No cont
 
 | Date | Host | Change |
 |------|------|--------|
+| 2026-10-19 | .98 .101 | **mikes-agents: five new agents.** alertwatch (event-driven Alertmanager triage, always-on receiver `:9435`, bounded for the GPU), patchrun (approval-gated OS security patching, dry-run default, never reboots), weekrollup (Fri digest + agent quality check), agentdemo (safe-vs-hijacked AI-agent demo driving the crAPI MCP tools on `.102` via a new stdlib MCP client), llmredteam (OWASP-LLM guardrail eval, Sun). Seven new LiteLLM agent identities registered on .101 (all opt out of `basic-safety-filter` except `llmredteam-probe`). **Alertmanager** receiver switched from `null` to the alertwatch webhook (old config backed up). New Grafana dashboard *Agent Lab · Agents II* (`/d/agent-lab-ii`). Docs + `TALKING-POINTS.md` in `mikes-agents` (commit `f8b1b84`). Kept independent of the Noname sensor on purpose. |
 | 2026-10-19 | .98 | **Grafana:** removed the stale *Agent Lab: AI agent traffic via LiteLLM* dashboard (`/d/agent-lab`; no `agent-lab` log lines in Loki since the ~10-05 retirement). File moved to `/opt/monitoring/grafana/dashboards-retired/agent-lab.json.retired-20261019` and dashboard deleted via the API (`disableDeletion: true` keeps it otherwise). *Agent Lab* folder now holds only *Daily Reports*. |
 | 2026-10-13 | .98 | **Grafana fix:** *Fleet Overview* per-host rows used `host="$host"`; Grafana regex-escapes multi-value variables, so `utility.lab.example.com` (the only host name with dots) matched nothing and its row was blank. Now `host=~"$host"` in the live dashboard and in `gen_dashboards.py` (.98 `/opt/monitoring/grafana/src/` and rasp5 `~/monitoring/`). The live JSON has hand edits the generator lacks, so it was edited in place, not regenerated. |
 | 2026-10-13 | .98 | **Grafana:** new folder *Lab Service Map* (`/d/lab-service-map`); *Agent Lab · Daily Reports* gains servicemap panels, a *Full reports* panel and links from every report log to its HTML report. Prometheus job `servicemap` (`localhost:9440`, 5m, `honor_labels`). **agenthub** (opencode, report exporter :9430) now also covers servicemap. `servicemap-web` serves `/reports/` for all agents (read-only bind mounts; `/opt/secnews` stays root-only). |
