@@ -132,13 +132,14 @@ Installed 2026-09-18 (metrics) and 2026-09-19 (logs); coverage extended to all 1
   podman-exp    :9882 → .100 .101 .102 .104                        k3s pods on .99)
   k3s kubelet   :10250 → .99 (SA-token, TLS-verified)
 ```
-Prometheus: 24 active targets, all **up** (2026-09-29).
+Prometheus: 25 active targets (the `litellm` gateway job added 2026-10-19), all **up**.
 
 **Notes**
 - Grafana dashboard folders on .98: Fleet Overview, k3s Cluster (.99), Gateway + CI Host (.100), crAPI Stack (.101),
   MCP Host (.102), Logs, **Raspberry Pi Cluster**, **Agent Lab** (*Daily Reports* + *Agents II*, hand-written, from mikes-agents),
-  **Lab Service Map** (from mikes-agents/servicemap-agent). Daily Reports, Lab Service Map and today's Fleet Overview fix
-  are not produced by `gen_dashboards.py`.
+  **Lab Service Map** (from mikes-agents/servicemap-agent) and **LiteLLM** (*LiteLLM Gateway*, from
+  mikes-agents/litellm, added 2026-10-19). Daily Reports, Agents II, Lab Service Map, LiteLLM Gateway and the
+  Fleet Overview fix are not produced by `gen_dashboards.py`.
 - ⚠ `gen_dashboards.py` (rasp5) does **not** generate the *Raspberry Pi Cluster* or *Agent Lab* folders, and its
   documented deploy step runs `rm -rf /opt/monitoring/grafana/dashboards/*` — running it as written deletes both.
   The retired *Agent Lab: AI agent traffic via LiteLLM* dashboard (`/d/agent-lab`) was removed 2026-10-19; don't
@@ -322,8 +323,18 @@ container, so the master key never leaves it).
 
 **Guardrail:** `basic-safety-filter` (`litellm_content_filter`, pre_call, **default on**, created 2026-10-03):
 blocks the harm/violence/self-harm/child-safety/prompt-injection/exfiltration categories at medium severity.
-The 4 lab-agent keys opt out of it via key metadata `opted_out_global_guardrails` (admin-set only); everything
-else is still filtered.
+Every lab-agent key opts out of it via key metadata `opted_out_global_guardrails` (admin-set only) **except
+`llmredteam-probe`** (2026-10-19), which keeps it on so llmredteam can test the guardrail; everything else is
+still filtered. The agents do no guardrailing of their own — it is all enforced here at the gateway.
+
+**Metrics (added 2026-10-19):** LiteLLM's native Prometheus integration is on — `litellm_settings:
+callbacks: ["prometheus"]` and `require_auth_for_metrics_endpoint: false` in `/opt/litellm/config.yaml`
+(backup `config.yaml.bak-pre-prometheus-20261019`; restart `sudo systemctl restart litellm`). Prometheus on
+.98 scrapes `192.168.1.101:4000/metrics/` (job `litellm`); `/metrics` is public but carries only aggregate
+request/token/spend/latency data (no prompts or secrets) and the lab is firewalled. Grafana dashboard
+**LiteLLM Gateway** (`/d/litellm-gateway`, folder *LiteLLM*) shows requests / failed-or-blocked (a guardrail
+BLOCK is an HTTP 400) / tokens / spend / latency incl. guardrail overhead, all **per agent** (`api_key_alias`).
+Source JSON: `mikes-agents/litellm/grafana/litellm-gateway.json`.
 
 ### Podman containers (rootful)
 
@@ -410,6 +421,7 @@ All three: `node_exporter` + `alloy` running and scraped/shipped to .98. No cont
 
 | Date | Host | Change |
 |------|------|--------|
+| 2026-10-19 | .101 .98 | **LiteLLM guardrail + traffic monitoring.** Turned on LiteLLM's native Prometheus metrics (`callbacks: ["prometheus"]`, `require_auth_for_metrics_endpoint: false`; config backed up, gateway restarted). Prometheus on .98 now scrapes `192.168.1.101:4000/metrics/` (job `litellm`). New Grafana dashboard *LiteLLM Gateway* (`/d/litellm-gateway`, folder *LiteLLM*): per-agent requests / blocked (400) / tokens / spend / latency incl. guardrail overhead. The guardrail itself is unchanged (LiteLLM `basic-safety-filter`); this just makes it observable. `llmredteam-probe` key kept the guardrail on (not opted out) so llmredteam tests it. |
 | 2026-10-19 | .98 .101 | **mikes-agents: five new agents.** alertwatch (event-driven Alertmanager triage, always-on receiver `:9435`, bounded for the GPU), patchrun (approval-gated OS security patching, dry-run default, never reboots), weekrollup (Fri digest + agent quality check), agentdemo (safe-vs-hijacked AI-agent demo driving the crAPI MCP tools on `.102` via a new stdlib MCP client), llmredteam (OWASP-LLM guardrail eval, Sun). Seven new LiteLLM agent identities registered on .101 (all opt out of `basic-safety-filter` except `llmredteam-probe`). **Alertmanager** receiver switched from `null` to the alertwatch webhook (old config backed up). New Grafana dashboard *Agent Lab · Agents II* (`/d/agent-lab-ii`). Docs + `TALKING-POINTS.md` in `mikes-agents` (commit `f8b1b84`). Kept independent of the Noname sensor on purpose. |
 | 2026-10-19 | .98 | **Grafana:** removed the stale *Agent Lab: AI agent traffic via LiteLLM* dashboard (`/d/agent-lab`; no `agent-lab` log lines in Loki since the ~10-05 retirement). File moved to `/opt/monitoring/grafana/dashboards-retired/agent-lab.json.retired-20261019` and dashboard deleted via the API (`disableDeletion: true` keeps it otherwise). *Agent Lab* folder now holds only *Daily Reports*. |
 | 2026-10-13 | .98 | **Grafana fix:** *Fleet Overview* per-host rows used `host="$host"`; Grafana regex-escapes multi-value variables, so `utility.lab.example.com` (the only host name with dots) matched nothing and its row was blank. Now `host=~"$host"` in the live dashboard and in `gen_dashboards.py` (.98 `/opt/monitoring/grafana/src/` and rasp5 `~/monitoring/`). The live JSON has hand edits the generator lacks, so it was edited in place, not regenerated. |
