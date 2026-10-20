@@ -1,13 +1,114 @@
 {
- "generated_at": "2026-10-19T05:40:15",
- "fingerprint": "fe7b7d3e6beca5fe",
- "change_summary": "no component changes",
+ "generated_at": "2026-10-20T05:40:14",
+ "fingerprint": "0850b4710a04b4c9",
+ "change_summary": "+5 (alertwatch, alertwatch-heartbeat, alertwatch, llmredteam\u2026); 8 host changes",
  "changes": {
   "first_run": false,
-  "added": [],
+  "added": [
+   {
+    "id": "192.168.1.98/podman-root/root/alertwatch",
+    "name": "alertwatch",
+    "host": "192.168.1.98",
+    "kind": "podman-root",
+    "category": "ops"
+   },
+   {
+    "id": "192.168.1.98/unit/alertwatch-heartbeat.service",
+    "name": "alertwatch-heartbeat",
+    "host": "192.168.1.98",
+    "kind": "timer",
+    "category": "platform"
+   },
+   {
+    "id": "192.168.1.98/unit/alertwatch.service",
+    "name": "alertwatch",
+    "host": "192.168.1.98",
+    "kind": "systemd",
+    "category": "observability"
+   },
+   {
+    "id": "192.168.1.98/unit/llmredteam.service",
+    "name": "llmredteam",
+    "host": "192.168.1.98",
+    "kind": "timer",
+    "category": "platform"
+   },
+   {
+    "id": "192.168.1.98/unit/weekrollup.service",
+    "name": "weekrollup",
+    "host": "192.168.1.98",
+    "kind": "timer",
+    "category": "ai-agent"
+   }
+  ],
   "removed": [],
   "changed": [],
-  "hosts": []
+  "hosts": [
+   {
+    "ip": "192.168.1.98",
+    "name": "hv-rocky-linux-1",
+    "kernel": [
+     "5.14.0-687.54.1.el9_8.x86_64",
+     "5.14.0-687.58.1.el9_8.x86_64"
+    ]
+   },
+   {
+    "ip": "192.168.1.99",
+    "name": "hv-rocky-linux-2",
+    "kernel": [
+     "5.14.0-687.54.1.el9_8.x86_64",
+     "5.14.0-687.58.1.el9_8.x86_64"
+    ]
+   },
+   {
+    "ip": "192.168.1.100",
+    "name": "hv-rocky-linux-3",
+    "kernel": [
+     "5.14.0-687.54.1.el9_8.x86_64",
+     "5.14.0-687.57.1.el9_8.x86_64"
+    ]
+   },
+   {
+    "ip": "192.168.1.101",
+    "name": "hv-rocky-linux-4",
+    "kernel": [
+     "5.14.0-687.54.1.el9_8.x86_64",
+     "5.14.0-687.58.1.el9_8.x86_64"
+    ]
+   },
+   {
+    "ip": "192.168.1.102",
+    "name": "hv-rocky-linux-5",
+    "kernel": [
+     "5.14.0-687.54.1.el9_8.x86_64",
+     "5.14.0-687.58.1.el9_8.x86_64"
+    ]
+   },
+   {
+    "ip": "192.168.1.103",
+    "name": "hv-rocky-linux-6",
+    "kernel": [
+     "6.12.0-211.55.1.el10_2.x86_64",
+     "6.12.0-211.66.1.el10_2.x86_64"
+    ]
+   },
+   {
+    "ip": "192.168.1.104",
+    "name": "hv-rocky-linux-7",
+    "kernel": [
+     "6.12.0-211.55.1.el10_2.x86_64",
+     "6.12.0-211.66.1.el10_2.x86_64"
+    ]
+   },
+   {
+    "ip": "192.168.1.105",
+    "name": "utility.lab",
+    "kernel": [
+     "6.12.0-211.55.1.el10_2.x86_64",
+     "6.12.0-211.66.1.el10_2.x86_64"
+    ]
+   }
+  ]
  },
  "hosts": {
   "192.168.1.75": {
@@ -245,7 +346,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-19 04:02:03",
+   "booted": "2026-10-20 04:00:22",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -287,7 +388,7 @@
      "component": "alloy"
     },
     {
-     "port": 46545,
+     "port": 46281,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -305,8 +406,8 @@
    "ip": "192.168.1.98",
    "name": "hv-rocky-linux-1",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
-   "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:18:19",
+   "kernel": "5.14.0-687.58.1.el9_8.x86_64",
+   "booted": "2026-10-19 10:31:56",
    "cpus": 8,
    "mem_gb": 7.5,
    "error": "",
@@ -378,6 +479,12 @@
      "component": "agenthub"
     },
     {
+     "port": 9435,
+     "addr": "0.0.0.0",
+     "process": "python",
+     "component": "alertwatch"
+    },
+    {
      "port": 9440,
      "addr": "0.0.0.0",
      "process": "python3",
@@ -390,14 +497,14 @@
      "component": "alloy"
     }
    ],
-   "role": "observability hub with Prometheus, Grafana, Loki, Alertmanager, VulnNotes"
+   "role": ""
   },
   "192.168.1.99": {
    "ip": "192.168.1.99",
    "name": "hv-rocky-linux-2",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
-   "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:15:26",
+   "kernel": "5.14.0-687.58.1.el9_8.x86_64",
+   "booted": "2026-10-19 10:32:11",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -547,8 +654,8 @@
    "ip": "192.168.1.100",
    "name": "hv-rocky-linux-3",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
-   "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:14:36",
+   "kernel": "5.14.0-687.57.1.el9_8.x86_64",
+   "booted": "2026-10-19 10:31:56",
    "cpus": 8,
    "mem_gb": 7.5,
    "error": "",
@@ -626,8 +733,8 @@
    "ip": "192.168.1.101",
    "name": "hv-rocky-linux-4",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
-   "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:16:12",
+   "kernel": "5.14.0-687.58.1.el9_8.x86_64",
+   "booted": "2026-10-19 10:31:57",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -735,8 +842,8 @@
    "ip": "192.168.1.102",
    "name": "hv-rocky-linux-5",
    "os": "Rocky Linux 9.8 (Blue Onyx)",
-   "kernel": "5.14.0-687.54.1.el9_8.x86_64",
-   "booted": "2026-10-07 22:13:53",
+   "kernel": "5.14.0-687.58.1.el9_8.x86_64",
+   "booted": "2026-10-19 10:33:10",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -808,8 +915,8 @@
    "ip": "192.168.1.103",
    "name": "hv-rocky-linux-6",
    "os": "Rocky Linux 10.2 (Red Quartz)",
-   "kernel": "6.12.0-211.55.1.el10_2.x86_64",
-   "booted": "2026-10-14 05:43:46",
+   "kernel": "6.12.0-211.66.1.el10_2.x86_64",
+   "booted": "2026-10-19 08:31:56",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -851,8 +958,8 @@
    "ip": "192.168.1.104",
    "name": "hv-rocky-linux-7",
    "os": "Rocky Linux 10.2 (Red Quartz)",
-   "kernel": "6.12.0-211.55.1.el10_2.x86_64",
-   "booted": "2026-10-12 07:59:50",
+   "kernel": "6.12.0-211.66.1.el10_2.x86_64",
+   "booted": "2026-10-19 08:52:58",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -862,12 +969,6 @@
      "addr": "::",
      "process": "sshd",
      "component": "sshd"
-    },
-    {
-     "port": 111,
-     "addr": "::",
-     "process": "rpcbind,systemd",
-     "component": "rpcbind"
     },
     {
      "port": 631,
@@ -898,18 +999,6 @@
      "addr": "127.0.0.1",
      "process": "alloy",
      "component": "alloy"
-    },
-    {
-     "port": 39535,
-     "addr": "::",
-     "process": "rpc.statd",
-     "component": "rpc-statd"
-    },
-    {
-     "port": 46951,
-     "addr": "0.0.0.0",
-     "process": "rpc.statd",
-     "component": "rpc-statd"
     }
    ],
    "role": "RHCSA practice workstation"
@@ -918,8 +1007,8 @@
    "ip": "192.168.1.105",
    "name": "utility.lab",
    "os": "Rocky Linux 10.2 (Red Quartz)",
-   "kernel": "6.12.0-211.55.1.el10_2.x86_64",
-   "booted": "2026-10-05 23:31:14",
+   "kernel": "6.12.0-211.66.1.el10_2.x86_64",
+   "booted": "2026-10-19 08:52:58",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -932,7 +1021,7 @@
     },
     {
      "port": 53,
-     "addr": "fd4a:4a9b:c79e:4220:215:5dff:fe01:dd32",
+     "addr": "::1",
      "process": "dnsmasq",
      "component": "dnsmasq"
     },
@@ -985,28 +1074,28 @@
      "component": "nfs-mountd"
     },
     {
-     "port": 37293,
+     "port": 38901,
+     "addr": "0.0.0.0",
+     "process": "",
+     "component": ""
+    },
+    {
+     "port": 39517,
      "addr": "::",
      "process": "",
      "component": ""
     },
     {
-     "port": 37411,
+     "port": 56809,
      "addr": "0.0.0.0",
      "process": "rpc.statd",
      "component": "rpc-statd"
     },
     {
-     "port": 39969,
+     "port": 57871,
      "addr": "::",
      "process": "rpc.statd",
      "component": "rpc-statd"
-    },
-    {
-     "port": 42763,
-     "addr": "0.0.0.0",
-     "process": "",
-     "component": ""
     }
    ],
    "role": "RHCSA utility server with dnf mirror, DNS, NFS"
@@ -1120,37 +1209,6 @@
    ]
   },
   {
-   "src": "192.168.1.98/proc/mcropsey/generate_traffic.py",
-   "dst": "192.168.1.102/unit/ai-sim.service",
-   "ports": [
-    8011,
-    8012
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.101/unit/prometheus-podman-exporter.service",
-   "ports": [
-    9882
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.100/unit/prometheus-podman-exporter.service",
-   "ports": [
-    9882
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/node_exporter.service",
    "ports": [
@@ -1162,7 +1220,27 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.103/unit/node_exporter.service",
+   "dst": "192.168.1.100/docker/root/cadvisor",
+   "ports": [
+    8081
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.101/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.75/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1182,7 +1260,77 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.98/docker/root/cadvisor",
+   "ports": [
+    8081
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.76/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.101/unit/prometheus-podman-exporter.service",
+   "ports": [
+    9882
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.99/unit/k3s.service",
+   "ports": [
+    10250
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/podman-root/root/alertwatch",
+   "dst": "192.168.1.98/docker/root/alertmanager",
+   "ports": [
+    9093
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.100/unit/prometheus-podman-exporter.service",
+   "ports": [
+    9882
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.104/unit/prometheus-podman-exporter.service",
+   "ports": [
+    9882
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.103/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1212,27 +1360,7 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.105/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.98/docker/root/cadvisor",
-   "ports": [
-    8081
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.75/unit/node_exporter.service",
+   "dst": "192.168.1.102/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1251,40 +1379,11 @@
    ]
   },
   {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.100/docker/root/cadvisor",
+   "src": "192.168.1.98/proc/mcropsey/generate_traffic.py",
+   "dst": "192.168.1.102/unit/ai-sim.service",
    "ports": [
-    8081
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.99/unit/k3s.service",
-   "ports": [
-    10250
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.101/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.102/unit/node_exporter.service",
-   "ports": [
-    9100
+    8011,
+    8012
    ],
    "how": [
     "observed"
@@ -1312,6 +1411,16 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.105/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.102/unit/prometheus-podman-exporter.service",
    "ports": [
     9882
@@ -1321,13 +1430,83 @@
    ]
   },
   {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.104/unit/prometheus-podman-exporter.service",
+   "src": "192.168.1.98/unit/alertwatch-heartbeat.service",
+   "dst": "192.168.1.101/podman-root/root/litellm",
    "ports": [
-    9882
+    4000
    ],
    "how": [
-    "observed"
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/alertwatch-heartbeat.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/alertwatch-heartbeat.service",
+   "dst": "192.168.1.98/docker/root/prometheus",
+   "ports": [
+    9090
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/alertwatch-heartbeat.service",
+   "dst": "192.168.1.98/docker/root/alertmanager",
+   "ports": [
+    9093
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/alertwatch.service",
+   "dst": "192.168.1.101/podman-root/root/litellm",
+   "ports": [
+    4000
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/alertwatch.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/alertwatch.service",
+   "dst": "192.168.1.98/docker/root/prometheus",
+   "ports": [
+    9090
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/alertwatch.service",
+   "dst": "192.168.1.98/docker/root/alertmanager",
+   "ports": [
+    9093
+   ],
+   "how": [
+    "configured"
    ]
   },
   {
@@ -1402,6 +1581,46 @@
   },
   {
    "src": "192.168.1.98/unit/labwatch.service",
+   "dst": "192.168.1.98/docker/root/alertmanager",
+   "ports": [
+    9093
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/llmredteam.service",
+   "dst": "192.168.1.101/podman-root/root/litellm",
+   "ports": [
+    4000
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/llmredteam.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/llmredteam.service",
+   "dst": "192.168.1.98/docker/root/prometheus",
+   "ports": [
+    9090
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/llmredteam.service",
    "dst": "192.168.1.98/docker/root/alertmanager",
    "ports": [
     9093
@@ -1521,6 +1740,46 @@
    ]
   },
   {
+   "src": "192.168.1.98/unit/weekrollup.service",
+   "dst": "192.168.1.101/podman-root/root/litellm",
+   "ports": [
+    4000
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/weekrollup.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/weekrollup.service",
+   "dst": "192.168.1.98/docker/root/prometheus",
+   "ports": [
+    9090
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/weekrollup.service",
+   "dst": "192.168.1.98/docker/root/alertmanager",
+   "ports": [
+    9093
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
    "src": "192.168.1.99/unit/cloudflared.service",
    "dst": "192.168.1.100/podman-root/root/kong",
    "ports": [
@@ -1531,20 +1790,20 @@
    ]
   },
   {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.101/podman-root/root/dvga",
+   "src": "192.168.1.99/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    5013
+    3100
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.99/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.101/podman-root/root/dvga",
    "ports": [
-    3100
+    5013
    ],
    "how": [
     "observed"
@@ -5892,6 +6151,26 @@
    "description": "cron (dir)",
    "classified_by": "rules"
   },
+  "192.168.1.98/podman-root/root/alertwatch": {
+   "id": "192.168.1.98/podman-root/root/alertwatch",
+   "host": "192.168.1.98",
+   "hosts": [
+    "192.168.1.98"
+   ],
+   "kind": "podman-root",
+   "name": "alertwatch",
+   "category": "ops",
+   "ai": false,
+   "purpose": "",
+   "state": "running",
+   "ports": [],
+   "image": "localhost/labagents:latest",
+   "detail": "localhost/labagents:latest",
+   "user": "root",
+   "group": "",
+   "baseline": false,
+   "classified_by": "rules"
+  },
   "192.168.1.98/docker/root/prometheus": {
    "id": "192.168.1.98/docker/root/prometheus",
    "host": "192.168.1.98",
@@ -6072,6 +6351,44 @@
    "baseline": false,
    "description": "mikes-agents report exporter (Prometheus metrics + Loki report logs)",
    "classified_by": "llm-cache"
+  },
+  "192.168.1.98/unit/alertwatch-heartbeat.service": {
+   "id": "192.168.1.98/unit/alertwatch-heartbeat.service",
+   "host": "192.168.1.98",
+   "hosts": [
+    "192.168.1.98"
+   ],
+   "kind": "timer",
+   "name": "alertwatch-heartbeat",
+   "category": "platform",
+   "ai": false,
+   "purpose": "Alert triage heartbeat (alertwatch-agent --test)",
+   "state": "inactive",
+   "schedule": "*-*-* 07:00:00 America/Chicago",
+   "detail": "/usr/bin/podman run localhost/labagents:latest",
+   "user": "root",
+   "baseline": false,
+   "description": "Alert triage heartbeat (alertwatch-agent --test)",
+   "classified_by": "rules"
+  },
+  "192.168.1.98/unit/alertwatch.service": {
+   "id": "192.168.1.98/unit/alertwatch.service",
+   "host": "192.168.1.98",
+   "hosts": [
+    "192.168.1.98"
+   ],
+   "kind": "systemd",
+   "name": "alertwatch",
+   "category": "observability",
+   "ai": false,
+   "purpose": "Alert triage receiver (alertwatch-agent) - Alertmanager webhook on :9435",
+   "state": "running",
+   "schedule": "",
+   "detail": "/usr/bin/podman run localhost/labagents:latest",
+   "user": "root",
+   "baseline": false,
+   "description": "Alert triage receiver (alertwatch-agent) - Alertmanager webhook on :9435",
+   "classified_by": "rules"
   },
   "192.168.1.98/unit/alloy.service": {
    "id": "192.168.1.98/unit/alloy.service",
@@ -6293,7 +6610,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "failed",
+   "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -6470,6 +6787,25 @@
    "user": "root",
    "baseline": true,
    "description": "libstoragemgmt plug-in server daemon",
+   "classified_by": "rules"
+  },
+  "192.168.1.98/unit/llmredteam.service": {
+   "id": "192.168.1.98/unit/llmredteam.service",
+   "host": "192.168.1.98",
+   "hosts": [
+    "192.168.1.98"
+   ],
+   "kind": "timer",
+   "name": "llmredteam",
+   "category": "platform",
+   "ai": false,
+   "purpose": "Weekly LLM guardrail eval (llmredteam-agent)",
+   "state": "inactive",
+   "schedule": "Sun *-*-* 06:50:00 America/Chicago",
+   "detail": "/usr/bin/podman run localhost/labagents:latest",
+   "user": "root",
+   "baseline": false,
+   "description": "Weekly LLM guardrail eval (llmredteam-agent)",
    "classified_by": "rules"
   },
   "192.168.1.98/unit/logrotate.service": {
@@ -7023,6 +7359,25 @@
    "description": "User Manager for UID 42",
    "classified_by": "rules"
   },
+  "192.168.1.98/unit/weekrollup.service": {
+   "id": "192.168.1.98/unit/weekrollup.service",
+   "host": "192.168.1.98",
+   "hosts": [
+    "192.168.1.98"
+   ],
+   "kind": "timer",
+   "name": "weekrollup",
+   "category": "ai-agent",
+   "ai": true,
+   "purpose": "Weekly lab digest + agent quality check (weekrollup-agent)",
+   "state": "inactive",
+   "schedule": "Fri *-*-* 06:55:00 America/Chicago",
+   "detail": "/usr/bin/podman run SECNEWS_REPORTS=/secnews-reports",
+   "user": "root",
+   "baseline": false,
+   "description": "Weekly lab digest + agent quality check (weekrollup-agent)",
+   "classified_by": "rules"
+  },
   "192.168.1.98/unit/wpa_supplicant.service": {
    "id": "192.168.1.98/unit/wpa_supplicant.service",
    "host": "192.168.1.98",
@@ -7124,14 +7479,14 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator on hv-rocky-linux-1.",
+   "purpose": "long-running python3 outside any service (up 19.1h)",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
-   "count": 2,
-   "description": "long-running python3 outside any service (up 271.4h)",
-   "classified_by": "llm"
+   "count": 1,
+   "description": "long-running python3 outside any service (up 19.1h)",
+   "classified_by": "rules"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
    "id": "192.168.1.99/unit/accounts-daemon.service",
@@ -9262,14 +9617,14 @@
    "baseline": false,
    "classified_by": "llm-cache"
   },
-  "192.168.1.101/unit/13d251c52eb6e80f9798d1bc53e20c1c420e2fd2955a6343368b35102e0ab7da-38d06c1bd58de447.service": {
-   "id": "192.168.1.101/unit/13d251c52eb6e80f9798d1bc53e20c1c420e2fd2955a6343368b35102e0ab7da-38d06c1bd58de447.service",
+  "192.168.1.101/unit/13d251c52eb6e80f9798d1bc53e20c1c420e2fd2955a6343368b35102e0ab7da-77719f7392e0e434.service": {
+   "id": "192.168.1.101/unit/13d251c52eb6e80f9798d1bc53e20c1c420e2fd2955a6343368b35102e0ab7da-77719f7392e0e434.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "13d251c52eb6e80f9798d1bc53e20c1c420e2fd2955a6343368b35102e0ab7da-38d06c1bd58de447",
+   "name": "13d251c52eb6e80f9798d1bc53e20c1c420e2fd2955a6343368b35102e0ab7da-77719f7392e0e434",
    "category": "platform",
    "ai": false,
    "purpose": "/usr/bin/podman healthcheck run 13d251c52eb6e80f9798d1bc53e20c1c420e2fd2955a6343368b35102e0ab7da",
@@ -9281,33 +9636,14 @@
    "description": "/usr/bin/podman healthcheck run 13d251c52eb6e80f9798d1bc53e20c1c420e2fd2955a6343368b35102e0ab7da",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/1ac80b9132ba6f8fdae8210f2358db3665f12db9294daa3e60f3a693e734cb9d-6e390a8061bfabfa.service": {
-   "id": "192.168.1.101/unit/1ac80b9132ba6f8fdae8210f2358db3665f12db9294daa3e60f3a693e734cb9d-6e390a8061bfabfa.service",
+  "192.168.1.101/unit/36c474c581a3a7459a7439a746c3064935fb3b5e852f82d3edb3bfbaeee9199e-4d2cf43425d49ab0.service": {
+   "id": "192.168.1.101/unit/36c474c581a3a7459a7439a746c3064935fb3b5e852f82d3edb3bfbaeee9199e-4d2cf43425d49ab0.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "1ac80b9132ba6f8fdae8210f2358db3665f12db9294daa3e60f3a693e734cb9d-6e390a8061bfabfa",
-   "category": "platform",
-   "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run 1ac80b9132ba6f8fdae8210f2358db3665f12db9294daa3e60f3a693e734cb9d",
-   "state": "inactive",
-   "schedule": "",
-   "detail": "/usr/bin/podman healthcheck",
-   "user": "root",
-   "baseline": true,
-   "description": "/usr/bin/podman healthcheck run 1ac80b9132ba6f8fdae8210f2358db3665f12db9294daa3e60f3a693e734cb9d",
-   "classified_by": "rules"
-  },
-  "192.168.1.101/unit/36c474c581a3a7459a7439a746c3064935fb3b5e852f82d3edb3bfbaeee9199e-5c27b78b84694313.service": {
-   "id": "192.168.1.101/unit/36c474c581a3a7459a7439a746c3064935fb3b5e852f82d3edb3bfbaeee9199e-5c27b78b84694313.service",
-   "host": "192.168.1.101",
-   "hosts": [
-    "192.168.1.101"
-   ],
-   "kind": "timer",
-   "name": "36c474c581a3a7459a7439a746c3064935fb3b5e852f82d3edb3bfbaeee9199e-5c27b78b84694313",
+   "name": "36c474c581a3a7459a7439a746c3064935fb3b5e852f82d3edb3bfbaeee9199e-4d2cf43425d49ab0",
    "category": "platform",
    "ai": false,
    "purpose": "/usr/bin/podman healthcheck run 36c474c581a3a7459a7439a746c3064935fb3b5e852f82d3edb3bfbaeee9199e",
@@ -9319,14 +9655,14 @@
    "description": "/usr/bin/podman healthcheck run 36c474c581a3a7459a7439a746c3064935fb3b5e852f82d3edb3bfbaeee9199e",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/5fd0d1877f0948e2ff59aef404180f6b98543a1815dc15ebce2a54e8dfb6df13-6b40d14420400c9a.service": {
-   "id": "192.168.1.101/unit/5fd0d1877f0948e2ff59aef404180f6b98543a1815dc15ebce2a54e8dfb6df13-6b40d14420400c9a.service",
+  "192.168.1.101/unit/5fd0d1877f0948e2ff59aef404180f6b98543a1815dc15ebce2a54e8dfb6df13-756bce29d66b055.service": {
+   "id": "192.168.1.101/unit/5fd0d1877f0948e2ff59aef404180f6b98543a1815dc15ebce2a54e8dfb6df13-756bce29d66b055.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "5fd0d1877f0948e2ff59aef404180f6b98543a1815dc15ebce2a54e8dfb6df13-6b40d14420400c9a",
+   "name": "5fd0d1877f0948e2ff59aef404180f6b98543a1815dc15ebce2a54e8dfb6df13-756bce29d66b055",
    "category": "platform",
    "ai": false,
    "purpose": "/usr/bin/podman healthcheck run 5fd0d1877f0948e2ff59aef404180f6b98543a1815dc15ebce2a54e8dfb6df13",
@@ -9338,14 +9674,14 @@
    "description": "/usr/bin/podman healthcheck run 5fd0d1877f0948e2ff59aef404180f6b98543a1815dc15ebce2a54e8dfb6df13",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/8796eb0a4d7f8c56ea2cdc46626982fb212c0e57e2cfee7fbcb01ad16b37a38c-3ec6191e5dc15d2c.service": {
-   "id": "192.168.1.101/unit/8796eb0a4d7f8c56ea2cdc46626982fb212c0e57e2cfee7fbcb01ad16b37a38c-3ec6191e5dc15d2c.service",
+  "192.168.1.101/unit/8796eb0a4d7f8c56ea2cdc46626982fb212c0e57e2cfee7fbcb01ad16b37a38c-737be395c34adfbe.service": {
+   "id": "192.168.1.101/unit/8796eb0a4d7f8c56ea2cdc46626982fb212c0e57e2cfee7fbcb01ad16b37a38c-737be395c34adfbe.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "8796eb0a4d7f8c56ea2cdc46626982fb212c0e57e2cfee7fbcb01ad16b37a38c-3ec6191e5dc15d2c",
+   "name": "8796eb0a4d7f8c56ea2cdc46626982fb212c0e57e2cfee7fbcb01ad16b37a38c-737be395c34adfbe",
    "category": "platform",
    "ai": false,
    "purpose": "/usr/bin/podman healthcheck run 8796eb0a4d7f8c56ea2cdc46626982fb212c0e57e2cfee7fbcb01ad16b37a38c",
@@ -9357,14 +9693,14 @@
    "description": "/usr/bin/podman healthcheck run 8796eb0a4d7f8c56ea2cdc46626982fb212c0e57e2cfee7fbcb01ad16b37a38c",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/8df83783cea24bcb0ad1dcd0e8dcfcfdd061219b21d2fcadfbb2c8391254a369-138f692c2ac63d0a.service": {
-   "id": "192.168.1.101/unit/8df83783cea24bcb0ad1dcd0e8dcfcfdd061219b21d2fcadfbb2c8391254a369-138f692c2ac63d0a.service",
+  "192.168.1.101/unit/8df83783cea24bcb0ad1dcd0e8dcfcfdd061219b21d2fcadfbb2c8391254a369-64caf61842087e57.service": {
+   "id": "192.168.1.101/unit/8df83783cea24bcb0ad1dcd0e8dcfcfdd061219b21d2fcadfbb2c8391254a369-64caf61842087e57.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "8df83783cea24bcb0ad1dcd0e8dcfcfdd061219b21d2fcadfbb2c8391254a369-138f692c2ac63d0a",
+   "name": "8df83783cea24bcb0ad1dcd0e8dcfcfdd061219b21d2fcadfbb2c8391254a369-64caf61842087e57",
    "category": "platform",
    "ai": false,
    "purpose": "/usr/bin/podman healthcheck run 8df83783cea24bcb0ad1dcd0e8dcfcfdd061219b21d2fcadfbb2c8391254a369",
@@ -9471,14 +9807,33 @@
    "description": "Avahi mDNS/DNS-SD Stack",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/b2e532efc12147c9cd040d6828d44c7b37936a073596be485b449acd5dc879d7-69be6e6c40921b49.service": {
-   "id": "192.168.1.101/unit/b2e532efc12147c9cd040d6828d44c7b37936a073596be485b449acd5dc879d7-69be6e6c40921b49.service",
+  "192.168.1.101/unit/b12ea04823fa541ed589e1816871cdac2c4bad05f759833e6a9a9ffd6587667d-1887e803db01e7dc.service": {
+   "id": "192.168.1.101/unit/b12ea04823fa541ed589e1816871cdac2c4bad05f759833e6a9a9ffd6587667d-1887e803db01e7dc.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "b2e532efc12147c9cd040d6828d44c7b37936a073596be485b449acd5dc879d7-69be6e6c40921b49",
+   "name": "b12ea04823fa541ed589e1816871cdac2c4bad05f759833e6a9a9ffd6587667d-1887e803db01e7dc",
+   "category": "platform",
+   "ai": false,
+   "purpose": "/usr/bin/podman healthcheck run b12ea04823fa541ed589e1816871cdac2c4bad05f759833e6a9a9ffd6587667d",
+   "state": "inactive",
+   "schedule": "",
+   "detail": "/usr/bin/podman healthcheck",
+   "user": "root",
+   "baseline": true,
+   "description": "/usr/bin/podman healthcheck run b12ea04823fa541ed589e1816871cdac2c4bad05f759833e6a9a9ffd6587667d",
+   "classified_by": "rules"
+  },
+  "192.168.1.101/unit/b2e532efc12147c9cd040d6828d44c7b37936a073596be485b449acd5dc879d7-5e40f2cd28ab5239.service": {
+   "id": "192.168.1.101/unit/b2e532efc12147c9cd040d6828d44c7b37936a073596be485b449acd5dc879d7-5e40f2cd28ab5239.service",
+   "host": "192.168.1.101",
+   "hosts": [
+    "192.168.1.101"
+   ],
+   "kind": "timer",
+   "name": "b2e532efc12147c9cd040d6828d44c7b37936a073596be485b449acd5dc879d7-5e40f2cd28ab5239",
    "category": "platform",
    "ai": false,
    "purpose": "/usr/bin/podman healthcheck run b2e532efc12147c9cd040d6828d44c7b37936a073596be485b449acd5dc879d7",
@@ -9490,14 +9845,14 @@
    "description": "/usr/bin/podman healthcheck run b2e532efc12147c9cd040d6828d44c7b37936a073596be485b449acd5dc879d7",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/c440ffcd9b1ecb5825fac12b892db32f1e540de7009c02872dfc27b172a0c4fb-54d462b0abb2c66a.service": {
-   "id": "192.168.1.101/unit/c440ffcd9b1ecb5825fac12b892db32f1e540de7009c02872dfc27b172a0c4fb-54d462b0abb2c66a.service",
+  "192.168.1.101/unit/c440ffcd9b1ecb5825fac12b892db32f1e540de7009c02872dfc27b172a0c4fb-3d370fdf0a34d11.service": {
+   "id": "192.168.1.101/unit/c440ffcd9b1ecb5825fac12b892db32f1e540de7009c02872dfc27b172a0c4fb-3d370fdf0a34d11.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "c440ffcd9b1ecb5825fac12b892db32f1e540de7009c02872dfc27b172a0c4fb-54d462b0abb2c66a",
+   "name": "c440ffcd9b1ecb5825fac12b892db32f1e540de7009c02872dfc27b172a0c4fb-3d370fdf0a34d11",
    "category": "platform",
    "ai": false,
    "purpose": "/usr/bin/podman healthcheck run c440ffcd9b1ecb5825fac12b892db32f1e540de7009c02872dfc27b172a0c4fb",
@@ -9509,14 +9864,14 @@
    "description": "/usr/bin/podman healthcheck run c440ffcd9b1ecb5825fac12b892db32f1e540de7009c02872dfc27b172a0c4fb",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/cbc2b910c8c2c3771ce63e1a0a8da02494336489261a21ec6d6d6da0a87bc4ec-65d56ffad9a1610.service": {
-   "id": "192.168.1.101/unit/cbc2b910c8c2c3771ce63e1a0a8da02494336489261a21ec6d6d6da0a87bc4ec-65d56ffad9a1610.service",
+  "192.168.1.101/unit/cbc2b910c8c2c3771ce63e1a0a8da02494336489261a21ec6d6d6da0a87bc4ec-14c5718f28cbd46.service": {
+   "id": "192.168.1.101/unit/cbc2b910c8c2c3771ce63e1a0a8da02494336489261a21ec6d6d6da0a87bc4ec-14c5718f28cbd46.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "cbc2b910c8c2c3771ce63e1a0a8da02494336489261a21ec6d6d6da0a87bc4ec-65d56ffad9a1610",
+   "name": "cbc2b910c8c2c3771ce63e1a0a8da02494336489261a21ec6d6d6da0a87bc4ec-14c5718f28cbd46",
    "category": "platform",
    "ai": false,
    "purpose": "/usr/bin/podman healthcheck run cbc2b910c8c2c3771ce63e1a0a8da02494336489261a21ec6d6d6da0a87bc4ec",
@@ -9642,14 +9997,14 @@
    "description": "dnf makecache",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/f0a1bd3c145dbf20e009c3c9162d7acc7d56d21dd082b1a1015c59658d3d6f82-4216add2029ea138.service": {
-   "id": "192.168.1.101/unit/f0a1bd3c145dbf20e009c3c9162d7acc7d56d21dd082b1a1015c59658d3d6f82-4216add2029ea138.service",
+  "192.168.1.101/unit/f0a1bd3c145dbf20e009c3c9162d7acc7d56d21dd082b1a1015c59658d3d6f82-65323c79de8e1fc5.service": {
+   "id": "192.168.1.101/unit/f0a1bd3c145dbf20e009c3c9162d7acc7d56d21dd082b1a1015c59658d3d6f82-65323c79de8e1fc5.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "f0a1bd3c145dbf20e009c3c9162d7acc7d56d21dd082b1a1015c59658d3d6f82-4216add2029ea138",
+   "name": "f0a1bd3c145dbf20e009c3c9162d7acc7d56d21dd082b1a1015c59658d3d6f82-65323c79de8e1fc5",
    "category": "platform",
    "ai": false,
    "purpose": "/usr/bin/podman healthcheck run f0a1bd3c145dbf20e009c3c9162d7acc7d56d21dd082b1a1015c59658d3d6f82",
@@ -10602,7 +10957,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "failed",
+   "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -11554,25 +11909,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/fwupd.service": {
-   "id": "192.168.1.103/unit/fwupd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.103/unit/gdm.service": {
@@ -12768,44 +13104,6 @@
    "description": "RAID setup health check",
    "classified_by": "rules"
   },
-  "192.168.1.104/unit/rpcbind.service": {
-   "id": "192.168.1.104/unit/rpcbind.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "rpcbind",
-   "category": "ops",
-   "ai": false,
-   "purpose": "RPC Bind",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/rpcbind $RPCBIND_ARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "RPC Bind",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/rpc-statd.service": {
-   "id": "192.168.1.104/unit/rpc-statd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "rpc-statd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "NFS status monitor for NFSv2/3 locking.",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/rpc.statd",
-   "user": "root",
-   "baseline": true,
-   "description": "NFS status monitor for NFSv2/3 locking.",
-   "classified_by": "rules"
-  },
   "192.168.1.104/unit/rsyslog.service": {
    "id": "192.168.1.104/unit/rsyslog.service",
    "host": "192.168.1.104",
@@ -13465,25 +13763,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/fwupd.service": {
-   "id": "192.168.1.105/unit/fwupd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.105/unit/gdm.service": {
