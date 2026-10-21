@@ -1,114 +1,46 @@
 {
- "generated_at": "2026-10-20T05:40:14",
- "fingerprint": "0850b4710a04b4c9",
- "change_summary": "+5 (alertwatch, alertwatch-heartbeat, alertwatch, llmredteam\u2026); 8 host changes",
+ "generated_at": "2026-10-21T05:40:14",
+ "fingerprint": "059e67b2ec84f198",
+ "change_summary": "4 changed",
  "changes": {
   "first_run": false,
-  "added": [
+  "added": [],
+  "removed": [],
+  "changed": [
    {
-    "id": "192.168.1.98/podman-root/root/alertwatch",
-    "name": "alertwatch",
+    "id": "192.168.1.98/unit/cvewatch.service",
+    "name": "cvewatch",
     "host": "192.168.1.98",
-    "kind": "podman-root",
-    "category": "ops"
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
    },
    {
-    "id": "192.168.1.98/unit/alertwatch-heartbeat.service",
-    "name": "alertwatch-heartbeat",
+    "id": "192.168.1.98/unit/secnews.service",
+    "name": "secnews",
     "host": "192.168.1.98",
-    "kind": "timer",
-    "category": "platform"
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
    },
    {
-    "id": "192.168.1.98/unit/alertwatch.service",
-    "name": "alertwatch",
+    "id": "192.168.1.98/unit/labwatch.service",
+    "name": "labwatch",
     "host": "192.168.1.98",
-    "kind": "systemd",
-    "category": "observability"
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
    },
    {
-    "id": "192.168.1.98/unit/llmredteam.service",
-    "name": "llmredteam",
+    "id": "192.168.1.98/unit/patchwatch.service",
+    "name": "patchwatch",
     "host": "192.168.1.98",
-    "kind": "timer",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.98/unit/weekrollup.service",
-    "name": "weekrollup",
-    "host": "192.168.1.98",
-    "kind": "timer",
-    "category": "ai-agent"
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
    }
   ],
-  "removed": [],
-  "changed": [],
-  "hosts": [
-   {
-    "ip": "192.168.1.98",
-    "name": "hv-rocky-linux-1",
-    "kernel": [
-     "5.14.0-687.54.1.el9_8.x86_64",
-     "5.14.0-687.58.1.el9_8.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.99",
-    "name": "hv-rocky-linux-2",
-    "kernel": [
-     "5.14.0-687.54.1.el9_8.x86_64",
-     "5.14.0-687.58.1.el9_8.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.100",
-    "name": "hv-rocky-linux-3",
-    "kernel": [
-     "5.14.0-687.54.1.el9_8.x86_64",
-     "5.14.0-687.57.1.el9_8.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.101",
-    "name": "hv-rocky-linux-4",
-    "kernel": [
-     "5.14.0-687.54.1.el9_8.x86_64",
-     "5.14.0-687.58.1.el9_8.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.102",
-    "name": "hv-rocky-linux-5",
-    "kernel": [
-     "5.14.0-687.54.1.el9_8.x86_64",
-     "5.14.0-687.58.1.el9_8.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.103",
-    "name": "hv-rocky-linux-6",
-    "kernel": [
-     "6.12.0-211.55.1.el10_2.x86_64",
-     "6.12.0-211.66.1.el10_2.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.104",
-    "name": "hv-rocky-linux-7",
-    "kernel": [
-     "6.12.0-211.55.1.el10_2.x86_64",
-     "6.12.0-211.66.1.el10_2.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.105",
-    "name": "utility.lab",
-    "kernel": [
-     "6.12.0-211.55.1.el10_2.x86_64",
-     "6.12.0-211.66.1.el10_2.x86_64"
-    ]
-   }
-  ]
+  "hosts": []
  },
  "hosts": {
   "192.168.1.75": {
@@ -346,7 +278,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-20 04:00:22",
+   "booted": "2026-10-21 04:00:36",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -388,7 +320,7 @@
      "component": "alloy"
     },
     {
-     "port": 46281,
+     "port": 45053,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1179,20 +1111,20 @@
    ]
   },
   {
-   "src": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "src": "192.168.1.76/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    19001
+    3100
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.76/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
-    3100
+    19001
    ],
    "how": [
     "observed"
@@ -1299,16 +1231,6 @@
    ]
   },
   {
-   "src": "192.168.1.98/podman-root/root/alertwatch",
-   "dst": "192.168.1.98/docker/root/alertmanager",
-   "ports": [
-    9093
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/prometheus-podman-exporter.service",
    "ports": [
@@ -1350,6 +1272,16 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.85/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.98/unit/node_exporter.service",
    "ports": [
     9100
@@ -1369,21 +1301,21 @@
    ]
   },
   {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
+   "src": "192.168.1.98/proc/mcropsey/generate_traffic.py",
+   "dst": "192.168.1.102/unit/ai-sim.service",
    "ports": [
-    9100
+    8011,
+    8012
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.98/proc/mcropsey/generate_traffic.py",
-   "dst": "192.168.1.102/unit/ai-sim.service",
+   "src": "192.168.1.98/podman-root/root/alertwatch",
+   "dst": "192.168.1.98/docker/root/alertmanager",
    "ports": [
-    8011,
-    8012
+    9093
    ],
    "how": [
     "observed"
@@ -1850,16 +1782,6 @@
    ]
   },
   {
-   "src": "192.168.1.103/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.104/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
@@ -2107,25 +2029,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.75/unit/fwupd.service": {
-   "id": "192.168.1.75/unit/fwupd.service",
-   "host": "192.168.1.75",
-   "hosts": [
-    "192.168.1.75"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.75/unit/getty@tty1.service": {
@@ -6572,7 +6475,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Matches CVEs to lab software.",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:30:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -6762,7 +6665,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Generates lab health briefings.",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:15:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -6971,7 +6874,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Daily AI patch and image drift planning",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:45:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -7066,7 +6969,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Creates daily cybersecurity news digest.",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:00:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/secnews:latest",
    "user": "root",
@@ -7479,13 +7382,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "long-running python3 outside any service (up 19.1h)",
+   "purpose": "long-running python3 outside any service (up 43.1h)",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running python3 outside any service (up 19.1h)",
+   "description": "long-running python3 outside any service (up 43.1h)",
    "classified_by": "rules"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
