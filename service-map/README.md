@@ -1,11 +1,13 @@
 # Lab service map
 
-Generated **2026-10-21 08:38** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-10-21 08:49** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- ➕ `claude` (process on hv-rocky-linux-1)
-- ➕ `mcp-remote` (process on hv-rocky-linux-1)
+- `patchwatch` on hv-rocky-linux-1: state failed → inactive
+- `labwatch` on hv-rocky-linux-1: state failed → inactive
+- `secnews` on hv-rocky-linux-1: state failed → inactive
+- `cvewatch` on hv-rocky-linux-1: state failed → inactive
 
 ## AI agents & dependencies
 
@@ -50,6 +52,8 @@ flowchart LR
   subgraph n27d5482e["outside the map"]
     nda547473["LM Studio (qwen3.8-27b, RTX 5090)<br/><small>external</small>"]
   end
+  n02586a2d -->|4000| ne2915bec
+  n5b143553 -->|8009| n0286a0d8
   n48c4898e -->|8011,8012| nfaf72a42
   n3fd6a072 -.->|4000| ne2915bec
   n21cfb59a -.->|4000| ne2915bec
@@ -65,7 +69,6 @@ flowchart LR
   n8203cbf4 -.->|3100| n941b31c1
   n8203cbf4 -.->|9090| n02586a2d
   n8203cbf4 -.->|9093| n8f651301
-  n5b143553 -.->|8009| n0286a0d8
   n58c79f44 -.->|8009| n0286a0d8
   nce8753db -.->|4000| ne2915bec
   nce8753db -.->|3100| n941b31c1
@@ -97,19 +100,19 @@ flowchart LR
 | **hv-rocky-linux-5** `192.168.1.102` | Noname sensor running crAPI, Noname, vampi MCP, AI sim | 7 | 0 | 1 | 0 | 🤖 ai-sim, 🤖 crapi-mcp, 🤖 noname-mcp, 🤖 vampi-mcp, alloy, node_exporter, prometheus-podman-exporter, noname-sensor |
 | **hv-rocky-linux-6** `192.168.1.103` | RHCSA practice workstation | 2 | 0 | 0 | 0 | alloy, node_exporter |
 | **hv-rocky-linux-7** `192.168.1.104` | RHCSA practice workstation | 3 | 0 | 0 | 0 | alloy, node_exporter, prometheus-podman-exporter |
-| **utility.lab** `192.168.1.105` | RHCSA utility server with dnf mirror, DNS, NFS | 5 | 0 | 0 | 0 | alloy, node_exporter, dnsmasq, httpd, nfs-mountd |
+| **utility** `192.168.1.105` | RHCSA utility server with dnf mirror, DNS, NFS | 5 | 0 | 0 | 0 | alloy, node_exporter, dnsmasq, httpd, nfs-mountd |
 
 ## AI components
 
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
-| claude | hv-rocky-linux-1 | process | AI agents | Long-running Claude AI coding assistant session. |  |
+| claude | hv-rocky-linux-1 | process | AI agents | Runs a Claude AI assistant session. |  |
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator script. |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator on hv-rocky-linux-1. |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | llmredteam | hv-rocky-linux-1 | timer | AI agents | Weekly LLM guardrail evaluation agent. | Sun *-*-* 06:50:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
-| mcp-remote | hv-rocky-linux-1 | process | AI agents | Long-running MCP remote client process. |  |
+| mcp-remote | hv-rocky-linux-1 | process | AI agents | Long-running MCP remote client on hv-rocky-linux-1. |  |
 | mcp-sweep | hv-rocky-linux-1 | systemd | AI agents | Runs read-only MCP sweeps. |  |
 | patchwatch | hv-rocky-linux-1 | timer | AI agents | Daily AI patch and image drift planning | *-*-* 06:45:00 America/Chicago |
 | secnews | hv-rocky-linux-1 | timer | AI agents | Creates daily cybersecurity news digest. | *-*-* 06:00:00 America/Chicago |
@@ -183,16 +186,16 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| claude | process | AI agents (AI) | Long-running Claude AI coding assistant session. | running |  | `claude` |
-| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator script. | running |  | `~/ai-sim/generate_traffic.py` |
-| mcp-remote | process | AI agents (AI) | Long-running MCP remote client process. | running |  | `~/.npm/_npx/705d23756ff7dacc/node_modules/.bin/mcp-remote` |
+| claude | process | AI agents (AI) | Runs a Claude AI assistant session. | running |  | `claude` |
+| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator on hv-rocky-linux-1. | running |  | `~/ai-sim/generate_traffic.py` |
+| mcp-remote | process | AI agents (AI) | Long-running MCP remote client on hv-rocky-linux-1. | running |  | `~/.npm/_npx/705d23756ff7dacc/node_modules/.bin/mcp-remote` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
-| cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | failed | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
-| labwatch | timer | AI agents (AI) | Generates lab health briefings. | failed | *-*-* 06:15:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
+| cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | inactive | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
+| labwatch | timer | AI agents (AI) | Generates lab health briefings. | inactive | *-*-* 06:15:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
 | llmredteam | timer | AI agents (AI) | Weekly LLM guardrail evaluation agent. | inactive | Sun *-*-* 06:50:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
-| patchwatch | timer | AI agents (AI) | Daily AI patch and image drift planning | failed | *-*-* 06:45:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
-| secnews | timer | AI agents (AI) | Creates daily cybersecurity news digest. | failed | *-*-* 06:00:00 America/Chicago | `/usr/bin/podman run localhost/secnews:latest` |
+| patchwatch | timer | AI agents (AI) | Daily AI patch and image drift planning | inactive | *-*-* 06:45:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
+| secnews | timer | AI agents (AI) | Creates daily cybersecurity news digest. | inactive | *-*-* 06:00:00 America/Chicago | `/usr/bin/podman run localhost/secnews:latest` |
 | servicemap | timer | AI agents (AI) | Daily SSH inventory and LLM labeling for lab service map | activating | *-*-* 05:40:00 America/Chicago | `/usr/sbin/runuser mcropsey` |
 | weekrollup | timer | AI agents (AI) | Weekly lab digest and agent quality check. | inactive | Fri *-*-* 06:55:00 America/Chicago | `/usr/bin/podman run SECNEWS_REPORTS=/secnews-reports` |
 | alertmanager | docker | Observability | Routes lab monitoring alerts. | running |  | `prom/alertmanager:v0.34.1` |
@@ -307,7 +310,7 @@ flowchart LR
 
 </details>
 
-<details><summary><b>utility.lab</b> (192.168.1.105): 5 components</summary>
+<details><summary><b>utility</b> (192.168.1.105): 5 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
@@ -320,4 +323,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint 5f58cc024c4d9688 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint 746df5a8aaaa1938 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>

@@ -1,27 +1,45 @@
 {
- "generated_at": "2026-10-21T08:38:13",
- "fingerprint": "5f58cc024c4d9688",
- "change_summary": "+2 (claude, mcp-remote)",
+ "generated_at": "2026-10-21T08:49:02",
+ "fingerprint": "746df5a8aaaa1938",
+ "change_summary": "4 changed",
  "changes": {
   "first_run": false,
-  "added": [
+  "added": [],
+  "removed": [],
+  "changed": [
    {
-    "id": "192.168.1.98/proc/mcropsey/claude",
-    "name": "claude",
+    "id": "192.168.1.98/unit/patchwatch.service",
+    "name": "patchwatch",
     "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-agent"
+    "field": "state",
+    "old": "failed",
+    "new": "inactive"
    },
    {
-    "id": "192.168.1.98/proc/mcropsey/mcp-remote",
-    "name": "mcp-remote",
+    "id": "192.168.1.98/unit/labwatch.service",
+    "name": "labwatch",
     "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-agent"
+    "field": "state",
+    "old": "failed",
+    "new": "inactive"
+   },
+   {
+    "id": "192.168.1.98/unit/secnews.service",
+    "name": "secnews",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "failed",
+    "new": "inactive"
+   },
+   {
+    "id": "192.168.1.98/unit/cvewatch.service",
+    "name": "cvewatch",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "failed",
+    "new": "inactive"
    }
   ],
-  "removed": [],
-  "changed": [],
   "hosts": []
  },
  "hosts": {
@@ -919,7 +937,7 @@
   },
   "192.168.1.105": {
    "ip": "192.168.1.105",
-   "name": "utility.lab",
+   "name": "utility",
    "os": "Rocky Linux 10.2 (Red Quartz)",
    "kernel": "6.12.0-211.66.1.el10_2.x86_64",
    "booted": "2026-10-19 08:52:58",
@@ -1073,16 +1091,6 @@
  ],
  "edges": [
   {
-   "src": "192.168.1.75/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
@@ -1093,7 +1101,7 @@
    ]
   },
   {
-   "src": "192.168.1.76/unit/alloy.service",
+   "src": "192.168.1.75/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
@@ -1113,10 +1121,30 @@
    ]
   },
   {
+   "src": "192.168.1.76/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.85/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.101/podman-root/root/litellm",
+   "ports": [
+    4000
    ],
    "how": [
     "observed"
@@ -1239,6 +1267,17 @@
     9100
    ],
    "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/mcp-heartbeat.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured",
     "observed"
    ]
   },
@@ -1528,16 +1567,6 @@
    "dst": "192.168.1.98/docker/root/alertmanager",
    "ports": [
     9093
-   ],
-   "how": [
-    "configured"
-   ]
-  },
-  {
-   "src": "192.168.1.98/unit/mcp-heartbeat.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
    ],
    "how": [
     "configured"
@@ -2116,25 +2145,6 @@
    "baseline": false,
    "description": "Prometheus node_exporter",
    "classified_by": "llm-cache"
-  },
-  "192.168.1.75/unit/packagekit.service": {
-   "id": "192.168.1.75/unit/packagekit.service",
-   "host": "192.168.1.75",
-   "hosts": [
-    "192.168.1.75"
-   ],
-   "kind": "systemd",
-   "name": "packagekit",
-   "category": "ops",
-   "ai": false,
-   "purpose": "PackageKit Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/packagekitd",
-   "user": "root",
-   "baseline": true,
-   "description": "PackageKit Daemon",
-   "classified_by": "rules"
   },
   "192.168.1.75/unit/polkit.service": {
    "id": "192.168.1.75/unit/polkit.service",
@@ -3311,25 +3321,6 @@
    "baseline": false,
    "description": "Prometheus node_exporter",
    "classified_by": "llm-cache"
-  },
-  "192.168.1.76/unit/packagekit.service": {
-   "id": "192.168.1.76/unit/packagekit.service",
-   "host": "192.168.1.76",
-   "hosts": [
-    "192.168.1.76"
-   ],
-   "kind": "systemd",
-   "name": "packagekit",
-   "category": "ops",
-   "ai": false,
-   "purpose": "PackageKit Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/packagekitd",
-   "user": "root",
-   "baseline": true,
-   "description": "PackageKit Daemon",
-   "classified_by": "rules"
   },
   "192.168.1.76/unit/polkit.service": {
    "id": "192.168.1.76/unit/polkit.service",
@@ -4812,25 +4803,6 @@
    "description": "Prometheus node_exporter",
    "classified_by": "llm-cache"
   },
-  "192.168.1.85/unit/packagekit.service": {
-   "id": "192.168.1.85/unit/packagekit.service",
-   "host": "192.168.1.85",
-   "hosts": [
-    "192.168.1.85"
-   ],
-   "kind": "systemd",
-   "name": "packagekit",
-   "category": "ops",
-   "ai": false,
-   "purpose": "PackageKit Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/packagekitd",
-   "user": "root",
-   "baseline": true,
-   "description": "PackageKit Daemon",
-   "classified_by": "rules"
-  },
   "192.168.1.85/unit/plocate-updatedb.service": {
    "id": "192.168.1.85/unit/plocate-updatedb.service",
    "host": "192.168.1.85",
@@ -6101,7 +6073,7 @@
    "user": "root",
    "group": "",
    "baseline": false,
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.98/docker/root/prometheus": {
    "id": "192.168.1.98/docker/root/prometheus",
@@ -6301,7 +6273,7 @@
    "user": "root",
    "baseline": false,
    "description": "Alert triage heartbeat (alertwatch-agent --test)",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.98/unit/alertwatch.service": {
    "id": "192.168.1.98/unit/alertwatch.service",
@@ -6320,7 +6292,7 @@
    "user": "root",
    "baseline": false,
    "description": "Alert triage receiver (alertwatch-agent) - Alertmanager webhook on :9435",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.98/unit/alloy.service": {
    "id": "192.168.1.98/unit/alloy.service",
@@ -6504,7 +6476,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Matches CVEs to lab software.",
-   "state": "failed",
+   "state": "inactive",
    "schedule": "*-*-* 06:30:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -6694,7 +6666,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Generates lab health briefings.",
-   "state": "failed",
+   "state": "inactive",
    "schedule": "*-*-* 06:15:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -6738,7 +6710,7 @@
    "user": "root",
    "baseline": false,
    "description": "Weekly LLM guardrail eval (llmredteam-agent)",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.98/unit/logrotate.service": {
    "id": "192.168.1.98/unit/logrotate.service",
@@ -6903,7 +6875,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Daily AI patch and image drift planning",
-   "state": "failed",
+   "state": "inactive",
    "schedule": "*-*-* 06:45:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -6998,7 +6970,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Creates daily cybersecurity news digest.",
-   "state": "failed",
+   "state": "inactive",
    "schedule": "*-*-* 06:00:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/secnews:latest",
    "user": "root",
@@ -7308,7 +7280,7 @@
    "user": "root",
    "baseline": false,
    "description": "Weekly lab digest + agent quality check (weekrollup-agent)",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.98/unit/wpa_supplicant.service": {
    "id": "192.168.1.98/unit/wpa_supplicant.service",
@@ -7411,13 +7383,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator script.",
+   "purpose": "Long-running AI traffic simulator on hv-rocky-linux-1.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running python3 outside any service (up 46.1h)",
+   "description": "long-running python3 outside any service (up 46.2h)",
    "classified_by": "llm"
   },
   "192.168.1.98/proc/mcropsey/claude": {
@@ -7430,14 +7402,14 @@
    "name": "claude",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running Claude AI coding assistant session.",
+   "purpose": "Runs a Claude AI assistant session.",
    "state": "running",
    "detail": "claude",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running claude outside any service (up 0.2h)",
-   "classified_by": "llm"
+   "description": "long-running claude outside any service (up 0.4h)",
+   "classified_by": "llm-cache"
   },
   "192.168.1.98/proc/mcropsey/mcp-remote": {
    "id": "192.168.1.98/proc/mcropsey/mcp-remote",
@@ -7449,13 +7421,13 @@
    "name": "mcp-remote",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running MCP remote client process.",
+   "purpose": "Long-running MCP remote client on hv-rocky-linux-1.",
    "state": "running",
    "detail": "~/.npm/_npx/705d23756ff7dacc/node_modules/.bin/mcp-remote",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running node outside any service (up 0.2h)",
+   "description": "long-running node outside any service (up 0.4h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
