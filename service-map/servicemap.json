@@ -1,54 +1,60 @@
 {
- "generated_at": "2026-10-22T05:40:14",
- "fingerprint": "72698ffe942565d5",
- "change_summary": "+1 (cvewatch); -2 (claude, mcp-remote); 1 changed; 1 host changes",
+ "generated_at": "2026-10-23T05:40:14",
+ "fingerprint": "c58ab154a6e42bbb",
+ "change_summary": "+3 (open-webui, litellm, litellm-db); 3 changed",
  "changes": {
   "first_run": false,
   "added": [
    {
-    "id": "192.168.1.98/podman-root/root/cvewatch",
-    "name": "cvewatch",
-    "host": "192.168.1.98",
+    "id": "192.168.1.103/podman-root/root/open-webui",
+    "name": "open-webui",
+    "host": "192.168.1.103",
     "kind": "podman-root",
-    "category": "ai-agent"
-   }
-  ],
-  "removed": [
-   {
-    "id": "192.168.1.98/proc/mcropsey/claude",
-    "name": "claude",
-    "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-agent"
+    "category": "ai-platform"
    },
    {
-    "id": "192.168.1.98/proc/mcropsey/mcp-remote",
-    "name": "mcp-remote",
-    "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-agent"
+    "id": "192.168.1.104/podman-root/root/litellm",
+    "name": "litellm",
+    "host": "192.168.1.104",
+    "kind": "podman-root",
+    "category": "ai-platform"
+   },
+   {
+    "id": "192.168.1.104/podman-root/root/litellm-db",
+    "name": "litellm-db",
+    "host": "192.168.1.104",
+    "kind": "podman-root",
+    "category": "platform"
    }
   ],
+  "removed": [],
   "changed": [
    {
-    "id": "192.168.1.98/unit/cvewatch.service",
-    "name": "cvewatch",
+    "id": "192.168.1.98/unit/secnews.service",
+    "name": "secnews",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
+   },
+   {
+    "id": "192.168.1.98/unit/labwatch.service",
+    "name": "labwatch",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
+   },
+   {
+    "id": "192.168.1.98/unit/patchwatch.service",
+    "name": "patchwatch",
     "host": "192.168.1.98",
     "field": "state",
     "old": "inactive",
     "new": "failed"
    }
   ],
-  "hosts": [
-   {
-    "ip": "192.168.1.100",
-    "name": "hv-rocky-linux-3",
-    "kernel": [
-     "5.14.0-687.57.1.el9_8.x86_64",
-     "5.14.0-687.58.1.el9_8.x86_64"
-    ]
-   }
-  ]
+  "hosts": []
  },
  "hosts": {
   "192.168.1.75": {
@@ -286,7 +292,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-22 04:00:25",
+   "booted": "2026-10-23 04:02:02",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -328,7 +334,7 @@
      "component": "alloy"
     },
     {
-     "port": 41765,
+     "port": 43659,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -437,7 +443,7 @@
      "component": "alloy"
     }
    ],
-   "role": ""
+   "role": "Observability hub: Prometheus, Grafana, Loki, Alertmanager, VulnNotes, AI agents"
   },
   "192.168.1.99": {
    "ip": "192.168.1.99",
@@ -856,7 +862,7 @@
    "name": "hv-rocky-linux-6",
    "os": "Rocky Linux 10.2 (Red Quartz)",
    "kernel": "6.12.0-211.66.1.el10_2.x86_64",
-   "booted": "2026-10-21 14:19:20",
+   "booted": "2026-10-22 12:23:59",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -872,6 +878,12 @@
      "addr": "::1",
      "process": "cupsd",
      "component": "cups"
+    },
+    {
+     "port": 3000,
+     "addr": "0.0.0.0",
+     "process": "conmon",
+     "component": ""
     },
     {
      "port": 9090,
@@ -892,14 +904,14 @@
      "component": "alloy"
     }
    ],
-   "role": "RHCSA practice workstation"
+   "role": "AI platform: Open WebUI"
   },
   "192.168.1.104": {
    "ip": "192.168.1.104",
    "name": "hv-rocky-linux-7",
    "os": "Rocky Linux 10.2 (Red Quartz)",
    "kernel": "6.12.0-211.66.1.el10_2.x86_64",
-   "booted": "2026-10-21 14:20:21",
+   "booted": "2026-10-22 12:24:47",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -911,10 +923,22 @@
      "component": "sshd"
     },
     {
+     "port": 53,
+     "addr": "10.89.0.1",
+     "process": "aardvark-dns",
+     "component": ""
+    },
+    {
      "port": 631,
      "addr": "::1",
      "process": "cupsd",
      "component": "cups"
+    },
+    {
+     "port": 4000,
+     "addr": "0.0.0.0",
+     "process": "conmon",
+     "component": ""
     },
     {
      "port": 9090,
@@ -941,14 +965,14 @@
      "component": "alloy"
     }
    ],
-   "role": "RHCSA practice workstation"
+   "role": "AI gateway: LiteLLM, database"
   },
   "192.168.1.105": {
    "ip": "192.168.1.105",
    "name": "utility",
    "os": "Rocky Linux 10.2 (Red Quartz)",
    "kernel": "6.12.0-211.66.1.el10_2.x86_64",
-   "booted": "2026-10-19 15:21:26",
+   "booted": "2026-10-20 13:25:50",
    "cpus": 8,
    "mem_gb": 3.6,
    "error": "",
@@ -1149,6 +1173,17 @@
    ]
   },
   {
+   "src": "192.168.1.98/proc/mcropsey/generate_traffic.py",
+   "dst": "192.168.1.102/unit/ai-sim.service",
+   "ports": [
+    8011,
+    8012
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.99/unit/k3s.service",
    "ports": [
@@ -1169,12 +1204,13 @@
    ]
   },
   {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.105/unit/node_exporter.service",
+   "src": "192.168.1.98/unit/mcp-sweep.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
    "ports": [
-    9100
+    8009
    ],
    "how": [
+    "configured",
     "observed"
    ]
   },
@@ -1183,16 +1219,6 @@
    "dst": "192.168.1.100/docker/root/cadvisor",
    "ports": [
     8081
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.104/unit/node_exporter.service",
-   "ports": [
-    9100
    ],
    "how": [
     "observed"
@@ -1239,8 +1265,49 @@
    ]
   },
   {
+   "src": "192.168.1.98/unit/mcp-heartbeat.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured",
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.105/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.103/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.101/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.104/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1261,27 +1328,6 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.98/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/proc/mcropsey/generate_traffic.py",
-   "dst": "192.168.1.102/unit/ai-sim.service",
-   "ports": [
-    8011,
-    8012
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.103/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1324,16 +1370,6 @@
    "dst": "192.168.1.102/unit/node_exporter.service",
    "ports": [
     9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/podman-root/root/alertwatch",
-   "dst": "192.168.1.98/docker/root/alertmanager",
-   "ports": [
-    9093
    ],
    "how": [
     "observed"
@@ -1570,26 +1606,6 @@
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-heartbeat.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
-   ],
-   "how": [
-    "configured"
-   ]
-  },
-  {
-   "src": "192.168.1.98/unit/mcp-sweep.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
-   ],
-   "how": [
-    "configured"
-   ]
-  },
-  {
    "src": "192.168.1.98/unit/patchwatch.service",
    "dst": "192.168.1.101/podman-root/root/litellm",
    "ports": [
@@ -1721,16 +1737,6 @@
   },
   {
    "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.100/podman-root/root/kong",
-   "ports": [
-    80
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.99/unit/cloudflared.service",
    "dst": "192.168.1.101/podman-root/root/dvga",
    "ports": [
     5013
@@ -1744,6 +1750,16 @@
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.100/podman-root/root/kong",
+   "ports": [
+    80
    ],
    "how": [
     "observed"
@@ -1800,6 +1816,16 @@
    ]
   },
   {
+   "src": "192.168.1.103/podman-root/root/open-webui",
+   "dst": "192.168.1.104/podman-root/root/litellm",
+   "ports": [
+    4000
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
    "src": "192.168.1.104/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
@@ -1807,6 +1833,16 @@
    ],
    "how": [
     "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.104/podman-root/root/litellm",
+   "dst": "ext/192.168.1.194:1234",
+   "ports": [
+    1234
+   ],
+   "how": [
+    "configured"
    ]
   },
   {
@@ -3223,25 +3259,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.76/unit/fwupd.service": {
-   "id": "192.168.1.76/unit/fwupd.service",
-   "host": "192.168.1.76",
-   "hosts": [
-    "192.168.1.76"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.76/unit/getty@tty1.service": {
@@ -6121,7 +6138,7 @@
    "name": "cvewatch",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "",
+   "purpose": "CVE watch AI agent on observability hub.",
    "state": "running",
    "ports": [],
    "image": "localhost/labagents:latest",
@@ -6129,7 +6146,7 @@
    "user": "root",
    "group": "",
    "baseline": false,
-   "classified_by": "rules"
+   "classified_by": "llm"
   },
   "192.168.1.98/docker/root/prometheus": {
    "id": "192.168.1.98/docker/root/prometheus",
@@ -6722,7 +6739,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Generates lab health briefings.",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:15:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -6931,7 +6948,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Daily AI patch and image drift planning",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:45:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -7026,7 +7043,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Creates daily cybersecurity news digest.",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:00:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/secnews:latest",
    "user": "root",
@@ -7439,14 +7456,14 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "long-running python3 outside any service (up 67.1h)",
+   "purpose": "Long-running AI traffic simulator on observability hub.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
-   "count": 1,
-   "description": "long-running python3 outside any service (up 67.1h)",
-   "classified_by": "rules"
+   "count": 2,
+   "description": "long-running python3 outside any service (up 91.1h)",
+   "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
    "id": "192.168.1.99/unit/accounts-daemon.service",
@@ -11605,6 +11622,28 @@
    "description": "cron (dir)",
    "classified_by": "rules"
   },
+  "192.168.1.103/podman-root/root/open-webui": {
+   "id": "192.168.1.103/podman-root/root/open-webui",
+   "host": "192.168.1.103",
+   "hosts": [
+    "192.168.1.103"
+   ],
+   "kind": "podman-root",
+   "name": "open-webui",
+   "category": "ai-platform",
+   "ai": true,
+   "purpose": "Open WebUI frontend for local LLM chat",
+   "state": "running",
+   "ports": [
+    "3000->8080/tcp"
+   ],
+   "image": "ghcr.io/open-webui/open-webui:v0.11.4",
+   "detail": "ghcr.io/open-webui/open-webui:v0.11.4",
+   "user": "root",
+   "group": "",
+   "baseline": false,
+   "classified_by": "llm"
+  },
   "192.168.1.103/unit/accounts-daemon.service": {
    "id": "192.168.1.103/unit/accounts-daemon.service",
    "host": "192.168.1.103",
@@ -12511,6 +12550,67 @@
    "user": "",
    "baseline": true,
    "description": "cron (dir)",
+   "classified_by": "rules"
+  },
+  "192.168.1.104/podman-root/root/litellm-db": {
+   "id": "192.168.1.104/podman-root/root/litellm-db",
+   "host": "192.168.1.104",
+   "hosts": [
+    "192.168.1.104"
+   ],
+   "kind": "podman-root",
+   "name": "litellm-db",
+   "category": "platform",
+   "ai": true,
+   "purpose": "PostgreSQL database for LiteLLM gateway",
+   "state": "running",
+   "ports": [],
+   "image": "docker.io/library/postgres:16.15",
+   "detail": "docker.io/library/postgres:16.15",
+   "user": "root",
+   "group": "",
+   "baseline": false,
+   "classified_by": "llm-cache"
+  },
+  "192.168.1.104/podman-root/root/litellm": {
+   "id": "192.168.1.104/podman-root/root/litellm",
+   "host": "192.168.1.104",
+   "hosts": [
+    "192.168.1.104"
+   ],
+   "kind": "podman-root",
+   "name": "litellm",
+   "category": "ai-platform",
+   "ai": true,
+   "purpose": "LiteLLM AI gateway for LLM API routing",
+   "state": "running",
+   "ports": [
+    "4000->4000/tcp"
+   ],
+   "image": "ghcr.io/berriai/litellm:v1.105.0",
+   "detail": "ghcr.io/berriai/litellm:v1.105.0",
+   "user": "root",
+   "group": "",
+   "baseline": false,
+   "classified_by": "llm"
+  },
+  "192.168.1.104/unit/259933c73d7192f86728a47299f61c1eda89e12a7b662583ef94c5b0093d8074-42c352ddd89dcb85.service": {
+   "id": "192.168.1.104/unit/259933c73d7192f86728a47299f61c1eda89e12a7b662583ef94c5b0093d8074-42c352ddd89dcb85.service",
+   "host": "192.168.1.104",
+   "hosts": [
+    "192.168.1.104"
+   ],
+   "kind": "timer",
+   "name": "259933c73d7192f86728a47299f61c1eda89e12a7b662583ef94c5b0093d8074-42c352ddd89dcb85",
+   "category": "platform",
+   "ai": false,
+   "purpose": "[systemd-run] /usr/bin/podman healthcheck run 259933c73d7192f86728a47299f61c1eda89e12a7b662583ef94c5b0093d8074",
+   "state": "inactive",
+   "schedule": "",
+   "detail": "/usr/bin/podman healthcheck",
+   "user": "root",
+   "baseline": true,
+   "description": "[systemd-run] /usr/bin/podman healthcheck run 259933c73d7192f86728a47299f61c1eda89e12a7b662583ef94c5b0093d8074",
    "classified_by": "rules"
   },
   "192.168.1.104/unit/accounts-daemon.service": {
@@ -13641,7 +13741,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "failed",
+   "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -13723,6 +13823,25 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
+   "classified_by": "rules"
+  },
+  "192.168.1.105/unit/fwupd.service": {
+   "id": "192.168.1.105/unit/fwupd.service",
+   "host": "192.168.1.105",
+   "hosts": [
+    "192.168.1.105"
+   ],
+   "kind": "systemd",
+   "name": "fwupd",
+   "category": "ops",
+   "ai": false,
+   "purpose": "Firmware update daemon",
+   "state": "running",
+   "schedule": "",
+   "detail": "/usr/libexec/fwupd/fwupd",
+   "user": "root",
+   "baseline": true,
+   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.105/unit/gdm.service": {
