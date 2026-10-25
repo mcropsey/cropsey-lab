@@ -1,58 +1,12 @@
 {
- "generated_at": "2026-10-24T05:40:14",
- "fingerprint": "6546a8f8e8b80f52",
- "change_summary": "+2 (ops-agent, writer-agent); -3 (open-webui, claude, mcp-remote); 1 changed",
+ "generated_at": "2026-10-25T05:40:14",
+ "fingerprint": "cd5b1b68cced024f",
+ "change_summary": "no component changes",
  "changes": {
   "first_run": false,
-  "added": [
-   {
-    "id": "192.168.1.103/unit/ops-agent.service",
-    "name": "ops-agent",
-    "host": "192.168.1.103",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.103/unit/writer-agent.service",
-    "name": "writer-agent",
-    "host": "192.168.1.103",
-    "kind": "systemd",
-    "category": "ai-agent"
-   }
-  ],
-  "removed": [
-   {
-    "id": "192.168.1.103/podman-root/root/open-webui",
-    "name": "open-webui",
-    "host": "192.168.1.103",
-    "kind": "podman-root",
-    "category": "ai-platform"
-   },
-   {
-    "id": "192.168.1.98/proc/mcropsey/claude",
-    "name": "claude",
-    "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-agent"
-   },
-   {
-    "id": "192.168.1.98/proc/mcropsey/mcp-remote",
-    "name": "mcp-remote",
-    "host": "192.168.1.98",
-    "kind": "process",
-    "category": "ai-agent"
-   }
-  ],
-  "changed": [
-   {
-    "id": "192.168.1.104/podman-root/root/litellm",
-    "name": "litellm",
-    "host": "192.168.1.104",
-    "field": "image",
-    "old": "ghcr.io/berriai/litellm:v1.105.0",
-    "new": "ghcr.io/berriai/litellm:v1.104.0"
-   }
-  ],
+  "added": [],
+  "removed": [],
+  "changed": [],
   "hosts": []
  },
  "hosts": {
@@ -291,7 +245,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-24 04:00:28",
+   "booted": "2026-10-25 04:01:56",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -333,7 +287,7 @@
      "component": "alloy"
     },
     {
-     "port": 40829,
+     "port": 38639,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1198,16 +1152,6 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.75/unit/node_exporter.service",
    "ports": [
     9100
@@ -1278,6 +1222,16 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.101/podman-root/root/litellm",
+   "ports": [
+    4000
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.101/unit/node_exporter.service",
    "ports": [
     9100
@@ -1308,7 +1262,7 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "ext/192.168.1.78:9100",
+   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1318,9 +1272,9 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.101/podman-root/root/litellm",
+   "dst": "ext/192.168.1.78:9100",
    "ports": [
-    4000
+    9100
    ],
    "how": [
     "observed"
@@ -2074,25 +2028,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.75/unit/fwupd.service": {
-   "id": "192.168.1.75/unit/fwupd.service",
-   "host": "192.168.1.75",
-   "hosts": [
-    "192.168.1.75"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.75/unit/getty@tty1.service": {
@@ -7465,13 +7400,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator on observability hub.",
+   "purpose": "Long-running AI traffic simulator on hv-rocky-linux-1.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 115.0h)",
+   "description": "long-running python3 outside any service (up 139.0h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -10943,7 +10878,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -12123,7 +12058,7 @@
    "user": "root",
    "baseline": false,
    "description": "ops-agent.service",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.103/unit/plocate-updatedb.service": {
    "id": "192.168.1.103/unit/plocate-updatedb.service",
@@ -12503,7 +12438,7 @@
    "user": "root",
    "baseline": false,
    "description": "writer-agent.service",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.103/user/mcropsey/dbus-broker.service": {
    "id": "192.168.1.103/user/mcropsey/dbus-broker.service",
@@ -12902,25 +12837,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/fwupd.service": {
-   "id": "192.168.1.104/unit/fwupd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.104/unit/gdm.service": {
