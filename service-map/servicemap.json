@@ -1,6 +1,6 @@
 {
- "generated_at": "2026-10-25T05:40:14",
- "fingerprint": "cd5b1b68cced024f",
+ "generated_at": "2026-10-26T05:40:14",
+ "fingerprint": "5b916833fb4ac437",
  "change_summary": "no component changes",
  "changes": {
   "first_run": false,
@@ -245,7 +245,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-25 04:01:56",
+   "booted": "2026-10-26 04:01:51",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -258,7 +258,7 @@
     },
     {
      "port": 53,
-     "addr": "127.0.0.53%lo",
+     "addr": "127.0.0.54",
      "process": "systemd-resolve",
      "component": "systemd-resolved"
     },
@@ -287,7 +287,7 @@
      "component": "alloy"
     },
     {
-     "port": 38639,
+     "port": 41875,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1070,16 +1070,6 @@
  ],
  "edges": [
   {
-   "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "ports": [
-    19001
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.75/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
@@ -1090,10 +1080,10 @@
    ]
   },
   {
-   "src": "192.168.1.76/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
-    3100
+    19001
    ],
    "how": [
     "observed"
@@ -1104,6 +1094,16 @@
    "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
     19001
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.76/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
    ],
    "how": [
     "observed"
@@ -1182,6 +1182,16 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.85/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.104/unit/node_exporter.service",
    "ports": [
     9100
@@ -1222,16 +1232,6 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.101/podman-root/root/litellm",
-   "ports": [
-    4000
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.101/unit/node_exporter.service",
    "ports": [
     9100
@@ -1253,16 +1253,6 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.98/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1691,16 +1681,6 @@
    ]
   },
   {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.100/podman-root/root/kong",
-   "ports": [
-    80
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.99/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
@@ -1715,6 +1695,16 @@
    "dst": "192.168.1.101/podman-root/root/dvga",
    "ports": [
     5013
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.100/podman-root/root/kong",
+   "ports": [
+    80
    ],
    "how": [
     "observed"
@@ -7406,7 +7396,7 @@
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 139.0h)",
+   "description": "long-running python3 outside any service (up 163.0h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -10878,7 +10868,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "failed",
+   "state": "activating",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",

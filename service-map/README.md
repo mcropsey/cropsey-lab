@@ -1,6 +1,6 @@
 # Lab service map
 
-Generated **2026-10-25 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-10-26 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
@@ -55,7 +55,6 @@ flowchart LR
     nda547473["LM Studio (qwen3.8-27b, RTX 5090)<br/><small>external</small>"]
   end
   n48c4898e -->|8011,8012| nfaf72a42
-  n02586a2d -->|4000| ne2915bec
   n3fd6a072 -.->|4000| ne2915bec
   n21cfb59a -.->|4000| ne2915bec
   n8dc796a2 -.->|4000| ne2915bec
@@ -329,4 +328,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint cd5b1b68cced024f · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint 5b916833fb4ac437 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
