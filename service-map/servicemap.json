@@ -1,12 +1,21 @@
 {
- "generated_at": "2026-10-26T05:40:14",
- "fingerprint": "5b916833fb4ac437",
- "change_summary": "no component changes",
+ "generated_at": "2026-10-27T05:40:14",
+ "fingerprint": "e23d8c6068b4fb69",
+ "change_summary": "1 changed",
  "changes": {
   "first_run": false,
   "added": [],
   "removed": [],
-  "changed": [],
+  "changed": [
+   {
+    "id": "192.168.1.98/unit/patchwatch.service",
+    "name": "patchwatch",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
+   }
+  ],
   "hosts": []
  },
  "hosts": {
@@ -245,7 +254,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-26 04:01:51",
+   "booted": "2026-10-27 04:00:32",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -258,7 +267,7 @@
     },
     {
      "port": 53,
-     "addr": "127.0.0.54",
+     "addr": "127.0.0.53%lo",
      "process": "systemd-resolve",
      "component": "systemd-resolved"
     },
@@ -287,7 +296,7 @@
      "component": "alloy"
     },
     {
-     "port": 41875,
+     "port": 43353,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1070,20 +1079,20 @@
  ],
  "edges": [
   {
-   "src": "192.168.1.75/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
-    3100
+    19001
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "src": "192.168.1.75/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    19001
+    3100
    ],
    "how": [
     "observed"
@@ -1173,16 +1182,6 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1312,9 +1311,29 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.101/podman-root/root/litellm",
+   "ports": [
+    4000
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/prometheus-podman-exporter.service",
    "ports": [
     9882
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.85/unit/node_exporter.service",
+   "ports": [
+    9100
    ],
    "how": [
     "observed"
@@ -3194,25 +3213,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.76/unit/fwupd.service": {
-   "id": "192.168.1.76/unit/fwupd.service",
-   "host": "192.168.1.76",
-   "hosts": [
-    "192.168.1.76"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.76/unit/getty@tty1.service": {
@@ -6882,7 +6882,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Daily AI patch and image drift planning",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:45:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -7390,13 +7390,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator on hv-rocky-linux-1.",
+   "purpose": "AI traffic simulator on hv-rocky-linux-1",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 163.0h)",
+   "description": "long-running python3 outside any service (up 187.0h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -10868,7 +10868,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "activating",
+   "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -12827,6 +12827,25 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
+   "classified_by": "rules"
+  },
+  "192.168.1.104/unit/fwupd.service": {
+   "id": "192.168.1.104/unit/fwupd.service",
+   "host": "192.168.1.104",
+   "hosts": [
+    "192.168.1.104"
+   ],
+   "kind": "systemd",
+   "name": "fwupd",
+   "category": "ops",
+   "ai": false,
+   "purpose": "Firmware update daemon",
+   "state": "running",
+   "schedule": "",
+   "detail": "/usr/libexec/fwupd/fwupd",
+   "user": "root",
+   "baseline": true,
+   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.104/unit/gdm.service": {
