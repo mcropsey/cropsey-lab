@@ -1,10 +1,10 @@
 # Lab service map
 
-Generated **2026-10-27 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-10-28 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- `patchwatch` on hv-rocky-linux-1: state inactive → failed
+- `patchwatch` on hv-rocky-linux-1: state failed → inactive
 
 ## AI agents & dependencies
 
@@ -55,7 +55,6 @@ flowchart LR
     nda547473["LM Studio (qwen3.8-27b, RTX 5090)<br/><small>external</small>"]
   end
   n48c4898e -->|8011,8012| nfaf72a42
-  n02586a2d -->|4000| ne2915bec
   n3fd6a072 -.->|4000| ne2915bec
   n21cfb59a -.->|4000| ne2915bec
   n8dc796a2 -.->|4000| ne2915bec
@@ -110,7 +109,7 @@ flowchart LR
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | AI traffic simulator on hv-rocky-linux-1 |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | long-running python3 outside any service (up 211.0h) |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | llmredteam | hv-rocky-linux-1 | timer | AI agents | Weekly LLM guardrail evaluation agent. | Sun *-*-* 06:50:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
@@ -190,13 +189,13 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| generate_traffic.py | process | AI agents (AI) | AI traffic simulator on hv-rocky-linux-1 | running |  | `~/ai-sim/generate_traffic.py` |
+| generate_traffic.py | process | AI agents (AI) | long-running python3 outside any service (up 211.0h) | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | inactive | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
 | labwatch | timer | AI agents (AI) | Generates lab health briefings. | inactive | *-*-* 06:15:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
 | llmredteam | timer | AI agents (AI) | Weekly LLM guardrail evaluation agent. | inactive | Sun *-*-* 06:50:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
-| patchwatch | timer | AI agents (AI) | Daily AI patch and image drift planning | failed | *-*-* 06:45:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
+| patchwatch | timer | AI agents (AI) | Daily AI patch and image drift planning | inactive | *-*-* 06:45:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
 | secnews | timer | AI agents (AI) | Creates daily cybersecurity news digest. | inactive | *-*-* 06:00:00 America/Chicago | `/usr/bin/podman run localhost/secnews:latest` |
 | servicemap | timer | AI agents (AI) | Daily SSH inventory and LLM labeling for lab service map | activating | *-*-* 05:40:00 America/Chicago | `/usr/sbin/runuser mcropsey` |
 | weekrollup | timer | AI agents (AI) | Weekly lab digest and agent quality check. | inactive | Fri *-*-* 06:55:00 America/Chicago | `/usr/bin/podman run SECNEWS_REPORTS=/secnews-reports` |
@@ -329,4 +328,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint e23d8c6068b4fb69 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint ccdc3a40e7acab36 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
