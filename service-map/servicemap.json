@@ -1,68 +1,12 @@
 {
- "generated_at": "2026-10-29T05:40:14",
- "fingerprint": "5b7cde1e740ab8b7",
- "change_summary": "+1 (kong-db); -2 (litellm, litellm-db); 4 changed",
+ "generated_at": "2026-10-30T05:40:14",
+ "fingerprint": "9c0fdc37202bdc30",
+ "change_summary": "no component changes",
  "changes": {
   "first_run": false,
-  "added": [
-   {
-    "id": "192.168.1.100/podman-root/root/kong-db",
-    "name": "kong-db",
-    "host": "192.168.1.100",
-    "kind": "podman-root",
-    "category": "network"
-   }
-  ],
-  "removed": [
-   {
-    "id": "192.168.1.104/podman-root/root/litellm",
-    "name": "litellm",
-    "host": "192.168.1.104",
-    "kind": "podman-root",
-    "category": "ai-platform"
-   },
-   {
-    "id": "192.168.1.104/podman-root/root/litellm-db",
-    "name": "litellm-db",
-    "host": "192.168.1.104",
-    "kind": "podman-root",
-    "category": "platform"
-   }
-  ],
-  "changed": [
-   {
-    "id": "192.168.1.98/unit/patchwatch.service",
-    "name": "patchwatch",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "inactive",
-    "new": "failed"
-   },
-   {
-    "id": "192.168.1.98/unit/secnews.service",
-    "name": "secnews",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "inactive",
-    "new": "failed"
-   },
-   {
-    "id": "192.168.1.98/unit/cvewatch.service",
-    "name": "cvewatch",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "inactive",
-    "new": "failed"
-   },
-   {
-    "id": "192.168.1.98/unit/labwatch.service",
-    "name": "labwatch",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "inactive",
-    "new": "failed"
-   }
-  ],
+  "added": [],
+  "removed": [],
+  "changed": [],
   "hosts": []
  },
  "hosts": {
@@ -301,7 +245,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-10-29 04:00:31",
+   "booted": "2026-10-30 04:01:55",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -343,7 +287,7 @@
      "component": "alloy"
     },
     {
-     "port": 44719,
+     "port": 37575,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -688,7 +632,7 @@
      "component": "docker"
     }
    ],
-   "role": ""
+   "role": "Kong gateway and Jenkins CI host"
   },
   "192.168.1.101": {
    "ip": "192.168.1.101",
@@ -1120,20 +1064,20 @@
  ],
  "edges": [
   {
-   "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "src": "192.168.1.75/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    19001
+    3100
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.75/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
-    3100
+    19001
    ],
    "how": [
     "observed"
@@ -1301,17 +1245,6 @@
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-sweep.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
-   ],
-   "how": [
-    "configured",
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/node_exporter.service",
    "ports": [
@@ -1386,16 +1319,6 @@
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/podman-root/root/alertwatch",
-   "dst": "192.168.1.98/docker/root/alertmanager",
-   "ports": [
-    9093
    ],
    "how": [
     "observed"
@@ -1612,6 +1535,16 @@
    ]
   },
   {
+   "src": "192.168.1.98/unit/mcp-sweep.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
    "src": "192.168.1.98/unit/patchwatch.service",
    "dst": "192.168.1.101/podman-root/root/litellm",
    "ports": [
@@ -1752,20 +1685,20 @@
    ]
   },
   {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.100/podman-root/root/kong",
+   "src": "192.168.1.99/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    80
+    3100
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.99/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.100/podman-root/root/kong",
    "ports": [
-    3100
+    80
    ],
    "how": [
     "observed"
@@ -1803,6 +1736,16 @@
   },
   {
    "src": "192.168.1.102/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.103/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
@@ -7412,14 +7355,14 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "long-running python3 outside any service (up 234.9h)",
+   "purpose": "Long-running AI traffic simulator on observability hub.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 234.9h)",
-   "classified_by": "rules"
+   "description": "long-running python3 outside any service (up 258.9h)",
+   "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
    "id": "192.168.1.99/unit/accounts-daemon.service",
@@ -8280,9 +8223,9 @@
    ],
    "kind": "podman-root",
    "name": "kong-db",
-   "category": "network",
+   "category": "platform",
    "ai": false,
-   "purpose": "",
+   "purpose": "Postgres database backing Kong gateway",
    "state": "running",
    "ports": [],
    "image": "docker.io/library/postgres:16",
@@ -8290,7 +8233,7 @@
    "user": "root",
    "group": "",
    "baseline": false,
-   "classified_by": "rules"
+   "classified_by": "llm"
   },
   "192.168.1.100/podman-root/root/kong": {
    "id": "192.168.1.100/podman-root/root/kong",

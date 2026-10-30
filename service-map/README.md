@@ -1,16 +1,10 @@
 # Lab service map
 
-Generated **2026-10-29 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-10-30 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- ➕ `kong-db` (root podman on hv-rocky-linux-3)
-- ➖ `litellm` (root podman on hv-rocky-linux-7)
-- ➖ `litellm-db` (root podman on hv-rocky-linux-7)
-- `patchwatch` on hv-rocky-linux-1: state inactive → failed
-- `secnews` on hv-rocky-linux-1: state inactive → failed
-- `cvewatch` on hv-rocky-linux-1: state inactive → failed
-- `labwatch` on hv-rocky-linux-1: state inactive → failed
+No changes.
 
 ## AI agents & dependencies
 
@@ -57,7 +51,6 @@ flowchart LR
     nda547473["LM Studio (qwen3.8-27b, RTX 5090)<br/><small>external</small>"]
   end
   n48c4898e -->|8011,8012| nfaf72a42
-  n58c79f44 -->|8009| n0286a0d8
   n3fd6a072 -.->|4000| ne2915bec
   n21cfb59a -.->|4000| ne2915bec
   n8dc796a2 -.->|4000| ne2915bec
@@ -73,6 +66,7 @@ flowchart LR
   n8203cbf4 -.->|9090| n02586a2d
   n8203cbf4 -.->|9093| n8f651301
   n5b143553 -.->|8009| n0286a0d8
+  n58c79f44 -.->|8009| n0286a0d8
   nce8753db -.->|4000| ne2915bec
   nce8753db -.->|3100| n941b31c1
   nce8753db -.->|9090| n02586a2d
@@ -98,7 +92,7 @@ flowchart LR
 | **rasp5** `192.168.1.85` | Raspberry Pi 5 control node with Docker, Apache, Twingate | 6 | 1 | 1 | 0 | alloy, glances, node_exporter, apache2, twingate-jade-limpet, scheduled-reboot, containerd, docker |
 | **hv-rocky-linux-1** `192.168.1.98` | Observability hub: Prometheus, Grafana, Loki, Alertmanager, VulnNotes, agents | 9 | 9 | 8 | 0 | 🤖 cvewatch, 🤖 generate_traffic.py ×2, 🤖 labwatch, 🤖 llmredteam, 🤖 mcp-heartbeat, 🤖 mcp-sweep, 🤖 patchwatch, 🤖 secnews, 🤖 servicemap, 🤖 weekrollup, agenthub, alertwatch, alertwatch, alertwatch-heartbeat, alloy, monitoring stack ×5, node_exporter, 🤖 servicemap-web, vnotes, vulnnotes, labinventory, containerd, docker |
 | **hv-rocky-linux-2** `192.168.1.99` | k3s cluster with Cloudflare tunnel, nginx, Juice Shop, vampi | 4 | 0 | 0 | 4 | alloy, node_exporter, vampi, cloudflared, ingress-nginx-controller, nginx, k3s, juice-shop |
-| **hv-rocky-linux-3** `192.168.1.100` |  | 5 | 0 | 5 | 0 | alloy, cadvisor, node_exporter, prometheus-podman-exporter, kong, kong-db, jenkins, jenkins-docker, containerd, docker |
+| **hv-rocky-linux-3** `192.168.1.100` | Kong gateway and Jenkins CI host | 5 | 0 | 5 | 0 | alloy, cadvisor, node_exporter, prometheus-podman-exporter, kong, jenkins, jenkins-docker, containerd, docker, kong-db |
 | **hv-rocky-linux-4** `192.168.1.101` | LiteLLM gateway with crAPI, Juice Shop, Noname sensor | 4 | 1 | 15 | 0 | 🤖 litellm, 🤖 searxng, alloy, node_exporter, prometheus-podman-exporter, noname-sensor, 🤖 litellm-backup, 🤖 litellm-db, 🤖 crapi stack ×10, dvga, juice-shop |
 | **hv-rocky-linux-5** `192.168.1.102` | Noname sensor running crAPI, Noname, vampi MCP, AI sim | 7 | 0 | 1 | 0 | 🤖 ai-sim, 🤖 crapi-mcp, 🤖 noname-mcp, 🤖 vampi-mcp, alloy, node_exporter, prometheus-podman-exporter, noname-sensor |
 | **hv-rocky-linux-6** `192.168.1.103` | RHCSA workstation: ops-agent, writer-agent | 4 | 0 | 0 | 0 | 🤖 writer-agent, alloy, node_exporter, ops-agent |
@@ -110,7 +104,7 @@ flowchart LR
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | long-running python3 outside any service (up 234.9h) |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator on observability hub. |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | llmredteam | hv-rocky-linux-1 | timer | AI agents | Weekly LLM guardrail evaluation agent. | Sun *-*-* 06:50:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
@@ -188,7 +182,7 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| generate_traffic.py | process | AI agents (AI) | long-running python3 outside any service (up 234.9h) | running |  | `~/ai-sim/generate_traffic.py` |
+| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator on observability hub. | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | failed | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
@@ -242,9 +236,9 @@ flowchart LR
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
 | prometheus-podman-exporter | systemd | Observability | Exports Podman container metrics for Prometheus | running |  | `/usr/bin/prometheus-podman-exporter $PODMAN_EXPORTER_OPTS` |
 | kong | root podman | Network & ingress | Kong API gateway for lab traffic | running | 80->8000/tcp, 8001->8001/tcp | `docker.io/library/kong:3.6` |
-| kong-db | root podman | Network & ingress |  | running |  | `docker.io/library/postgres:16` |
 | jenkins | docker | Ops & CI | Jenkins CI server for lab builds | running | 0.0.0.0:50000->50000/tcp, 0.0.0.0:8080->8080/tcp, [::]:50000->50000/tcp | `myjenkins-noname:2.568.3-jdk21` |
 | jenkins-docker | docker | Ops & CI | Docker daemon for Jenkins CI builds | running | 0.0.0.0:2376->2376/tcp, [::]:2376->2376/tcp | `docker:dind` |
+| kong-db | root podman | Platform & data | Postgres database backing Kong gateway | running |  | `docker.io/library/postgres:16` |
 | containerd | systemd | Platform & data | Container runtime for lab workloads | running |  | `/usr/bin/containerd` |
 | docker | systemd | Platform & data | Docker engine for lab containers | running |  | `/usr/bin/dockerd fd://` |
 
@@ -326,4 +320,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint 5b7cde1e740ab8b7 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint 9c0fdc37202bdc30 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
