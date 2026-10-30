@@ -1,5 +1,5 @@
 # Lab Inventory — 192.168.1.x home lab
-**Updated:** 2026-10-19 | 13 hosts verified live via SSH (2026-10-07) | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
+**Updated:** 2026-10-30 (ubuntu-1..3 added) | 13 hosts verified live via SSH (2026-10-07) | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
 New since 2026-09-29: **mikes-agents** (lab agents on .98 using the local LLM through LiteLLM): the original
 set (secnews, labwatch, cvewatch, patchwatch, labinventory, servicemap) plus **five added 2026-10-19** —
 alertwatch (event-driven Alertmanager triage), patchrun (approval-gated OS patching), weekrollup (weekly digest
@@ -49,6 +49,10 @@ guardrail eval). The **Agent Lab** traffic generator was retired (~2026-10-05);
 │  .103 hv-rocky-linux-6 ┐ RHCSA RHEL10 practice lab (Rocky 10.2, GNOME + Cockpit :9090)         │
 │  .104 hv-rocky-linux-7 ┘                                                                        │
 │  .105 utility.lab      dnf repo mirror (httpd :80) + NFS exports                                │
+│                                                                                                │
+│  .91 ubuntu-1 ┐ Ubuntu 24.04 general-purpose VMs (new 2026-10-30): Docker + compose,           │
+│  .92 ubuntu-2 │ Claude Code + opencode, git push; node_exporter + alloy                        │
+│  .93 ubuntu-3 ┘                                                                                │
 │                                                                                                │
 │  .194 (not managed here)  LM Studio on RTX 5090 :1234 — qwen3.8-27b, backend for LiteLLM        │
 └──────────────────────────────────────────────────────────────────────────────────────────────┘
@@ -175,6 +179,9 @@ Prometheus: 25 active targets (the `litellm` gateway job added 2026-10-19), all 
 | .103 | hv-rocky-linux-6 | RHCSA practice workstation | Rocky 10.2 | 3.6 / 2.6 Gi | 6.5 / 70 G | 4d |
 | .104 | hv-rocky-linux-7 | RHCSA practice workstation | Rocky 10.2 | 3.6 / 2.5 Gi | 11 / 70 G | 4d |
 | .105 | utility.lab.example.com | RHCSA utility server: dnf repos + NFS | Rocky 10.2 | 3.6 / 2.6 Gi | 17 / 70 G | 4d |
+| .91 | ubuntu-1 | General purpose (new) | Ubuntu 24.04.5 (Hyper-V) | 3.8 / 3.3 Gi | 3.6 / 38 G | 4h |
+| .92 | ubuntu-2 | General purpose (new) | Ubuntu 24.04.5 (Hyper-V) | 3.8 / 3.3 Gi | 3.6 / 38 G | 3h |
+| .93 | ubuntu-3 | General purpose (new) | Ubuntu 24.04.5 (Hyper-V) | 3.8 / 3.3 Gi | 3.6 / 38 G | 2h |
 | .75 | rk1 | microk8s node | Ubuntu 24.04.4 (RPi 5) | 7.8 / 6.5 Gi | 8.6 / 58 G | 4d |
 | .76 | rk2 | microk8s node | Ubuntu 24.04.4 (RPi 5) | 7.8 / 6.4 Gi | 8.7 / 58 G | 4d |
 | .77 | rk3 | spare (reserved) | Ubuntu 24.04.4 (RPi 5) | 7.8 / 7.3 Gi | 3.9 / 58 G | 2d |
@@ -183,7 +190,7 @@ Prometheus: 25 active targets (the `litellm` gateway job added 2026-10-19), all 
 Rocky VMs: Hyper-V on an Intel i9-9900K @ 3.60 GHz. Raspberry Pis: Pi 5 Model B, aarch64.
 ⚠ RAM on .99 (was 6.0 Gi) and .101 (was 8.1 Gi) now reports 3.6 Gi — cause not verified (Hyper-V dynamic
 memory or a VM resize). .101 is tight with LiteLLM added; keep new workloads off it.
-RAM/disk/uptime columns are from 2026-09-29; every Rocky host reboots on 2026-10-07 22:05+ after patching.
+RAM/disk/uptime columns are from 2026-09-29 (ubuntu-1..3: 2026-10-30); every Rocky host reboots on 2026-10-07 22:05+ after patching.
 
 ---
 
@@ -415,12 +422,28 @@ The Agent Lab `agentlab.service` is gone (retired); `~/agent-lab` + `.venv` rema
 
 All three: `node_exporter` + `alloy` running and scraped/shipped to .98. No containers.
 
+## .91 / .92 / .93 — ubuntu-1, ubuntu-2, ubuntu-3 (new 2026-10-30)
+
+**Role:** general-purpose Ubuntu 24.04 VMs on the Hyper-V host (OFFICE-PC, .221), stored under `D:\Virtual Machines`.
+Gen2, 2 vCPU, 4 GB static RAM, 40 GB disk, built from the Ubuntu cloud image with a cloud-init seed (cloud-init now disabled).
+Static IP, gateway .1, DNS 1.1.1.1 / 8.8.8.8.
+
+| Item | Detail |
+|---|---|
+| Login | `mcropsey`, same SSH keys as the other hosts, NOPASSWD sudo, SSH password auth on (like the Rocky hosts) |
+| Containers | Docker 29.1.3 (`docker.io`) + Compose v2 2.40.3; `mcropsey` in the `docker` group; container logs ship to Loki (`job="docker"`) |
+| Dev tools | Claude Code + opencode with the same config as .98 (Claude login is per box); Node 22 for the MCPs; git commit/push over HTTPS like .98 |
+| Monitoring | `node_exporter` :9100 + `alloy` (journald, auditd, docker) → .98; Prometheus `node` targets `host: ubuntu-1..3` |
+
+On the service map since 2026-10-30.
+
 ---
 
 ## Change Log
 
 | Date | Host | Change |
 |------|------|--------|
+| 2026-10-30 | .91 .92 .93 .98 | **New Ubuntu 24.04 VMs ubuntu-1..3** (.91–.93) on the Hyper-V host: Docker + compose, Claude Code + opencode (config same as .98), git push. Added to Prometheus/Loki/Grafana (firewalld Loki rule per host on .98), `LAB_HOSTS` and `labinventory/hosts.conf` in mikes-agents, and the service map. .103–.105 are powered off for now (not enough RAM on the Hyper-V host); the map keeps their last good inventory. |
 | 2026-10-19 | .101 .98 | **LiteLLM guardrail + traffic monitoring.** Turned on LiteLLM's native Prometheus metrics (`callbacks: ["prometheus"]`, `require_auth_for_metrics_endpoint: false`; config backed up, gateway restarted). Prometheus on .98 now scrapes `192.168.1.101:4000/metrics/` (job `litellm`). New Grafana dashboard *LiteLLM Gateway* (`/d/litellm-gateway`, folder *LiteLLM*): per-agent requests / blocked (400) / tokens / spend / latency incl. guardrail overhead. The guardrail itself is unchanged (LiteLLM `basic-safety-filter`); this just makes it observable. `llmredteam-probe` key kept the guardrail on (not opted out) so llmredteam tests it. |
 | 2026-10-19 | .98 .101 | **mikes-agents: five new agents.** alertwatch (event-driven Alertmanager triage, always-on receiver `:9435`, bounded for the GPU), patchrun (approval-gated OS security patching, dry-run default, never reboots), weekrollup (Fri digest + agent quality check), agentdemo (safe-vs-hijacked AI-agent demo driving the crAPI MCP tools on `.102` via a new stdlib MCP client), llmredteam (OWASP-LLM guardrail eval, Sun). Seven new LiteLLM agent identities registered on .101 (all opt out of `basic-safety-filter` except `llmredteam-probe`). **Alertmanager** receiver switched from `null` to the alertwatch webhook (old config backed up). New Grafana dashboard *Agent Lab · Agents II* (`/d/agent-lab-ii`). Docs + `TALKING-POINTS.md` in `mikes-agents` (commit `f8b1b84`). Kept independent of the Noname sensor on purpose. |
 | 2026-10-19 | .98 | **Grafana:** removed the stale *Agent Lab: AI agent traffic via LiteLLM* dashboard (`/d/agent-lab`; no `agent-lab` log lines in Loki since the ~10-05 retirement). File moved to `/opt/monitoring/grafana/dashboards-retired/agent-lab.json.retired-20261019` and dashboard deleted via the API (`disableDeletion: true` keeps it otherwise). *Agent Lab* folder now holds only *Daily Reports*. |
