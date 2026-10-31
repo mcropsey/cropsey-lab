@@ -370,8 +370,19 @@ Also installed 2026-09-29: `chromium-headless` (EPEL) for rendering these docs t
 ⚠ **Noname sensor repo** (`/etc/yum.repos.d/noname-registry.repo`, `[Noname-Artifactory]` on Google Artifact
 Registry, credential embedded in the URL) fails since ~2026-10 (repomd.xml can't be downloaded, likely an expired
 or rotated credential). Set `skip_if_unavailable=1` on 2026-10-07 so plain `dnf` keeps working (backup
-`/root/noname-registry.repo.bak-20261007`). Sensor updates (`noname-sensor-ebpf-rhel9`, installed 3.3-62) need a
-fresh repo file from the Noname/Akamai portal. Same on .102.
+`/root/noname-registry.repo.bak-20261007`). **Working again by 2026-10-30:** that day's `dnf update` upgraded
+`noname-sensor-ebpf-rhel9` 3.3-62 → **3.3-64** from it. Same on .102.
+
+⚠ **Noname sensor upgrades disable the sensor (vendor RPM bug) — auto-fixed since 2026-10-30.** On an upgrade dnf runs
+the new package's `%post` (enable + start, install the hourly updater cron) and *then* the old package's `%postun`.
+Noname's `%postun` always runs `systemctl stop` + `disable` and deletes `/etc/cron.d/noname_security_sensor_cron_policy`,
+with no `if [ $1 -eq 0 ]` (real uninstall) guard. So every upgrade or reinstall left the sensor off. The 10-30
+3.3-64 upgrade did exactly that on .101 and .102; 3.3-64 has the same scriptlet. Fix, on both hosts:
+`python3-dnf-plugin-post-transaction-actions` (BaseOS) + `/etc/dnf/plugins/post-transaction-actions.d/noname-sensor.action`
+(`noname-sensor-ebpf-rhel9:in:/usr/local/sbin/noname-sensor-reenable`). After the whole transaction, the script puts the
+cron job back and runs `systemctl enable --now noname-sensor`. It covers manual `dnf update`, patchrun and the sensor's
+own hourly `sensor_updater.sh` (it calls `yum`); a bare `rpm -U` would bypass it. Check it fired:
+`journalctl -t noname-sensor-reenable`. Tested with `dnf reinstall noname-sensor-ebpf-rhel9` on both hosts.
 
 ---
 
@@ -388,7 +399,8 @@ fresh repo file from the Noname/Akamai portal. Same on .102.
 | `noname-sensor`, `node_exporter`, `prometheus-podman-exporter`, `alloy` | — / 9100 / 9882 |
 
 Services live under `/opt/{crapi-mcp,noname-mcp,ai-sim}` with their own `.venv`. firewalld rich rules — never `--reload`.
-Noname sensor repo: same broken `[Noname-Artifactory]` repo as .101, same `skip_if_unavailable=1` fix (2026-10-07).
+Noname sensor repo: same `[Noname-Artifactory]` repo as .101, same `skip_if_unavailable=1` setting (2026-10-07).
+Same upgrade bug and same auto re-enable dnf hook as .101 (see the ⚠ note there).
 
 ---
 
@@ -443,6 +455,7 @@ On the service map since 2026-10-30.
 
 | Date | Host | Change |
 |------|------|--------|
+| 2026-10-30 | .101 .102 | **noname-sensor found disabled** after the 08:38 `dnf update -y` (3.3-62 → 3.3-64): the old package's `%postun` stops and disables the sensor and deletes its updater cron, even on upgrades. Re-enabled, cron restored, and a dnf `post-transaction-actions` hook (`/usr/local/sbin/noname-sensor-reenable`) added so future upgrades re-enable it automatically. Tested with `dnf reinstall` on both hosts. |
 | 2026-10-30 | .91 .92 .93 .98 | **New Ubuntu 24.04 VMs ubuntu-1..3** (.91–.93) on the Hyper-V host: Docker + compose, Claude Code + opencode (config same as .98), git push. Added to Prometheus/Loki/Grafana (firewalld Loki rule per host on .98), `LAB_HOSTS` and `labinventory/hosts.conf` in mikes-agents, and the service map. .103–.105 are powered off for now (not enough RAM on the Hyper-V host); the map keeps their last good inventory. |
 | 2026-10-19 | .101 .98 | **LiteLLM guardrail + traffic monitoring.** Turned on LiteLLM's native Prometheus metrics (`callbacks: ["prometheus"]`, `require_auth_for_metrics_endpoint: false`; config backed up, gateway restarted). Prometheus on .98 now scrapes `192.168.1.101:4000/metrics/` (job `litellm`). New Grafana dashboard *LiteLLM Gateway* (`/d/litellm-gateway`, folder *LiteLLM*): per-agent requests / blocked (400) / tokens / spend / latency incl. guardrail overhead. The guardrail itself is unchanged (LiteLLM `basic-safety-filter`); this just makes it observable. `llmredteam-probe` key kept the guardrail on (not opted out) so llmredteam tests it. |
 | 2026-10-19 | .98 .101 | **mikes-agents: five new agents.** alertwatch (event-driven Alertmanager triage, always-on receiver `:9435`, bounded for the GPU), patchrun (approval-gated OS security patching, dry-run default, never reboots), weekrollup (Fri digest + agent quality check), agentdemo (safe-vs-hijacked AI-agent demo driving the crAPI MCP tools on `.102` via a new stdlib MCP client), llmredteam (OWASP-LLM guardrail eval, Sun). Seven new LiteLLM agent identities registered on .101 (all opt out of `basic-safety-filter` except `llmredteam-probe`). **Alertmanager** receiver switched from `null` to the alertwatch webhook (old config backed up). New Grafana dashboard *Agent Lab · Agents II* (`/d/agent-lab-ii`). Docs + `TALKING-POINTS.md` in `mikes-agents` (commit `f8b1b84`). Kept independent of the Noname sensor on purpose. |
