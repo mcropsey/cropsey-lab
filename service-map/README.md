@@ -1,20 +1,20 @@
 # Lab service map
 
-Generated **2026-11-01 05:48** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-11-02 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- ➖ `alloy` (systemd on rk2)
-- ➖ `node_exporter` (systemd on rk2)
-- ➖ `scheduled-reboot` (timer on rk2)
-- ➖ `snap.microk8s.daemon-apiserver-kicker` (systemd on rk2)
-- ➖ `snap.microk8s.daemon-cluster-agent` (systemd on rk2)
-- ➖ `snap.microk8s.daemon-containerd` (systemd on rk2)
-- ➖ `snap.microk8s.daemon-k8s-dqlite` (systemd on rk2)
-- ➖ `snap.microk8s.daemon-kubelite` (systemd on rk2)
-- ➖ `nginx-ingress-microk8s-controller` (k8s on rk1)
-- ➖ `vampi` (k8s on rk1)
-- host rk2: RuntimeError: ssh: connect to host 192.168.1.76 port 22: Connection timed out
+- ➕ `alloy` (systemd on rk2)
+- ➕ `node_exporter` (systemd on rk2)
+- ➕ `scheduled-reboot` (timer on rk2)
+- ➕ `snap.microk8s.daemon-apiserver-kicker` (systemd on rk2)
+- ➕ `snap.microk8s.daemon-cluster-agent` (systemd on rk2)
+- ➕ `snap.microk8s.daemon-containerd` (systemd on rk2)
+- ➕ `snap.microk8s.daemon-k8s-dqlite` (systemd on rk2)
+- ➕ `snap.microk8s.daemon-kubelite` (systemd on rk2)
+- ➕ `nginx-ingress-microk8s-controller` (k8s on rk1)
+- ➕ `vampi` (k8s on rk1)
+- host rk2: kernel  → 6.8.0-1065-raspi
 
 ## AI agents & dependencies
 
@@ -94,8 +94,8 @@ flowchart LR
 
 | Host | Role | Services | Scheduled | Containers | k8s | Notable components |
 |---|---|---|---|---|---|---|
-| **rk1** `192.168.1.75` | Raspberry Pi 5 microk8s node | 7 | 1 | 0 | 0 | alloy, node_exporter, scheduled-reboot, microk8s (snap) ×5 |
-| rk2 `192.168.1.76` | unreachable | | | | | |
+| **rk1** `192.168.1.75` | Raspberry Pi 5 microk8s node running nginx ingress, vampi | 7 | 1 | 0 | 2 | alloy, node_exporter, nginx-ingress-microk8s-controller, scheduled-reboot, microk8s (snap) ×5, vampi |
+| **rk2** `192.168.1.76` | Raspberry Pi 5 microk8s node running nginx ingress, vampi | 7 | 1 | 0 | 2 | alloy, node_exporter, nginx-ingress-microk8s-controller, scheduled-reboot, microk8s (snap) ×5, vampi |
 | **rasp5** `192.168.1.85` | Raspberry Pi 5 control node with Docker, Apache, Twingate | 6 | 1 | 1 | 0 | alloy, glances, node_exporter, apache2, twingate-jade-limpet, scheduled-reboot, containerd, docker |
 | **ubuntu-1** `192.168.1.91` | General-purpose Ubuntu VM with Docker and containerd. | 8 | 0 | 0 | 0 | alloy, node_exporter, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker |
 | ubuntu-2 `192.168.1.92` | unreachable | | | | | |
@@ -114,7 +114,7 @@ flowchart LR
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | AI traffic simulator running on hv-rocky-linux-1. |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | AI traffic simulator running on observability hub. |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | llmredteam | hv-rocky-linux-1 | timer | AI agents | Weekly LLM guardrail evaluation agent. | Sun *-*-* 06:50:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
@@ -138,18 +138,37 @@ flowchart LR
 
 ## Every component
 
-<details><summary><b>rk1</b> (192.168.1.75): 8 components</summary>
+<details><summary><b>rk1</b> (192.168.1.75): 10 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
 | alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
+| nginx-ingress-microk8s-controller | k8s | Network & ingress | Ingress controller for MicroK8s traffic | running |  | `registry.k8s.io/ingress-nginx/controller:v1.11.5` |
 | scheduled-reboot | timer | Ops & CI | Guarded daily reboot maintenance job | inactive | *-*-* 03:00:00 | `/usr/local/sbin/safe-reboot.sh` |
 | snap.microk8s.daemon-apiserver-kicker | systemd | Platform & data | Supports microk8s API server on rk2 | running |  | `/usr/bin/snap run` |
 | snap.microk8s.daemon-cluster-agent | systemd | Platform & data | Runs microk8s cluster agent on rk2 | running |  | `/usr/bin/snap run` |
 | snap.microk8s.daemon-containerd | systemd | Platform & data | Runs containers for microk8s on rk2 | running |  | `/usr/bin/snap run` |
 | snap.microk8s.daemon-k8s-dqlite | systemd | Platform & data | Stores microk8s cluster state on rk2 | running |  | `/usr/bin/snap run` |
 | snap.microk8s.daemon-kubelite | systemd | Platform & data | Manages microk8s node workload on rk2 | running |  | `/usr/bin/snap run` |
+| vampi | k8s | Lab target apps | Vulnerable API demo application | running |  | `erev0s/vampi:latest` |
+
+</details>
+
+<details><summary><b>rk2</b> (192.168.1.76): 10 components</summary>
+
+| Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
+|---|---|---|---|---|---|---|
+| alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
+| node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
+| nginx-ingress-microk8s-controller | k8s | Network & ingress | Ingress controller for MicroK8s traffic | running |  | `registry.k8s.io/ingress-nginx/controller:v1.11.5` |
+| scheduled-reboot | timer | Ops & CI | Guarded daily reboot maintenance job | inactive | *-*-* 03:15:00 | `/usr/local/sbin/safe-reboot.sh` |
+| snap.microk8s.daemon-apiserver-kicker | systemd | Platform & data | Supports microk8s API server on rk2 | running |  | `/usr/bin/snap run` |
+| snap.microk8s.daemon-cluster-agent | systemd | Platform & data | Runs microk8s cluster agent on rk2 | running |  | `/usr/bin/snap run` |
+| snap.microk8s.daemon-containerd | systemd | Platform & data | Runs containers for microk8s on rk2 | running |  | `/usr/bin/snap run` |
+| snap.microk8s.daemon-k8s-dqlite | systemd | Platform & data | Stores microk8s cluster state on rk2 | running |  | `/usr/bin/snap run` |
+| snap.microk8s.daemon-kubelite | systemd | Platform & data | Manages microk8s node workload on rk2 | running |  | `/usr/bin/snap run` |
+| vampi | k8s | Lab target apps | Vulnerable API demo application | running |  | `erev0s/vampi:latest` |
 
 </details>
 
@@ -187,7 +206,7 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| generate_traffic.py | process | AI agents (AI) | AI traffic simulator running on hv-rocky-linux-1. | running |  | `~/ai-sim/generate_traffic.py` |
+| generate_traffic.py | process | AI agents (AI) | AI traffic simulator running on observability hub. | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | inactive | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
@@ -294,4 +313,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint 6848eb4a40f911eb · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint 5e052a6d803078ef · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
