@@ -1,20 +1,28 @@
 # Lab service map
 
-Generated **2026-11-02 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-11-03 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- ➕ `alloy` (systemd on rk2)
-- ➕ `node_exporter` (systemd on rk2)
-- ➕ `scheduled-reboot` (timer on rk2)
-- ➕ `snap.microk8s.daemon-apiserver-kicker` (systemd on rk2)
-- ➕ `snap.microk8s.daemon-cluster-agent` (systemd on rk2)
-- ➕ `snap.microk8s.daemon-containerd` (systemd on rk2)
-- ➕ `snap.microk8s.daemon-k8s-dqlite` (systemd on rk2)
-- ➕ `snap.microk8s.daemon-kubelite` (systemd on rk2)
-- ➕ `nginx-ingress-microk8s-controller` (k8s on rk1)
-- ➕ `vampi` (k8s on rk1)
-- host rk2: kernel  → 6.8.0-1065-raspi
+- ➕ `kong` (docker on ubuntu-1)
+- ➕ `alloy` (systemd on ubuntu-2)
+- ➕ `containerd` (systemd on ubuntu-2)
+- ➕ `docker` (systemd on ubuntu-2)
+- ➕ `hv-fcopy-daemon` (systemd on ubuntu-2)
+- ➕ `hv-kvp-daemon` (systemd on ubuntu-2)
+- ➕ `hv-vss-daemon` (systemd on ubuntu-2)
+- ➕ `multipathd` (systemd on ubuntu-2)
+- ➕ `node_exporter` (systemd on ubuntu-2)
+- ➕ `alloy` (systemd on ubuntu-3)
+- ➕ `containerd` (systemd on ubuntu-3)
+- ➕ `docker` (systemd on ubuntu-3)
+- ➕ `hv-fcopy-daemon` (systemd on ubuntu-3)
+- ➕ `hv-kvp-daemon` (systemd on ubuntu-3)
+- ➕ `hv-vss-daemon` (systemd on ubuntu-3)
+- ➕ `multipathd` (systemd on ubuntu-3)
+- ➕ `node_exporter` (systemd on ubuntu-3)
+- host ubuntu-2: kernel  → 6.8.0-147-generic
+- host ubuntu-3: kernel  → 6.8.0-147-generic
 
 ## AI agents & dependencies
 
@@ -97,10 +105,10 @@ flowchart LR
 | **rk1** `192.168.1.75` | Raspberry Pi 5 microk8s node running nginx ingress, vampi | 7 | 1 | 0 | 2 | alloy, node_exporter, nginx-ingress-microk8s-controller, scheduled-reboot, microk8s (snap) ×5, vampi |
 | **rk2** `192.168.1.76` | Raspberry Pi 5 microk8s node running nginx ingress, vampi | 7 | 1 | 0 | 2 | alloy, node_exporter, nginx-ingress-microk8s-controller, scheduled-reboot, microk8s (snap) ×5, vampi |
 | **rasp5** `192.168.1.85` | Raspberry Pi 5 control node with Docker, Apache, Twingate | 6 | 1 | 1 | 0 | alloy, glances, node_exporter, apache2, twingate-jade-limpet, scheduled-reboot, containerd, docker |
-| **ubuntu-1** `192.168.1.91` | General-purpose Ubuntu VM with Docker and containerd. | 8 | 0 | 0 | 0 | alloy, node_exporter, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker |
-| ubuntu-2 `192.168.1.92` | unreachable | | | | | |
-| ubuntu-3 `192.168.1.93` | unreachable | | | | | |
-| **hv-rocky-linux-1** `192.168.1.98` | Observability hub: Prometheus, Grafana, Loki, Alertmanager, VulnNotes, agents | 9 | 9 | 8 | 0 | 🤖 cvewatch, 🤖 generate_traffic.py, 🤖 labwatch, 🤖 llmredteam, 🤖 mcp-heartbeat, 🤖 mcp-sweep, 🤖 patchwatch, 🤖 secnews, 🤖 servicemap, 🤖 weekrollup, agenthub, alertwatch, alertwatch, alertwatch-heartbeat, alloy, monitoring stack ×5, node_exporter, 🤖 servicemap-web, vnotes, vulnnotes, labinventory, containerd, docker |
+| **ubuntu-1** `192.168.1.91` | general purpose VM running Kong and Docker | 8 | 0 | 1 | 0 | alloy, node_exporter, kong, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker |
+| **ubuntu-2** `192.168.1.92` | General-purpose Ubuntu VM with Docker and containerd. | 8 | 0 | 0 | 0 | alloy, node_exporter, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker |
+| **ubuntu-3** `192.168.1.93` | General-purpose Ubuntu VM with Docker and containerd. | 8 | 0 | 0 | 0 | alloy, node_exporter, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker |
+| **hv-rocky-linux-1** `192.168.1.98` | Observability hub: Prometheus, Grafana, Loki, Alertmanager, VulnNotes, agents | 9 | 9 | 8 | 0 | 🤖 cvewatch, 🤖 generate_traffic.py ×2, 🤖 labwatch, 🤖 llmredteam, 🤖 mcp-heartbeat, 🤖 mcp-sweep, 🤖 patchwatch, 🤖 secnews, 🤖 servicemap, 🤖 weekrollup, agenthub, alertwatch, alertwatch, alertwatch-heartbeat, alloy, monitoring stack ×5, node_exporter, 🤖 servicemap-web, vnotes, vulnnotes, labinventory, containerd, docker |
 | **hv-rocky-linux-2** `192.168.1.99` | k3s cluster with Cloudflare tunnel, nginx, Juice Shop, vampi | 4 | 0 | 0 | 4 | alloy, node_exporter, vampi, cloudflared, ingress-nginx-controller, nginx, k3s, juice-shop |
 | **hv-rocky-linux-3** `192.168.1.100` | Kong gateway and Jenkins CI host | 5 | 0 | 5 | 0 | alloy, cadvisor, node_exporter, prometheus-podman-exporter, kong, jenkins, jenkins-docker, containerd, docker, kong-db |
 | **hv-rocky-linux-4** `192.168.1.101` | LiteLLM AI gateway, crAPI, Juice Shop, Noname sensor | 4 | 2 | 15 | 0 | 🤖 litellm, 🤖 searxng, alloy, node_exporter, prometheus-podman-exporter, noname-sensor, sensor_updater.sh, 🤖 litellm-backup, 🤖 litellm-db, 🤖 crapi stack ×10, dvga, juice-shop |
@@ -114,7 +122,7 @@ flowchart LR
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | AI traffic simulator running on observability hub. |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator process |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | llmredteam | hv-rocky-linux-1 | timer | AI agents | Weekly LLM guardrail evaluation agent. | Sun *-*-* 06:50:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
@@ -187,7 +195,38 @@ flowchart LR
 
 </details>
 
-<details><summary><b>ubuntu-1</b> (192.168.1.91): 8 components</summary>
+<details><summary><b>ubuntu-1</b> (192.168.1.91): 9 components</summary>
+
+| Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
+|---|---|---|---|---|---|---|
+| alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
+| node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
+| kong | docker | Network & ingress | Kong API gateway on ubuntu-1 | running | 0.0.0.0:80->8000/tcp, 0.0.0.0:8001->8001/tcp, [::]:80->8000/tcp | `kong-noname:3.6` |
+| hv-fcopy-daemon | systemd | Ops & CI | Hyper-V file copy protocol daemon | running |  | `/usr/sbin/hv_fcopy_daemon` |
+| hv-kvp-daemon | systemd | Ops & CI | Hyper-V key-value pair protocol daemon | running |  | `/usr/sbin/hv_kvp_daemon` |
+| hv-vss-daemon | systemd | Ops & CI | Hyper-V volume shadow copy daemon | running |  | `/usr/sbin/hv_vss_daemon` |
+| multipathd | systemd | Ops & CI | Device-mapper multipath storage controller | running |  | `/sbin/multipathd` |
+| containerd | systemd | Platform & data | Container runtime for lab workloads | running |  | `/usr/bin/containerd` |
+| docker | systemd | Platform & data | Docker engine for lab containers | running |  | `/usr/bin/dockerd fd://` |
+
+</details>
+
+<details><summary><b>ubuntu-2</b> (192.168.1.92): 8 components</summary>
+
+| Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
+|---|---|---|---|---|---|---|
+| alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
+| node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
+| hv-fcopy-daemon | systemd | Ops & CI | Hyper-V file copy protocol daemon | running |  | `/usr/sbin/hv_fcopy_daemon` |
+| hv-kvp-daemon | systemd | Ops & CI | Hyper-V key-value pair protocol daemon | running |  | `/usr/sbin/hv_kvp_daemon` |
+| hv-vss-daemon | systemd | Ops & CI | Hyper-V volume shadow copy daemon | running |  | `/usr/sbin/hv_vss_daemon` |
+| multipathd | systemd | Ops & CI | Device-mapper multipath storage controller | running |  | `/sbin/multipathd` |
+| containerd | systemd | Platform & data | Container runtime for lab workloads | running |  | `/usr/bin/containerd` |
+| docker | systemd | Platform & data | Docker engine for lab containers | running |  | `/usr/bin/dockerd fd://` |
+
+</details>
+
+<details><summary><b>ubuntu-3</b> (192.168.1.93): 8 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
@@ -206,7 +245,7 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| generate_traffic.py | process | AI agents (AI) | AI traffic simulator running on observability hub. | running |  | `~/ai-sim/generate_traffic.py` |
+| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator process | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | inactive | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
@@ -313,4 +352,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint 5e052a6d803078ef · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint df6fe3b89e34c699 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
