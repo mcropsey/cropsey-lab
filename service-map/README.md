@@ -1,28 +1,16 @@
 # Lab service map
 
-Generated **2026-11-03 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-11-04 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- ➕ `kong` (docker on ubuntu-1)
-- ➕ `alloy` (systemd on ubuntu-2)
-- ➕ `containerd` (systemd on ubuntu-2)
-- ➕ `docker` (systemd on ubuntu-2)
-- ➕ `hv-fcopy-daemon` (systemd on ubuntu-2)
-- ➕ `hv-kvp-daemon` (systemd on ubuntu-2)
-- ➕ `hv-vss-daemon` (systemd on ubuntu-2)
-- ➕ `multipathd` (systemd on ubuntu-2)
-- ➕ `node_exporter` (systemd on ubuntu-2)
-- ➕ `alloy` (systemd on ubuntu-3)
-- ➕ `containerd` (systemd on ubuntu-3)
-- ➕ `docker` (systemd on ubuntu-3)
-- ➕ `hv-fcopy-daemon` (systemd on ubuntu-3)
-- ➕ `hv-kvp-daemon` (systemd on ubuntu-3)
-- ➕ `hv-vss-daemon` (systemd on ubuntu-3)
-- ➕ `multipathd` (systemd on ubuntu-3)
-- ➕ `node_exporter` (systemd on ubuntu-3)
-- host ubuntu-2: kernel  → 6.8.0-147-generic
-- host ubuntu-3: kernel  → 6.8.0-147-generic
+- ➕ `kong-3.6.1-old` (root podman on hv-rocky-linux-3)
+- ➕ `k3s` (systemd on ubuntu-1)
+- ➕ `k3s-agent` (systemd on ubuntu-2)
+- ➕ `k3s-agent` (systemd on ubuntu-3)
+- ➕ `kong` (k8s on ubuntu-1)
+- ➖ `kong` (docker on ubuntu-1)
+- `kong` on hv-rocky-linux-3: image localhost/kong-noname:3.6-5.0.1-src4 → localhost/kong-noname:3.9.4-5.0.1-src4
 
 ## AI agents & dependencies
 
@@ -66,6 +54,7 @@ flowchart LR
     nda547473["LM Studio (qwen3.8-27b, RTX 5090)<br/><small>external</small>"]
   end
   n48c4898e -->|8011,8012| nfaf72a42
+  n58c79f44 -->|8009| n0286a0d8
   n3fd6a072 -.->|4000| ne2915bec
   n21cfb59a -.->|4000| ne2915bec
   n8dc796a2 -.->|4000| ne2915bec
@@ -81,7 +70,6 @@ flowchart LR
   n8203cbf4 -.->|9090| n02586a2d
   n8203cbf4 -.->|9093| n8f651301
   n5b143553 -.->|8009| n0286a0d8
-  n58c79f44 -.->|8009| n0286a0d8
   nce8753db -.->|4000| ne2915bec
   nce8753db -.->|3100| n941b31c1
   nce8753db -.->|9090| n02586a2d
@@ -105,12 +93,12 @@ flowchart LR
 | **rk1** `192.168.1.75` | Raspberry Pi 5 microk8s node running nginx ingress, vampi | 7 | 1 | 0 | 2 | alloy, node_exporter, nginx-ingress-microk8s-controller, scheduled-reboot, microk8s (snap) ×5, vampi |
 | **rk2** `192.168.1.76` | Raspberry Pi 5 microk8s node running nginx ingress, vampi | 7 | 1 | 0 | 2 | alloy, node_exporter, nginx-ingress-microk8s-controller, scheduled-reboot, microk8s (snap) ×5, vampi |
 | **rasp5** `192.168.1.85` | Raspberry Pi 5 control node with Docker, Apache, Twingate | 6 | 1 | 1 | 0 | alloy, glances, node_exporter, apache2, twingate-jade-limpet, scheduled-reboot, containerd, docker |
-| **ubuntu-1** `192.168.1.91` | general purpose VM running Kong and Docker | 8 | 0 | 1 | 0 | alloy, node_exporter, kong, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker |
-| **ubuntu-2** `192.168.1.92` | General-purpose Ubuntu VM with Docker and containerd. | 8 | 0 | 0 | 0 | alloy, node_exporter, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker |
-| **ubuntu-3** `192.168.1.93` | General-purpose Ubuntu VM with Docker and containerd. | 8 | 0 | 0 | 0 | alloy, node_exporter, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker |
+| **ubuntu-1** `192.168.1.91` | General-purpose Ubuntu VM with k3s, Kong. | 9 | 0 | 0 | 1 | alloy, node_exporter, kong, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker, k3s |
+| **ubuntu-2** `192.168.1.92` | General-purpose Ubuntu VM with k3s-agent, Kong. | 9 | 0 | 0 | 1 | alloy, node_exporter, kong, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker, k3s-agent |
+| **ubuntu-3** `192.168.1.93` | General-purpose Ubuntu VM with k3s-agent, Kong. | 9 | 0 | 0 | 1 | alloy, node_exporter, kong, hv-fcopy-daemon, hv-kvp-daemon, hv-vss-daemon, multipathd, containerd, docker, k3s-agent |
 | **hv-rocky-linux-1** `192.168.1.98` | Observability hub: Prometheus, Grafana, Loki, Alertmanager, VulnNotes, agents | 9 | 9 | 8 | 0 | 🤖 cvewatch, 🤖 generate_traffic.py ×2, 🤖 labwatch, 🤖 llmredteam, 🤖 mcp-heartbeat, 🤖 mcp-sweep, 🤖 patchwatch, 🤖 secnews, 🤖 servicemap, 🤖 weekrollup, agenthub, alertwatch, alertwatch, alertwatch-heartbeat, alloy, monitoring stack ×5, node_exporter, 🤖 servicemap-web, vnotes, vulnnotes, labinventory, containerd, docker |
 | **hv-rocky-linux-2** `192.168.1.99` | k3s cluster with Cloudflare tunnel, nginx, Juice Shop, vampi | 4 | 0 | 0 | 4 | alloy, node_exporter, vampi, cloudflared, ingress-nginx-controller, nginx, k3s, juice-shop |
-| **hv-rocky-linux-3** `192.168.1.100` | Kong gateway and Jenkins CI host | 5 | 0 | 5 | 0 | alloy, cadvisor, node_exporter, prometheus-podman-exporter, kong, jenkins, jenkins-docker, containerd, docker, kong-db |
+| **hv-rocky-linux-3** `192.168.1.100` | Kong gateway and Jenkins CI. | 5 | 0 | 6 | 0 | alloy, cadvisor, node_exporter, prometheus-podman-exporter, kong, kong-3.6.1-old, jenkins, jenkins-docker, containerd, docker, kong-db |
 | **hv-rocky-linux-4** `192.168.1.101` | LiteLLM AI gateway, crAPI, Juice Shop, Noname sensor | 4 | 2 | 15 | 0 | 🤖 litellm, 🤖 searxng, alloy, node_exporter, prometheus-podman-exporter, noname-sensor, sensor_updater.sh, 🤖 litellm-backup, 🤖 litellm-db, 🤖 crapi stack ×10, dvga, juice-shop |
 | **hv-rocky-linux-5** `192.168.1.102` | Noname sensor, MCP servers, AI simulator | 7 | 1 | 1 | 0 | 🤖 ai-sim, 🤖 crapi-mcp, 🤖 noname-mcp, 🤖 vampi-mcp, alloy, node_exporter, prometheus-podman-exporter, noname-sensor, sensor_updater.sh |
 | hv-rocky-linux-6 `192.168.1.103` | unreachable | | | | | |
@@ -122,7 +110,7 @@ flowchart LR
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator process |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic generator for lab testing. |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | llmredteam | hv-rocky-linux-1 | timer | AI agents | Weekly LLM guardrail evaluation agent. | Sun *-*-* 06:50:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
@@ -195,49 +183,54 @@ flowchart LR
 
 </details>
 
-<details><summary><b>ubuntu-1</b> (192.168.1.91): 9 components</summary>
+<details><summary><b>ubuntu-1</b> (192.168.1.91): 10 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
 | alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
-| kong | docker | Network & ingress | Kong API gateway on ubuntu-1 | running | 0.0.0.0:80->8000/tcp, 0.0.0.0:8001->8001/tcp, [::]:80->8000/tcp | `kong-noname:3.6` |
+| kong | k8s | Network & ingress | Kong API gateway on Ubuntu VM | running | 30080/TCP, 30443/TCP | `kong:3.9.4` |
 | hv-fcopy-daemon | systemd | Ops & CI | Hyper-V file copy protocol daemon | running |  | `/usr/sbin/hv_fcopy_daemon` |
 | hv-kvp-daemon | systemd | Ops & CI | Hyper-V key-value pair protocol daemon | running |  | `/usr/sbin/hv_kvp_daemon` |
 | hv-vss-daemon | systemd | Ops & CI | Hyper-V volume shadow copy daemon | running |  | `/usr/sbin/hv_vss_daemon` |
 | multipathd | systemd | Ops & CI | Device-mapper multipath storage controller | running |  | `/sbin/multipathd` |
 | containerd | systemd | Platform & data | Container runtime for lab workloads | running |  | `/usr/bin/containerd` |
 | docker | systemd | Platform & data | Docker engine for lab containers | running |  | `/usr/bin/dockerd fd://` |
+| k3s | systemd | Platform & data | Runs lightweight Kubernetes for lab workloads | running |  | `/usr/local/bin/k3s server` |
 
 </details>
 
-<details><summary><b>ubuntu-2</b> (192.168.1.92): 8 components</summary>
+<details><summary><b>ubuntu-2</b> (192.168.1.92): 10 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
 | alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
+| kong | k8s | Network & ingress | Kong API gateway on Ubuntu VM | running | 30080/TCP, 30443/TCP | `kong:3.9.4` |
 | hv-fcopy-daemon | systemd | Ops & CI | Hyper-V file copy protocol daemon | running |  | `/usr/sbin/hv_fcopy_daemon` |
 | hv-kvp-daemon | systemd | Ops & CI | Hyper-V key-value pair protocol daemon | running |  | `/usr/sbin/hv_kvp_daemon` |
 | hv-vss-daemon | systemd | Ops & CI | Hyper-V volume shadow copy daemon | running |  | `/usr/sbin/hv_vss_daemon` |
 | multipathd | systemd | Ops & CI | Device-mapper multipath storage controller | running |  | `/sbin/multipathd` |
 | containerd | systemd | Platform & data | Container runtime for lab workloads | running |  | `/usr/bin/containerd` |
 | docker | systemd | Platform & data | Docker engine for lab containers | running |  | `/usr/bin/dockerd fd://` |
+| k3s-agent | systemd | Platform & data | Kubernetes agent on utility.lab | running |  | `/usr/local/bin/k3s agent` |
 
 </details>
 
-<details><summary><b>ubuntu-3</b> (192.168.1.93): 8 components</summary>
+<details><summary><b>ubuntu-3</b> (192.168.1.93): 10 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
 | alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
+| kong | k8s | Network & ingress | Kong API gateway on Ubuntu VM | running | 30080/TCP, 30443/TCP | `kong:3.9.4` |
 | hv-fcopy-daemon | systemd | Ops & CI | Hyper-V file copy protocol daemon | running |  | `/usr/sbin/hv_fcopy_daemon` |
 | hv-kvp-daemon | systemd | Ops & CI | Hyper-V key-value pair protocol daemon | running |  | `/usr/sbin/hv_kvp_daemon` |
 | hv-vss-daemon | systemd | Ops & CI | Hyper-V volume shadow copy daemon | running |  | `/usr/sbin/hv_vss_daemon` |
 | multipathd | systemd | Ops & CI | Device-mapper multipath storage controller | running |  | `/sbin/multipathd` |
 | containerd | systemd | Platform & data | Container runtime for lab workloads | running |  | `/usr/bin/containerd` |
 | docker | systemd | Platform & data | Docker engine for lab containers | running |  | `/usr/bin/dockerd fd://` |
+| k3s-agent | systemd | Platform & data | Kubernetes agent on utility.lab | running |  | `/usr/local/bin/k3s agent` |
 
 </details>
 
@@ -245,7 +238,7 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator process | running |  | `~/ai-sim/generate_traffic.py` |
+| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic generator for lab testing. | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | inactive | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
@@ -290,7 +283,7 @@ flowchart LR
 
 </details>
 
-<details><summary><b>hv-rocky-linux-3</b> (192.168.1.100): 10 components</summary>
+<details><summary><b>hv-rocky-linux-3</b> (192.168.1.100): 11 components</summary>
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
@@ -298,7 +291,8 @@ flowchart LR
 | alloy | systemd | Observability | Collects OpenTelemetry telemetry for lab monitoring | running |  | `/usr/bin/alloy run` |
 | node_exporter | systemd | Observability | Exports host metrics for Prometheus | running |  | `/usr/local/bin/node_exporter` |
 | prometheus-podman-exporter | systemd | Observability | Exports Podman container metrics for Prometheus | running |  | `/usr/bin/prometheus-podman-exporter $PODMAN_EXPORTER_OPTS` |
-| kong | root podman | Network & ingress | Kong API gateway for lab traffic | running | 80->8000/tcp, 8001->8001/tcp | `localhost/kong-noname:3.6-5.0.1-src4` |
+| kong | root podman | Network & ingress | Kong API gateway on hv-rocky-linux-3. | running | 80->8000/tcp, 8001->8001/tcp | `localhost/kong-noname:3.9.4-5.0.1-src4` |
+| kong-3.6.1-old | root podman | Network & ingress | Old Kong API gateway on hv-rocky-linux-3. | exited | 80->8000/tcp, 8001->8001/tcp | `localhost/kong-noname:3.6-5.0.1-src4` |
 | jenkins | docker | Ops & CI | Jenkins CI server for lab builds | running | 0.0.0.0:50000->50000/tcp, 0.0.0.0:8080->8080/tcp, [::]:50000->50000/tcp | `myjenkins-noname:2.568.3-jdk21` |
 | jenkins-docker | docker | Ops & CI | Docker daemon for Jenkins CI builds | running | 0.0.0.0:2376->2376/tcp, [::]:2376->2376/tcp | `docker:dind` |
 | kong-db | root podman | Platform & data | Postgres database backing Kong gateway | running |  | `docker.io/library/postgres:16` |
@@ -352,4 +346,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint df6fe3b89e34c699 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint 79e4a9cbf08c30d8 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>

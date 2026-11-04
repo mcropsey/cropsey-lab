@@ -1,150 +1,66 @@
 {
- "generated_at": "2026-11-03T05:40:14",
- "fingerprint": "df6fe3b89e34c699",
- "change_summary": "+17 (kong, alloy, containerd, docker\u2026); 2 host changes",
+ "generated_at": "2026-11-04T05:40:14",
+ "fingerprint": "79e4a9cbf08c30d8",
+ "change_summary": "+5 (kong-3.6.1-old, k3s, k3s-agent, k3s-agent\u2026); -1 (kong); 1 changed",
  "changes": {
   "first_run": false,
   "added": [
+   {
+    "id": "192.168.1.100/podman-root/root/kong-3.6.1-old",
+    "name": "kong-3.6.1-old",
+    "host": "192.168.1.100",
+    "kind": "podman-root",
+    "category": "network"
+   },
+   {
+    "id": "192.168.1.91/unit/k3s.service",
+    "name": "k3s",
+    "host": "192.168.1.91",
+    "kind": "systemd",
+    "category": "platform"
+   },
+   {
+    "id": "192.168.1.92/unit/k3s-agent.service",
+    "name": "k3s-agent",
+    "host": "192.168.1.92",
+    "kind": "systemd",
+    "category": "platform"
+   },
+   {
+    "id": "192.168.1.93/unit/k3s-agent.service",
+    "name": "k3s-agent",
+    "host": "192.168.1.93",
+    "kind": "systemd",
+    "category": "platform"
+   },
+   {
+    "id": "k8s/k3s-d53f8f/kong/DaemonSet/kong",
+    "name": "kong",
+    "host": "192.168.1.91",
+    "kind": "k8s",
+    "category": "network"
+   }
+  ],
+  "removed": [
    {
     "id": "192.168.1.91/docker/root/kong",
     "name": "kong",
     "host": "192.168.1.91",
     "kind": "docker",
     "category": "network"
-   },
-   {
-    "id": "192.168.1.92/unit/alloy.service",
-    "name": "alloy",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.92/unit/containerd.service",
-    "name": "containerd",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.92/unit/docker.service",
-    "name": "docker",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.92/unit/hv-fcopy-daemon.service",
-    "name": "hv-fcopy-daemon",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/hv-kvp-daemon.service",
-    "name": "hv-kvp-daemon",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/hv-vss-daemon.service",
-    "name": "hv-vss-daemon",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/multipathd.service",
-    "name": "multipathd",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/node_exporter.service",
-    "name": "node_exporter",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.93/unit/alloy.service",
-    "name": "alloy",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.93/unit/containerd.service",
-    "name": "containerd",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.93/unit/docker.service",
-    "name": "docker",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.93/unit/hv-fcopy-daemon.service",
-    "name": "hv-fcopy-daemon",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/hv-kvp-daemon.service",
-    "name": "hv-kvp-daemon",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/hv-vss-daemon.service",
-    "name": "hv-vss-daemon",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/multipathd.service",
-    "name": "multipathd",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/node_exporter.service",
-    "name": "node_exporter",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "observability"
    }
   ],
-  "removed": [],
-  "changed": [],
-  "hosts": [
+  "changed": [
    {
-    "ip": "192.168.1.92",
-    "name": "ubuntu-2",
-    "kernel": [
-     "",
-     "6.8.0-147-generic"
-    ]
-   },
-   {
-    "ip": "192.168.1.93",
-    "name": "ubuntu-3",
-    "kernel": [
-     "",
-     "6.8.0-147-generic"
-    ]
+    "id": "192.168.1.100/podman-root/root/kong",
+    "name": "kong",
+    "host": "192.168.1.100",
+    "field": "image",
+    "old": "localhost/kong-noname:3.6-5.0.1-src4",
+    "new": "localhost/kong-noname:3.9.4-5.0.1-src4"
    }
-  ]
+  ],
+  "hosts": []
  },
  "hosts": {
   "192.168.1.75": {
@@ -382,7 +298,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-11-03 04:00:21",
+   "booted": "2026-11-04 04:01:50",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -424,7 +340,7 @@
      "component": "alloy"
     },
     {
-     "port": 46291,
+     "port": 37243,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -443,7 +359,7 @@
    "name": "ubuntu-1",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-147-generic",
-   "booted": "2026-10-30 15:19:59",
+   "booted": "2026-11-03 13:55:13",
    "cpus": 2,
    "mem_gb": 3.8,
    "error": "",
@@ -461,16 +377,16 @@
      "component": "systemd-resolved"
     },
     {
-     "port": 80,
-     "addr": "::",
-     "process": "docker-proxy",
-     "component": "docker"
+     "port": 6443,
+     "addr": "*",
+     "process": "k3s-server",
+     "component": "k3s"
     },
     {
-     "port": 8001,
-     "addr": "::",
-     "process": "docker-proxy",
-     "component": "docker"
+     "port": 6444,
+     "addr": "127.0.0.1",
+     "process": "k3s-server",
+     "component": "k3s"
     },
     {
      "port": 9100,
@@ -479,10 +395,64 @@
      "component": "node_exporter"
     },
     {
+     "port": 10010,
+     "addr": "127.0.0.1",
+     "process": "containerd",
+     "component": "k3s"
+    },
+    {
+     "port": 10248,
+     "addr": "127.0.0.1",
+     "process": "k3s-server",
+     "component": "k3s"
+    },
+    {
+     "port": 10249,
+     "addr": "127.0.0.1",
+     "process": "k3s-server",
+     "component": "k3s"
+    },
+    {
+     "port": 10250,
+     "addr": "*",
+     "process": "k3s-server",
+     "component": "k3s"
+    },
+    {
+     "port": 10256,
+     "addr": "127.0.0.1",
+     "process": "k3s-server",
+     "component": "k3s"
+    },
+    {
+     "port": 10257,
+     "addr": "127.0.0.1",
+     "process": "k3s-server",
+     "component": "k3s"
+    },
+    {
+     "port": 10258,
+     "addr": "127.0.0.1",
+     "process": "k3s-server",
+     "component": "k3s"
+    },
+    {
+     "port": 10259,
+     "addr": "127.0.0.1",
+     "process": "k3s-server",
+     "component": "k3s"
+    },
+    {
      "port": 12345,
      "addr": "127.0.0.1",
      "process": "alloy",
      "component": "alloy"
+    },
+    {
+     "port": 30805,
+     "addr": "0.0.0.0",
+     "process": "k3s-server",
+     "component": "k3s"
     },
     {
      "port": 33329,
@@ -491,7 +461,7 @@
      "component": "containerd"
     }
    ],
-   "role": "general purpose VM running Kong and Docker"
+   "role": "General-purpose Ubuntu VM with k3s, Kong."
   },
   "192.168.1.92": {
    "ip": "192.168.1.92",
@@ -516,10 +486,46 @@
      "component": "systemd-resolved"
     },
     {
+     "port": 6444,
+     "addr": "::1",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
      "port": 9100,
      "addr": "*",
      "process": "node_exporter",
      "component": "node_exporter"
+    },
+    {
+     "port": 10010,
+     "addr": "127.0.0.1",
+     "process": "containerd",
+     "component": "k3s-agent"
+    },
+    {
+     "port": 10248,
+     "addr": "127.0.0.1",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
+     "port": 10249,
+     "addr": "127.0.0.1",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
+     "port": 10250,
+     "addr": "*",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
+     "port": 10256,
+     "addr": "127.0.0.1",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
     },
     {
      "port": 12345,
@@ -528,13 +534,19 @@
      "component": "alloy"
     },
     {
+     "port": 30805,
+     "addr": "0.0.0.0",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
      "port": 32815,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
     }
    ],
-   "role": "General-purpose Ubuntu VM with Docker and containerd."
+   "role": "General-purpose Ubuntu VM with k3s-agent, Kong."
   },
   "192.168.1.93": {
    "ip": "192.168.1.93",
@@ -559,10 +571,46 @@
      "component": "systemd-resolved"
     },
     {
+     "port": 6444,
+     "addr": "::1",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
      "port": 9100,
      "addr": "*",
      "process": "node_exporter",
      "component": "node_exporter"
+    },
+    {
+     "port": 10010,
+     "addr": "127.0.0.1",
+     "process": "containerd",
+     "component": "k3s-agent"
+    },
+    {
+     "port": 10248,
+     "addr": "127.0.0.1",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
+     "port": 10249,
+     "addr": "127.0.0.1",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
+     "port": 10250,
+     "addr": "*",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
+     "port": 10256,
+     "addr": "127.0.0.1",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
     },
     {
      "port": 12345,
@@ -571,13 +619,19 @@
      "component": "alloy"
     },
     {
+     "port": 30805,
+     "addr": "0.0.0.0",
+     "process": "k3s-agent",
+     "component": "k3s-agent"
+    },
+    {
      "port": 41775,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
     }
    ],
-   "role": "General-purpose Ubuntu VM with Docker and containerd."
+   "role": "General-purpose Ubuntu VM with k3s-agent, Kong."
   },
   "192.168.1.98": {
    "ip": "192.168.1.98",
@@ -910,7 +964,7 @@
      "component": "docker"
     }
    ],
-   "role": "Kong gateway and Jenkins CI host"
+   "role": "Kong gateway and Jenkins CI."
   },
   "192.168.1.101": {
    "ip": "192.168.1.101",
@@ -1163,6 +1217,38 @@
    ]
   },
   {
+   "id": "d53f8fde-4c4c-45a7-ad3f-e395abdc1448",
+   "flavor": "k3s",
+   "seen_on": [
+    "192.168.1.91"
+   ],
+   "nodes": [
+    {
+     "name": "ubuntu-1",
+     "ip": "192.168.1.91",
+     "host": "ubuntu-1"
+    },
+    {
+     "name": "ubuntu-2",
+     "ip": "192.168.1.92",
+     "host": "ubuntu-2"
+    },
+    {
+     "name": "ubuntu-3",
+     "ip": "192.168.1.93",
+     "host": "ubuntu-3"
+    }
+   ],
+   "name": "k3s (ubuntu-1, ubuntu-2, ubuntu-3)",
+   "workloads": [
+    "k8s/k3s-d53f8f/kube-system/Deployment/coredns",
+    "k8s/k3s-d53f8f/kube-system/Deployment/local-path-provisioner",
+    "k8s/k3s-d53f8f/kube-system/Deployment/metrics-server",
+    "k8s/k3s-d53f8f/kong/DaemonSet/kong",
+    "k8s/k3s-d53f8f/kube-system/DaemonSet/svclb-kong-proxy-d31f817b"
+   ]
+  },
+  {
    "id": "dbacb595-62f5-41f9-8d41-ec4d00937ec3",
    "flavor": "k3s",
    "seen_on": [
@@ -1249,6 +1335,28 @@
    ]
   },
   {
+   "src": "192.168.1.92/unit/k3s-agent.service",
+   "dst": "192.168.1.91/unit/k3s.service",
+   "ports": [
+    6443
+   ],
+   "how": [
+    "configured",
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.93/unit/k3s-agent.service",
+   "dst": "192.168.1.91/unit/k3s.service",
+   "ports": [
+    6443
+   ],
+   "how": [
+    "configured",
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.76/unit/node_exporter.service",
    "ports": [
@@ -1264,6 +1372,16 @@
    "ports": [
     8011,
     8012
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.85/unit/node_exporter.service",
+   "ports": [
+    9100
    ],
    "how": [
     "observed"
@@ -1341,31 +1459,22 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.91/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.99/unit/k3s.service",
    "ports": [
     10250
    ],
    "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/mcp-sweep.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured",
     "observed"
    ]
   },
@@ -1452,6 +1561,16 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.98/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.91/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1670,16 +1789,6 @@
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-sweep.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
-   ],
-   "how": [
-    "configured"
-   ]
-  },
-  {
    "src": "192.168.1.98/unit/patchwatch.service",
    "dst": "192.168.1.101/podman-root/root/litellm",
    "ports": [
@@ -1807,16 +1916,6 @@
    ],
    "how": [
     "configured"
-   ]
-  },
-  {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.91/docker/root/kong",
-   "ports": [
-    80
-   ],
-   "how": [
-    "observed"
    ]
   },
   {
@@ -3283,25 +3382,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.76/unit/fwupd.service": {
-   "id": "192.168.1.76/unit/fwupd.service",
-   "host": "192.168.1.76",
-   "hosts": [
-    "192.168.1.76"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.76/unit/getty@tty1.service": {
@@ -6151,31 +6231,6 @@
    "description": "cron (dir)",
    "classified_by": "rules"
   },
-  "192.168.1.91/docker/root/kong": {
-   "id": "192.168.1.91/docker/root/kong",
-   "host": "192.168.1.91",
-   "hosts": [
-    "192.168.1.91"
-   ],
-   "kind": "docker",
-   "name": "kong",
-   "category": "network",
-   "ai": false,
-   "purpose": "Kong API gateway on ubuntu-1",
-   "state": "running",
-   "ports": [
-    "0.0.0.0:80->8000/tcp",
-    "0.0.0.0:8001->8001/tcp",
-    "[::]:80->8000/tcp",
-    "[::]:8001->8001/tcp"
-   ],
-   "image": "kong-noname:3.6",
-   "detail": "kong-noname:3.6",
-   "user": "root",
-   "group": "",
-   "baseline": false,
-   "classified_by": "llm"
-  },
   "192.168.1.91/unit/ModemManager.service": {
    "id": "192.168.1.91/unit/ModemManager.service",
    "host": "192.168.1.91",
@@ -6497,6 +6552,25 @@
    "user": "root",
    "baseline": false,
    "description": "Hyper-V VSS Protocol Daemon",
+   "classified_by": "llm-cache"
+  },
+  "192.168.1.91/unit/k3s.service": {
+   "id": "192.168.1.91/unit/k3s.service",
+   "host": "192.168.1.91",
+   "hosts": [
+    "192.168.1.91"
+   ],
+   "kind": "systemd",
+   "name": "k3s",
+   "category": "platform",
+   "ai": false,
+   "purpose": "Runs lightweight Kubernetes for lab workloads",
+   "state": "running",
+   "schedule": "",
+   "detail": "/usr/local/bin/k3s server",
+   "user": "root",
+   "baseline": false,
+   "description": "Lightweight Kubernetes",
    "classified_by": "llm-cache"
   },
   "192.168.1.91/unit/logrotate.service": {
@@ -7580,6 +7654,25 @@
    "description": "Hyper-V VSS Protocol Daemon",
    "classified_by": "llm-cache"
   },
+  "192.168.1.92/unit/k3s-agent.service": {
+   "id": "192.168.1.92/unit/k3s-agent.service",
+   "host": "192.168.1.92",
+   "hosts": [
+    "192.168.1.92"
+   ],
+   "kind": "systemd",
+   "name": "k3s-agent",
+   "category": "platform",
+   "ai": false,
+   "purpose": "Kubernetes agent on utility.lab",
+   "state": "running",
+   "schedule": "",
+   "detail": "/usr/local/bin/k3s agent",
+   "user": "root",
+   "baseline": false,
+   "description": "Lightweight Kubernetes",
+   "classified_by": "llm-cache"
+  },
   "192.168.1.92/unit/logrotate.service": {
    "id": "192.168.1.92/unit/logrotate.service",
    "host": "192.168.1.92",
@@ -8585,25 +8678,6 @@
    "description": "Refresh fwupd metadata and update motd",
    "classified_by": "rules"
   },
-  "192.168.1.93/unit/fwupd.service": {
-   "id": "192.168.1.93/unit/fwupd.service",
-   "host": "192.168.1.93",
-   "hosts": [
-    "192.168.1.93"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
-   "classified_by": "rules"
-  },
   "192.168.1.93/unit/getty@tty1.service": {
    "id": "192.168.1.93/unit/getty@tty1.service",
    "host": "192.168.1.93",
@@ -8678,6 +8752,25 @@
    "user": "root",
    "baseline": false,
    "description": "Hyper-V VSS Protocol Daemon",
+   "classified_by": "llm-cache"
+  },
+  "192.168.1.93/unit/k3s-agent.service": {
+   "id": "192.168.1.93/unit/k3s-agent.service",
+   "host": "192.168.1.93",
+   "hosts": [
+    "192.168.1.93"
+   ],
+   "kind": "systemd",
+   "name": "k3s-agent",
+   "category": "platform",
+   "ai": false,
+   "purpose": "Kubernetes agent on utility.lab",
+   "state": "running",
+   "schedule": "",
+   "detail": "/usr/local/bin/k3s agent",
+   "user": "root",
+   "baseline": false,
+   "description": "Lightweight Kubernetes",
    "classified_by": "llm-cache"
   },
   "192.168.1.93/unit/logrotate.service": {
@@ -10766,13 +10859,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator process",
+   "purpose": "Long-running AI traffic generator for lab testing.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 93.4h)",
+   "description": "long-running python3 outside any service (up 117.4h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -11646,6 +11739,29 @@
    "baseline": false,
    "classified_by": "llm-cache"
   },
+  "192.168.1.100/podman-root/root/kong-3.6.1-old": {
+   "id": "192.168.1.100/podman-root/root/kong-3.6.1-old",
+   "host": "192.168.1.100",
+   "hosts": [
+    "192.168.1.100"
+   ],
+   "kind": "podman-root",
+   "name": "kong-3.6.1-old",
+   "category": "network",
+   "ai": false,
+   "purpose": "Old Kong API gateway on hv-rocky-linux-3.",
+   "state": "exited",
+   "ports": [
+    "80->8000/tcp",
+    "8001->8001/tcp"
+   ],
+   "image": "localhost/kong-noname:3.6-5.0.1-src4",
+   "detail": "localhost/kong-noname:3.6-5.0.1-src4",
+   "user": "root",
+   "group": "",
+   "baseline": false,
+   "classified_by": "llm"
+  },
   "192.168.1.100/podman-root/root/kong": {
    "id": "192.168.1.100/podman-root/root/kong",
    "host": "192.168.1.100",
@@ -11656,18 +11772,18 @@
    "name": "kong",
    "category": "network",
    "ai": false,
-   "purpose": "Kong API gateway for lab traffic",
+   "purpose": "Kong API gateway on hv-rocky-linux-3.",
    "state": "running",
    "ports": [
     "80->8000/tcp",
     "8001->8001/tcp"
    ],
-   "image": "localhost/kong-noname:3.6-5.0.1-src4",
-   "detail": "localhost/kong-noname:3.6-5.0.1-src4",
+   "image": "localhost/kong-noname:3.9.4-5.0.1-src4",
+   "detail": "localhost/kong-noname:3.9.4-5.0.1-src4",
    "user": "root",
    "group": "",
    "baseline": false,
-   "classified_by": "llm-cache"
+   "classified_by": "llm"
   },
   "192.168.1.100/docker/root/cadvisor": {
    "id": "192.168.1.100/docker/root/cadvisor",
@@ -11832,6 +11948,25 @@
    "description": "Avahi mDNS/DNS-SD Stack",
    "classified_by": "rules"
   },
+  "192.168.1.100/unit/cd386e49d51335c4d5e2452e770f9c78458746f21365296c0a7c3f8cd47d4c57-57e5ef598ca0599.service": {
+   "id": "192.168.1.100/unit/cd386e49d51335c4d5e2452e770f9c78458746f21365296c0a7c3f8cd47d4c57-57e5ef598ca0599.service",
+   "host": "192.168.1.100",
+   "hosts": [
+    "192.168.1.100"
+   ],
+   "kind": "timer",
+   "name": "cd386e49d51335c4d5e2452e770f9c78458746f21365296c0a7c3f8cd47d4c57-57e5ef598ca0599",
+   "category": "platform",
+   "ai": false,
+   "purpose": "/usr/bin/podman healthcheck run cd386e49d51335c4d5e2452e770f9c78458746f21365296c0a7c3f8cd47d4c57",
+   "state": "inactive",
+   "schedule": "",
+   "detail": "/usr/bin/podman healthcheck",
+   "user": "root",
+   "baseline": true,
+   "description": "/usr/bin/podman healthcheck run cd386e49d51335c4d5e2452e770f9c78458746f21365296c0a7c3f8cd47d4c57",
+   "classified_by": "rules"
+  },
   "192.168.1.100/unit/chronyd.service": {
    "id": "192.168.1.100/unit/chronyd.service",
    "host": "192.168.1.100",
@@ -11927,25 +12062,6 @@
    "description": "CUPS Scheduler",
    "classified_by": "rules"
   },
-  "192.168.1.100/unit/dadfd69656efe3ab17cf6c601a36677dd1732d6107c7a3f49f33212b119b8386-33e55e2ba414b178.service": {
-   "id": "192.168.1.100/unit/dadfd69656efe3ab17cf6c601a36677dd1732d6107c7a3f49f33212b119b8386-33e55e2ba414b178.service",
-   "host": "192.168.1.100",
-   "hosts": [
-    "192.168.1.100"
-   ],
-   "kind": "timer",
-   "name": "dadfd69656efe3ab17cf6c601a36677dd1732d6107c7a3f49f33212b119b8386-33e55e2ba414b178",
-   "category": "platform",
-   "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run dadfd69656efe3ab17cf6c601a36677dd1732d6107c7a3f49f33212b119b8386",
-   "state": "inactive",
-   "schedule": "",
-   "detail": "/usr/bin/podman healthcheck",
-   "user": "root",
-   "baseline": true,
-   "description": "/usr/bin/podman healthcheck run dadfd69656efe3ab17cf6c601a36677dd1732d6107c7a3f49f33212b119b8386",
-   "classified_by": "rules"
-  },
   "192.168.1.100/unit/dbus-broker.service": {
    "id": "192.168.1.100/unit/dbus-broker.service",
    "host": "192.168.1.100",
@@ -11976,7 +12092,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -15172,6 +15288,129 @@
    "ready": 2,
    "baseline": false,
    "classified_by": "llm-cache"
+  },
+  "k8s/k3s-d53f8f/kube-system/Deployment/coredns": {
+   "id": "k8s/k3s-d53f8f/kube-system/Deployment/coredns",
+   "host": "192.168.1.91",
+   "hosts": [
+    "192.168.1.91"
+   ],
+   "kind": "k8s",
+   "name": "coredns",
+   "category": "ops",
+   "ai": false,
+   "purpose": "",
+   "state": "running",
+   "schedule": "",
+   "image": "rancher/mirrored-coredns-coredns:1.14.7",
+   "detail": "Deployment in kube-system",
+   "namespace": "kube-system",
+   "k8s_kind": "Deployment",
+   "cluster": "k3s (ubuntu-1, ubuntu-2, ubuntu-3)",
+   "replicas": 1,
+   "ready": 1,
+   "baseline": true,
+   "classified_by": "rules"
+  },
+  "k8s/k3s-d53f8f/kube-system/Deployment/local-path-provisioner": {
+   "id": "k8s/k3s-d53f8f/kube-system/Deployment/local-path-provisioner",
+   "host": "192.168.1.91",
+   "hosts": [
+    "192.168.1.91"
+   ],
+   "kind": "k8s",
+   "name": "local-path-provisioner",
+   "category": "platform",
+   "ai": false,
+   "purpose": "",
+   "state": "running",
+   "schedule": "",
+   "image": "rancher/local-path-provisioner:v0.0.37",
+   "detail": "Deployment in kube-system",
+   "namespace": "kube-system",
+   "k8s_kind": "Deployment",
+   "cluster": "k3s (ubuntu-1, ubuntu-2, ubuntu-3)",
+   "replicas": 1,
+   "ready": 1,
+   "baseline": true,
+   "classified_by": "rules"
+  },
+  "k8s/k3s-d53f8f/kube-system/Deployment/metrics-server": {
+   "id": "k8s/k3s-d53f8f/kube-system/Deployment/metrics-server",
+   "host": "192.168.1.91",
+   "hosts": [
+    "192.168.1.91"
+   ],
+   "kind": "k8s",
+   "name": "metrics-server",
+   "category": "ops",
+   "ai": false,
+   "purpose": "",
+   "state": "running",
+   "schedule": "",
+   "image": "rancher/mirrored-metrics-server:v0.9.0",
+   "detail": "Deployment in kube-system",
+   "namespace": "kube-system",
+   "k8s_kind": "Deployment",
+   "cluster": "k3s (ubuntu-1, ubuntu-2, ubuntu-3)",
+   "replicas": 1,
+   "ready": 1,
+   "baseline": true,
+   "classified_by": "rules"
+  },
+  "k8s/k3s-d53f8f/kong/DaemonSet/kong": {
+   "id": "k8s/k3s-d53f8f/kong/DaemonSet/kong",
+   "host": "192.168.1.91",
+   "hosts": [
+    "192.168.1.91",
+    "192.168.1.92",
+    "192.168.1.93"
+   ],
+   "kind": "k8s",
+   "name": "kong",
+   "category": "network",
+   "ai": false,
+   "purpose": "Kong API gateway on Ubuntu VM",
+   "state": "running",
+   "schedule": "",
+   "ports": [
+    "30080/TCP",
+    "30443/TCP"
+   ],
+   "image": "kong:3.9.4",
+   "detail": "DaemonSet in kong",
+   "namespace": "kong",
+   "k8s_kind": "DaemonSet",
+   "cluster": "k3s (ubuntu-1, ubuntu-2, ubuntu-3)",
+   "replicas": 3,
+   "ready": 3,
+   "baseline": false,
+   "classified_by": "llm"
+  },
+  "k8s/k3s-d53f8f/kube-system/DaemonSet/svclb-kong-proxy-d31f817b": {
+   "id": "k8s/k3s-d53f8f/kube-system/DaemonSet/svclb-kong-proxy-d31f817b",
+   "host": "192.168.1.91",
+   "hosts": [
+    "192.168.1.91",
+    "192.168.1.92",
+    "192.168.1.93"
+   ],
+   "kind": "k8s",
+   "name": "svclb-kong-proxy-d31f817b",
+   "category": "network",
+   "ai": false,
+   "purpose": "",
+   "state": "running",
+   "schedule": "",
+   "image": "rancher/klipper-lb:v0.4.17, rancher/klipper-lb:v0.4.17",
+   "detail": "DaemonSet in kube-system",
+   "namespace": "kube-system",
+   "k8s_kind": "DaemonSet",
+   "cluster": "k3s (ubuntu-1, ubuntu-2, ubuntu-3)",
+   "replicas": 3,
+   "ready": 3,
+   "baseline": true,
+   "classified_by": "rules"
   },
   "k8s/k3s-dbacb5/default/Deployment/nginx": {
    "id": "k8s/k3s-dbacb5/default/Deployment/nginx",
