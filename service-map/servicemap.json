@@ -1,65 +1,12 @@
 {
- "generated_at": "2026-11-04T05:40:14",
- "fingerprint": "79e4a9cbf08c30d8",
- "change_summary": "+5 (kong-3.6.1-old, k3s, k3s-agent, k3s-agent\u2026); -1 (kong); 1 changed",
+ "generated_at": "2026-11-05T05:40:15",
+ "fingerprint": "7897d0cd4b38b569",
+ "change_summary": "no component changes",
  "changes": {
   "first_run": false,
-  "added": [
-   {
-    "id": "192.168.1.100/podman-root/root/kong-3.6.1-old",
-    "name": "kong-3.6.1-old",
-    "host": "192.168.1.100",
-    "kind": "podman-root",
-    "category": "network"
-   },
-   {
-    "id": "192.168.1.91/unit/k3s.service",
-    "name": "k3s",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.92/unit/k3s-agent.service",
-    "name": "k3s-agent",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.93/unit/k3s-agent.service",
-    "name": "k3s-agent",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "k8s/k3s-d53f8f/kong/DaemonSet/kong",
-    "name": "kong",
-    "host": "192.168.1.91",
-    "kind": "k8s",
-    "category": "network"
-   }
-  ],
-  "removed": [
-   {
-    "id": "192.168.1.91/docker/root/kong",
-    "name": "kong",
-    "host": "192.168.1.91",
-    "kind": "docker",
-    "category": "network"
-   }
-  ],
-  "changed": [
-   {
-    "id": "192.168.1.100/podman-root/root/kong",
-    "name": "kong",
-    "host": "192.168.1.100",
-    "field": "image",
-    "old": "localhost/kong-noname:3.6-5.0.1-src4",
-    "new": "localhost/kong-noname:3.9.4-5.0.1-src4"
-   }
-  ],
+  "added": [],
+  "removed": [],
+  "changed": [],
   "hosts": []
  },
  "hosts": {
@@ -298,7 +245,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-11-04 04:01:50",
+   "booted": "2026-11-05 04:00:38",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -340,7 +287,7 @@
      "component": "alloy"
     },
     {
-     "port": 37243,
+     "port": 39749,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -359,7 +306,7 @@
    "name": "ubuntu-1",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-147-generic",
-   "booted": "2026-11-03 13:55:13",
+   "booted": "2026-11-03 15:05:54",
    "cpus": 2,
    "mem_gb": 3.8,
    "error": "",
@@ -553,7 +500,7 @@
    "name": "ubuntu-3",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-147-generic",
-   "booted": "2026-11-02 08:36:43",
+   "booted": "2026-11-02 08:36:44",
    "cpus": 2,
    "mem_gb": 3.8,
    "error": "",
@@ -1346,6 +1293,16 @@
    ]
   },
   {
+   "src": "192.168.1.93/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.93/unit/k3s-agent.service",
    "dst": "192.168.1.91/unit/k3s.service",
    "ports": [
@@ -1372,16 +1329,6 @@
    "ports": [
     8011,
     8012
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
-   "ports": [
-    9100
    ],
    "how": [
     "observed"
@@ -1459,22 +1406,21 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.99/unit/k3s.service",
+   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
-    10250
+    9100
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-sweep.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.99/unit/k3s.service",
    "ports": [
-    8009
+    10250
    ],
    "how": [
-    "configured",
     "observed"
    ]
   },
@@ -1511,6 +1457,16 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.101/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.91/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1561,16 +1517,6 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.98/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.91/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1780,6 +1726,16 @@
   },
   {
    "src": "192.168.1.98/unit/mcp-heartbeat.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/mcp-sweep.service",
    "dst": "192.168.1.102/unit/crapi-mcp.service",
    "ports": [
     8009
@@ -10859,13 +10815,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic generator for lab testing.",
+   "purpose": "Long-running AI traffic simulator on the observability hub.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 117.4h)",
+   "description": "long-running python3 outside any service (up 141.4h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -11760,7 +11716,7 @@
    "user": "root",
    "group": "",
    "baseline": false,
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.100/podman-root/root/kong": {
    "id": "192.168.1.100/podman-root/root/kong",
@@ -11783,7 +11739,7 @@
    "user": "root",
    "group": "",
    "baseline": false,
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.100/docker/root/cadvisor": {
    "id": "192.168.1.100/docker/root/cadvisor",
@@ -12092,7 +12048,7 @@
    "category": "ops",
    "ai": false,
    "purpose": "dnf makecache",
-   "state": "failed",
+   "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/dnf makecache",
    "user": "root",
@@ -15385,7 +15341,7 @@
    "replicas": 3,
    "ready": 3,
    "baseline": false,
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "k8s/k3s-d53f8f/kube-system/DaemonSet/svclb-kong-proxy-d31f817b": {
    "id": "k8s/k3s-d53f8f/kube-system/DaemonSet/svclb-kong-proxy-d31f817b",
