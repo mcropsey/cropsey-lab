@@ -1,13 +1,22 @@
 {
- "generated_at": "2026-11-05T05:40:15",
- "fingerprint": "7897d0cd4b38b569",
- "change_summary": "no component changes",
+ "generated_at": "2026-11-06T05:40:14",
+ "fingerprint": "3adf4df4321f9b1a",
+ "change_summary": "1 host changes",
  "changes": {
   "first_run": false,
   "added": [],
   "removed": [],
   "changed": [],
-  "hosts": []
+  "hosts": [
+   {
+    "ip": "192.168.1.85",
+    "name": "rasp5",
+    "kernel": [
+     "6.8.0-1065-raspi",
+     "6.8.0-1068-raspi"
+    ]
+   }
+  ]
  },
  "hosts": {
   "192.168.1.75": {
@@ -244,8 +253,8 @@
    "ip": "192.168.1.85",
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
-   "kernel": "6.8.0-1065-raspi",
-   "booted": "2026-11-05 04:00:38",
+   "kernel": "6.8.0-1068-raspi",
+   "booted": "2026-11-06 04:00:27",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -258,7 +267,7 @@
     },
     {
      "port": 53,
-     "addr": "127.0.0.53%lo",
+     "addr": "127.0.0.54",
      "process": "systemd-resolve",
      "component": "systemd-resolved"
     },
@@ -287,7 +296,7 @@
      "component": "alloy"
     },
     {
-     "port": 39749,
+     "port": 38537,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1272,16 +1281,6 @@
    ]
   },
   {
-   "src": "192.168.1.91/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.92/unit/k3s-agent.service",
    "dst": "192.168.1.91/unit/k3s.service",
    "ports": [
@@ -1293,7 +1292,7 @@
    ]
   },
   {
-   "src": "192.168.1.93/unit/alloy.service",
+   "src": "192.168.1.92/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
@@ -1386,6 +1385,16 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.85/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.102/unit/prometheus-podman-exporter.service",
    "ports": [
     9882
@@ -1397,16 +1406,6 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1875,20 +1874,20 @@
    ]
   },
   {
-   "src": "192.168.1.99/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.101/podman-root/root/dvga",
    "ports": [
-    3100
+    5013
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.101/podman-root/root/dvga",
+   "src": "192.168.1.99/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    5013
+    3100
    ],
    "how": [
     "observed"
@@ -10815,13 +10814,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator on the observability hub.",
+   "purpose": "Long-running AI traffic simulator on observability hub.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 2,
-   "description": "long-running python3 outside any service (up 141.4h)",
+   "description": "long-running python3 outside any service (up 165.4h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
