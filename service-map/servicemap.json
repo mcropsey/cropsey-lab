@@ -1,95 +1,13 @@
 {
- "generated_at": "2026-11-11T05:40:14",
- "fingerprint": "3a5f5dbc1eebcb8c",
- "change_summary": "5 changed; 5 host changes",
+ "generated_at": "2026-11-12T05:40:13",
+ "fingerprint": "585701fd0d15c545",
+ "change_summary": "no component changes",
  "changes": {
   "first_run": false,
   "added": [],
   "removed": [],
-  "changed": [
-   {
-    "id": "192.168.1.98/unit/labwatch.service",
-    "name": "labwatch",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
-   },
-   {
-    "id": "192.168.1.98/unit/secnews.service",
-    "name": "secnews",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
-   },
-   {
-    "id": "192.168.1.98/unit/cvewatch.service",
-    "name": "cvewatch",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
-   },
-   {
-    "id": "192.168.1.98/unit/alertwatch-heartbeat.service",
-    "name": "alertwatch-heartbeat",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
-   },
-   {
-    "id": "192.168.1.98/unit/patchwatch.service",
-    "name": "patchwatch",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
-   }
-  ],
-  "hosts": [
-   {
-    "ip": "192.168.1.98",
-    "name": "hv-rocky-linux-1",
-    "kernel": [
-     "5.14.0-687.61.1.el9_8.x86_64",
-     "5.14.0-687.66.1.el9_8.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.99",
-    "name": "hv-rocky-linux-2",
-    "kernel": [
-     "5.14.0-687.61.1.el9_8.x86_64",
-     "5.14.0-687.66.1.el9_8.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.100",
-    "name": "hv-rocky-linux-3",
-    "kernel": [
-     "5.14.0-687.61.1.el9_8.x86_64",
-     "5.14.0-687.66.1.el9_8.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.101",
-    "name": "hv-rocky-linux-4",
-    "kernel": [
-     "5.14.0-687.61.1.el9_8.x86_64",
-     "5.14.0-687.66.1.el9_8.x86_64"
-    ]
-   },
-   {
-    "ip": "192.168.1.102",
-    "name": "hv-rocky-linux-5",
-    "kernel": [
-     "5.14.0-687.61.1.el9_8.x86_64",
-     "5.14.0-687.66.1.el9_8.x86_64"
-    ]
-   }
-  ]
+  "changed": [],
+  "hosts": []
  },
  "hosts": {
   "192.168.1.75": {
@@ -327,7 +245,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1068-raspi",
-   "booted": "2026-11-11 04:00:21",
+   "booted": "2026-11-12 04:00:21",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -369,7 +287,7 @@
      "component": "alloy"
     },
     {
-     "port": 42623,
+     "port": 35197,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1122,16 +1040,6 @@
  ],
  "edges": [
   {
-   "src": "192.168.1.75/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "dst": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
@@ -1142,10 +1050,10 @@
    ]
   },
   {
-   "src": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "src": "192.168.1.75/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    19001
+    3100
    ],
    "how": [
     "observed"
@@ -1162,7 +1070,37 @@
    ]
   },
   {
+   "src": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "ports": [
+    19001
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.85/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.92/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.93/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
@@ -1193,16 +1131,6 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "ext/192.168.1.78:9100",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.93/unit/node_exporter.service",
    "ports": [
     9100
@@ -1217,6 +1145,16 @@
    "ports": [
     8011,
     8012
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.76/unit/node_exporter.service",
+   "ports": [
+    9100
    ],
    "how": [
     "observed"
@@ -1244,16 +1182,6 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.76/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.98/unit/node_exporter.service",
    "ports": [
     9100
@@ -1274,16 +1202,6 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.99/unit/k3s.service",
    "ports": [
     10250
@@ -1293,8 +1211,39 @@
    ]
   },
   {
+   "src": "192.168.1.98/unit/mcp-heartbeat.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured",
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.75/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "ext/192.168.1.78:9100",
    "ports": [
     9100
    ],
@@ -1324,7 +1273,7 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.75/unit/node_exporter.service",
+   "dst": "192.168.1.101/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1334,9 +1283,19 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.101/unit/node_exporter.service",
+   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
     9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/podman-root/root/alertwatch",
+   "dst": "192.168.1.98/docker/root/alertmanager",
+   "ports": [
+    9093
    ],
    "how": [
     "observed"
@@ -1583,16 +1542,6 @@
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-heartbeat.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
-   ],
-   "how": [
-    "configured"
-   ]
-  },
-  {
    "src": "192.168.1.98/unit/mcp-sweep.service",
    "dst": "192.168.1.102/unit/crapi-mcp.service",
    "ports": [
@@ -1733,16 +1682,6 @@
    ]
   },
   {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.101/podman-root/root/dvga",
-   "ports": [
-    5013
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.99/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
@@ -1757,6 +1696,16 @@
    "dst": "192.168.1.100/podman-root/root/kong",
    "ports": [
     80
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.101/podman-root/root/dvga",
+   "ports": [
+    5013
    ],
    "how": [
     "observed"
@@ -3206,25 +3155,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.76/unit/fwupd.service": {
-   "id": "192.168.1.76/unit/fwupd.service",
-   "host": "192.168.1.76",
-   "hosts": [
-    "192.168.1.76"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.76/unit/getty@tty1.service": {
@@ -6319,25 +6249,6 @@
    "user": "fwupd-refresh",
    "baseline": true,
    "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.91/unit/fwupd.service": {
-   "id": "192.168.1.91/unit/fwupd.service",
-   "host": "192.168.1.91",
-   "hosts": [
-    "192.168.1.91"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
    "classified_by": "rules"
   },
   "192.168.1.91/unit/getty@tty1.service": {
@@ -10664,14 +10575,14 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator on observability hub.",
+   "purpose": "long-running python3 outside any service (up 44.3h)",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running python3 outside any service (up 20.3h)",
-   "classified_by": "llm"
+   "description": "long-running python3 outside any service (up 44.3h)",
+   "classified_by": "rules"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
    "id": "192.168.1.99/unit/accounts-daemon.service",

@@ -1,19 +1,10 @@
 # Lab service map
 
-Generated **2026-11-11 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-11-12 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- `labwatch` on hv-rocky-linux-1: state failed → inactive
-- `secnews` on hv-rocky-linux-1: state failed → inactive
-- `cvewatch` on hv-rocky-linux-1: state failed → inactive
-- `alertwatch-heartbeat` on hv-rocky-linux-1: state failed → inactive
-- `patchwatch` on hv-rocky-linux-1: state failed → inactive
-- host hv-rocky-linux-1: kernel 5.14.0-687.61.1.el9_8.x86_64 → 5.14.0-687.66.1.el9_8.x86_64
-- host hv-rocky-linux-2: kernel 5.14.0-687.61.1.el9_8.x86_64 → 5.14.0-687.66.1.el9_8.x86_64
-- host hv-rocky-linux-3: kernel 5.14.0-687.61.1.el9_8.x86_64 → 5.14.0-687.66.1.el9_8.x86_64
-- host hv-rocky-linux-4: kernel 5.14.0-687.61.1.el9_8.x86_64 → 5.14.0-687.66.1.el9_8.x86_64
-- host hv-rocky-linux-5: kernel 5.14.0-687.61.1.el9_8.x86_64 → 5.14.0-687.66.1.el9_8.x86_64
+No changes.
 
 ## AI agents & dependencies
 
@@ -57,6 +48,7 @@ flowchart LR
     nda547473["LM Studio (qwen3.8-27b, RTX 5090)<br/><small>external</small>"]
   end
   n48c4898e -->|8011,8012| nfaf72a42
+  n5b143553 -->|8009| n0286a0d8
   n3fd6a072 -.->|4000| ne2915bec
   n21cfb59a -.->|4000| ne2915bec
   n8dc796a2 -.->|4000| ne2915bec
@@ -71,7 +63,6 @@ flowchart LR
   n8203cbf4 -.->|3100| n941b31c1
   n8203cbf4 -.->|9090| n02586a2d
   n8203cbf4 -.->|9093| n8f651301
-  n5b143553 -.->|8009| n0286a0d8
   n58c79f44 -.->|8009| n0286a0d8
   nce8753db -.->|4000| ne2915bec
   nce8753db -.->|3100| n941b31c1
@@ -113,7 +104,7 @@ flowchart LR
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | Long-running AI traffic simulator on observability hub. |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | long-running python3 outside any service (up 44.3h) |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | llmredteam | hv-rocky-linux-1 | timer | AI agents | Weekly LLM guardrail evaluation agent. | Sun *-*-* 06:50:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
@@ -235,7 +226,7 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| generate_traffic.py | process | AI agents (AI) | Long-running AI traffic simulator on observability hub. | running |  | `~/ai-sim/generate_traffic.py` |
+| generate_traffic.py | process | AI agents (AI) | long-running python3 outside any service (up 44.3h) | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | inactive | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
@@ -343,4 +334,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint 3a5f5dbc1eebcb8c · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint 585701fd0d15c545 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
