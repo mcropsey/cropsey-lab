@@ -1,12 +1,53 @@
 {
- "generated_at": "2026-11-12T05:40:13",
- "fingerprint": "585701fd0d15c545",
- "change_summary": "no component changes",
+ "generated_at": "2026-11-13T05:40:14",
+ "fingerprint": "c99d8ea6aeea505f",
+ "change_summary": "5 changed",
  "changes": {
   "first_run": false,
   "added": [],
   "removed": [],
-  "changed": [],
+  "changed": [
+   {
+    "id": "192.168.1.98/unit/secnews.service",
+    "name": "secnews",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
+   },
+   {
+    "id": "192.168.1.98/unit/cvewatch.service",
+    "name": "cvewatch",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
+   },
+   {
+    "id": "192.168.1.98/unit/labwatch.service",
+    "name": "labwatch",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
+   },
+   {
+    "id": "192.168.1.98/unit/alertwatch-heartbeat.service",
+    "name": "alertwatch-heartbeat",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
+   },
+   {
+    "id": "192.168.1.98/unit/patchwatch.service",
+    "name": "patchwatch",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "inactive",
+    "new": "failed"
+   }
+  ],
   "hosts": []
  },
  "hosts": {
@@ -245,7 +286,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1068-raspi",
-   "booted": "2026-11-12 04:00:21",
+   "booted": "2026-11-13 04:00:30",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -258,7 +299,7 @@
     },
     {
      "port": 53,
-     "addr": "127.0.0.54",
+     "addr": "127.0.0.53%lo",
      "process": "systemd-resolve",
      "component": "systemd-resolved"
     },
@@ -287,7 +328,7 @@
      "component": "alloy"
     },
     {
-     "port": 35197,
+     "port": 46813,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1090,26 +1131,6 @@
    ]
   },
   {
-   "src": "192.168.1.92/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.93/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.91/unit/node_exporter.service",
    "ports": [
@@ -1161,6 +1182,16 @@
    ]
   },
   {
+   "src": "192.168.1.98/podman-root/root/alertwatch",
+   "dst": "192.168.1.98/docker/root/alertmanager",
+   "ports": [
+    9093
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/docker/root/cadvisor",
    "ports": [
@@ -1202,22 +1233,21 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.99/unit/k3s.service",
+   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
-    10250
+    9100
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-heartbeat.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.99/unit/k3s.service",
    "ports": [
-    8009
+    10250
    ],
    "how": [
-    "configured",
     "observed"
    ]
   },
@@ -1276,26 +1306,6 @@
    "dst": "192.168.1.101/unit/node_exporter.service",
    "ports": [
     9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/podman-root/root/alertwatch",
-   "dst": "192.168.1.98/docker/root/alertmanager",
-   "ports": [
-    9093
    ],
    "how": [
     "observed"
@@ -1542,6 +1552,16 @@
    ]
   },
   {
+   "src": "192.168.1.98/unit/mcp-heartbeat.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured"
+   ]
+  },
+  {
    "src": "192.168.1.98/unit/mcp-sweep.service",
    "dst": "192.168.1.102/unit/crapi-mcp.service",
    "ports": [
@@ -1682,20 +1702,20 @@
    ]
   },
   {
-   "src": "192.168.1.99/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.100/podman-root/root/kong",
    "ports": [
-    3100
+    80
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.100/podman-root/root/kong",
+   "src": "192.168.1.99/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    80
+    3100
    ],
    "how": [
     "observed"
@@ -9459,7 +9479,7 @@
    "category": "observability",
    "ai": false,
    "purpose": "Daily alert triage heartbeat test.",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 07:00:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -9668,7 +9688,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Matches CVEs to lab software.",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:30:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -9858,7 +9878,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Generates lab health briefings.",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:15:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -10067,7 +10087,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Daily AI patch and image drift planning",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:45:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/labagents:latest",
    "user": "root",
@@ -10162,7 +10182,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Creates daily cybersecurity news digest.",
-   "state": "inactive",
+   "state": "failed",
    "schedule": "*-*-* 06:00:00 America/Chicago",
    "detail": "/usr/bin/podman run localhost/secnews:latest",
    "user": "root",
@@ -10575,13 +10595,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "long-running python3 outside any service (up 44.3h)",
+   "purpose": "long-running python3 outside any service (up 68.3h)",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
-   "count": 1,
-   "description": "long-running python3 outside any service (up 44.3h)",
+   "count": 2,
+   "description": "long-running python3 outside any service (up 68.3h)",
    "classified_by": "rules"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
