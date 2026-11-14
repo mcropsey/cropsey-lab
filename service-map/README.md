@@ -1,14 +1,10 @@
 # Lab service map
 
-Generated **2026-11-13 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
+Generated **2026-11-14 05:40** (America/Chicago) by [servicemap-agent](https://github.com/mcropsey/mikes-agents/tree/main/servicemap-agent) on .98. Live page (in Grafana and on the lab network): `http://192.168.1.98:9440/`. Open [`index.html`](index.html) locally for the interactive version.
 
 ## Changes since the previous map
 
-- `secnews` on hv-rocky-linux-1: state inactive → failed
-- `cvewatch` on hv-rocky-linux-1: state inactive → failed
-- `labwatch` on hv-rocky-linux-1: state inactive → failed
-- `alertwatch-heartbeat` on hv-rocky-linux-1: state inactive → failed
-- `patchwatch` on hv-rocky-linux-1: state inactive → failed
+- `weekrollup` on hv-rocky-linux-1: state inactive → failed
 
 ## AI agents & dependencies
 
@@ -108,7 +104,7 @@ flowchart LR
 | Component | Host | Runtime | Category | Purpose | Schedule / ports |
 |---|---|---|---|---|---|
 | cvewatch | hv-rocky-linux-1 | timer | AI agents | Matches CVEs to lab software. | *-*-* 06:30:00 America/Chicago |
-| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | long-running python3 outside any service (up 68.3h) |  |
+| generate_traffic.py | hv-rocky-linux-1 | process | AI agents | long-running python3 outside any service (up 92.3h) |  |
 | labwatch | hv-rocky-linux-1 | timer | AI agents | Generates lab health briefings. | *-*-* 06:15:00 America/Chicago |
 | llmredteam | hv-rocky-linux-1 | timer | AI agents | Weekly LLM guardrail evaluation agent. | Sun *-*-* 06:50:00 America/Chicago |
 | mcp-heartbeat | hv-rocky-linux-1 | systemd | AI agents | Keeps Noname MCP session alive. |  |
@@ -230,7 +226,7 @@ flowchart LR
 
 | Component | Runtime | Category | Purpose | State | Schedule / ports | Image / program |
 |---|---|---|---|---|---|---|
-| generate_traffic.py | process | AI agents (AI) | long-running python3 outside any service (up 68.3h) | running |  | `~/ai-sim/generate_traffic.py` |
+| generate_traffic.py | process | AI agents (AI) | long-running python3 outside any service (up 92.3h) | running |  | `~/ai-sim/generate_traffic.py` |
 | mcp-heartbeat | systemd | AI agents (AI) | Keeps Noname MCP session alive. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/mcp_heartbeat.py` |
 | mcp-sweep | systemd | AI agents (AI) | Runs read-only MCP sweeps. | running |  | `/usr/bin/python3 /home/mcropsey/mcp-heartbeat/crapi_sweep.py` |
 | cvewatch | timer | AI agents (AI) | Matches CVEs to lab software. | failed | *-*-* 06:30:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
@@ -239,7 +235,7 @@ flowchart LR
 | patchwatch | timer | AI agents (AI) | Daily AI patch and image drift planning | failed | *-*-* 06:45:00 America/Chicago | `/usr/bin/podman run localhost/labagents:latest` |
 | secnews | timer | AI agents (AI) | Creates daily cybersecurity news digest. | failed | *-*-* 06:00:00 America/Chicago | `/usr/bin/podman run localhost/secnews:latest` |
 | servicemap | timer | AI agents (AI) | Daily SSH inventory and LLM labeling for lab service map | activating | *-*-* 05:40:00 America/Chicago | `/usr/sbin/runuser mcropsey` |
-| weekrollup | timer | AI agents (AI) | Weekly lab digest and agent quality check. | inactive | Fri *-*-* 06:55:00 America/Chicago | `/usr/bin/podman run SECNEWS_REPORTS=/secnews-reports` |
+| weekrollup | timer | AI agents (AI) | Weekly lab digest and agent quality check. | failed | Fri *-*-* 06:55:00 America/Chicago | `/usr/bin/podman run SECNEWS_REPORTS=/secnews-reports` |
 | alertmanager | docker | Observability | Routes lab monitoring alerts. | running |  | `prom/alertmanager:v0.34.1` |
 | cadvisor | docker | Observability | Container metrics exporter for Prometheus | running |  | `ghcr.io/google/cadvisor:v0.60.6` |
 | grafana | docker | Observability | Dashboards for lab metrics and logs. | running |  | `grafana/grafana:13.2.2` |
@@ -338,4 +334,4 @@ flowchart LR
 </details>
 
 
-<sub>fingerprint c99d8ea6aeea505f · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
+<sub>fingerprint b0975db92b23f5e7 · command lines and secrets are never collected into this map; only program/script paths, images, schedules and ports.</sub>
