@@ -1,216 +1,21 @@
 {
- "generated_at": "2026-11-16T20:22:36",
- "fingerprint": "d53a7d3f6e3e1dab",
- "change_summary": "+24 (alloy, containerd, docker, hv-fcopy-daemon\u2026); 1 changed; 3 host changes",
+ "generated_at": "2026-11-16T20:24:00",
+ "fingerprint": "e1892d7b628092af",
+ "change_summary": "-1 (noname-mcp)",
  "changes": {
   "first_run": false,
-  "added": [
+  "added": [],
+  "removed": [
    {
-    "id": "192.168.1.91/unit/alloy.service",
-    "name": "alloy",
-    "host": "192.168.1.91",
+    "id": "192.168.1.102/unit/noname-mcp.service",
+    "name": "noname-mcp",
+    "host": "192.168.1.102",
     "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.91/unit/containerd.service",
-    "name": "containerd",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.91/unit/docker.service",
-    "name": "docker",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.91/unit/hv-fcopy-daemon.service",
-    "name": "hv-fcopy-daemon",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.91/unit/hv-kvp-daemon.service",
-    "name": "hv-kvp-daemon",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.91/unit/hv-vss-daemon.service",
-    "name": "hv-vss-daemon",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.91/unit/multipathd.service",
-    "name": "multipathd",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.91/unit/node_exporter.service",
-    "name": "node_exporter",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.92/unit/alloy.service",
-    "name": "alloy",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.92/unit/containerd.service",
-    "name": "containerd",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.92/unit/docker.service",
-    "name": "docker",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.92/unit/hv-fcopy-daemon.service",
-    "name": "hv-fcopy-daemon",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/hv-kvp-daemon.service",
-    "name": "hv-kvp-daemon",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/hv-vss-daemon.service",
-    "name": "hv-vss-daemon",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/multipathd.service",
-    "name": "multipathd",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/node_exporter.service",
-    "name": "node_exporter",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.93/unit/alloy.service",
-    "name": "alloy",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.93/unit/containerd.service",
-    "name": "containerd",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.93/unit/docker.service",
-    "name": "docker",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.93/unit/hv-fcopy-daemon.service",
-    "name": "hv-fcopy-daemon",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/hv-kvp-daemon.service",
-    "name": "hv-kvp-daemon",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/hv-vss-daemon.service",
-    "name": "hv-vss-daemon",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/multipathd.service",
-    "name": "multipathd",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/node_exporter.service",
-    "name": "node_exporter",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "observability"
+    "category": "ai-platform"
    }
   ],
-  "removed": [],
-  "changed": [
-   {
-    "id": "192.168.1.98/unit/servicemap.service",
-    "name": "servicemap",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "activating",
-    "new": "inactive"
-   }
-  ],
-  "hosts": [
-   {
-    "ip": "192.168.1.91",
-    "name": "ubuntu-1",
-    "kernel": [
-     "",
-     "6.8.0-149-generic"
-    ]
-   },
-   {
-    "ip": "192.168.1.92",
-    "name": "ubuntu-2",
-    "kernel": [
-     "",
-     "6.8.0-149-generic"
-    ]
-   },
-   {
-    "ip": "192.168.1.93",
-    "name": "ubuntu-3",
-    "kernel": [
-     "",
-     "6.8.0-149-generic"
-    ]
-   }
-  ]
+  "changed": [],
+  "hosts": []
  },
  "hosts": {
   "192.168.1.75": {
@@ -1416,20 +1221,20 @@
    ]
   },
   {
-   "src": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "src": "192.168.1.76/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    19001
+    3100
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.76/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
-    3100
+    19001
    ],
    "how": [
     "observed"
@@ -1627,6 +1432,17 @@
    ]
   },
   {
+   "src": "192.168.1.98/unit/mcp-sweep.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured",
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/prometheus-podman-exporter.service",
    "ports": [
@@ -1651,16 +1467,6 @@
    "dst": "192.168.1.101/unit/node_exporter.service",
    "ports": [
     9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.101/podman-root/root/litellm",
-   "ports": [
-    4000
    ],
    "how": [
     "observed"
@@ -1907,16 +1713,6 @@
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-sweep.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
-   ],
-   "how": [
-    "configured"
-   ]
-  },
-  {
    "src": "192.168.1.98/unit/patchwatch.service",
    "dst": "192.168.1.101/podman-root/root/litellm",
    "ports": [
@@ -2051,16 +1847,6 @@
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.100/podman-root/root/kong",
-   "ports": [
-    80
    ],
    "how": [
     "observed"
@@ -10970,13 +10756,13 @@
    "name": "claude",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running Claude coding assistant on hv-rocky-linux-1.",
+   "purpose": "Long-running Claude Code session on Rocky observability host",
    "state": "running",
    "detail": "claude",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running claude outside any service (up 1.1h)",
+   "description": "long-running claude outside any service (up 1.2h)",
    "classified_by": "llm"
   },
   "192.168.1.98/proc/mcropsey/mcp-remote": {
@@ -10989,13 +10775,13 @@
    "name": "mcp-remote",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "MCP client bridge on hv-rocky-linux-1.",
+   "purpose": "Long-running MCP client bridge for AI tooling",
    "state": "running",
    "detail": "~/.npm/_npx/705d23756ff7dacc/node_modules/.bin/mcp-remote",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running node outside any service (up 1.1h)",
+   "description": "long-running node outside any service (up 1.2h)",
    "classified_by": "llm"
   },
   "192.168.1.98/proc/mcropsey/generate_traffic.py": {
@@ -11008,13 +10794,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "AI traffic simulator on hv-rocky-linux-1.",
+   "purpose": "AI traffic simulator generating lab requests",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running python3 outside any service (up 0.9h)",
+   "description": "long-running python3 outside any service (up 1.0h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -14786,25 +14572,6 @@
    "user": "node_exporter",
    "baseline": false,
    "description": "Prometheus node_exporter",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.102/unit/noname-mcp.service": {
-   "id": "192.168.1.102/unit/noname-mcp.service",
-   "host": "192.168.1.102",
-   "hosts": [
-    "192.168.1.102"
-   ],
-   "kind": "systemd",
-   "name": "noname-mcp",
-   "category": "ai-platform",
-   "ai": true,
-   "purpose": "Noname MCP server for AI agent tool access",
-   "state": "failed",
-   "schedule": "",
-   "detail": "",
-   "user": "root",
-   "baseline": false,
-   "description": "noname-mcp.service",
    "classified_by": "llm-cache"
   },
   "192.168.1.102/unit/noname-sensor.service": {
