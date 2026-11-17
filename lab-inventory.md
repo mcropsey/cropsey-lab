@@ -1,5 +1,5 @@
 # Lab Inventory — 192.168.1.x home lab
-**Updated:** 2026-11-16 (Noname sensors: .101 and .99 removed, .102 moved to mikec-lab) | 2026-10-30 (ubuntu-1..3 added) | 13 hosts verified live via SSH (2026-10-07) | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
+**Updated:** 2026-11-16 (VM swap: .103–.105 off, .91–.93 on · Noname sensors: .101 and .99 removed, .102 moved to mikec-lab) | 2026-10-30 (ubuntu-1..3 added) | 13 hosts verified live via SSH (2026-10-07) | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
 New since 2026-09-29: **mikes-agents** (lab agents on .98 using the local LLM through LiteLLM): the original
 set (secnews, labwatch, cvewatch, patchwatch, labinventory, servicemap) plus **five added 2026-10-19** —
 alertwatch (event-driven Alertmanager triage), patchrun (approval-gated OS patching), weekrollup (weekly digest
@@ -46,7 +46,7 @@ guardrail eval). The **Agent Lab** traffic generator was retired (~2026-10-05);
 │  .76 rk2 ┘                                                                                      │
 │  .77 rk3 · .78 rk4    spare Raspberry Pi 5s (monitoring agents only; reserved)                  │
 │                                                                                                │
-│  .103 hv-rocky-linux-6 ┐ RHCSA RHEL10 practice lab (Rocky 10.2, GNOME + Cockpit :9090)         │
+│  .103 hv-rocky-linux-6 ┐ RHCSA RHEL10 practice lab — POWERED OFF since 2026-11-16 (host RAM)    │
 │  .104 hv-rocky-linux-7 ┘                                                                        │
 │  .105 utility.lab      dnf repo mirror (httpd :80) + NFS exports                                │
 │                                                                                                │
@@ -176,9 +176,9 @@ Prometheus: 25 active targets (the `litellm` gateway job added 2026-10-19), all 
 | .100 | hv-rocky-linux-3 | Kong + Jenkins CI | Rocky 9.8 | 7.5 / 4.9 Gi | 15 / 70 G | 12h |
 | .101 | hv-rocky-linux-4 | **LiteLLM AI gateway** + crAPI lab | Rocky 9.8 | 3.6 / 1.2 Gi | 19 / 70 G | 4d |
 | .102 | hv-rocky-linux-5 | Noname sensor + MCP servers + AI sim | Rocky 9.8 | 3.6 / 2.1 Gi | 19 / 70 G | 4d |
-| .103 | hv-rocky-linux-6 | RHCSA practice workstation | Rocky 10.2 | 3.6 / 2.6 Gi | 6.5 / 70 G | 4d |
-| .104 | hv-rocky-linux-7 | RHCSA practice workstation | Rocky 10.2 | 3.6 / 2.5 Gi | 11 / 70 G | 4d |
-| .105 | utility.lab.example.com | RHCSA utility server: dnf repos + NFS | Rocky 10.2 | 3.6 / 2.6 Gi | 17 / 70 G | 4d |
+| .103 | hv-rocky-linux-6 | RHCSA practice workstation (**off** since 2026-11-16) | Rocky 10.2 | 3.6 / 2.6 Gi | 6.5 / 70 G | 4d |
+| .104 | hv-rocky-linux-7 | RHCSA practice workstation (**off** since 2026-11-16) | Rocky 10.2 | 3.6 / 2.5 Gi | 11 / 70 G | 4d |
+| .105 | utility.lab.example.com | RHCSA utility server: dnf repos + NFS (**off** since 2026-11-16) | Rocky 10.2 | 3.6 / 2.6 Gi | 17 / 70 G | 4d |
 | .91 | ubuntu-1 | General purpose (new) | Ubuntu 24.04.5 (Hyper-V) | 3.8 / 3.3 Gi | 3.6 / 38 G | 4h |
 | .92 | ubuntu-2 | General purpose (new) | Ubuntu 24.04.5 (Hyper-V) | 3.8 / 3.3 Gi | 3.6 / 38 G | 3h |
 | .93 | ubuntu-3 | General purpose (new) | Ubuntu 24.04.5 (Hyper-V) | 3.8 / 3.3 Gi | 3.6 / 38 G | 2h |
@@ -427,6 +427,11 @@ The Agent Lab `agentlab.service` is gone (retired); `~/agent-lab` + `.venv` rema
 
 ## .103 / .104 / .105 — RHCSA RHEL10 practice lab (Rocky 10.2)
 
+> **Powered off since 2026-11-16 ~20:20.** The Hyper-V host (OFFICE-PC .221, 64 GB) can't run every VM at once, so
+> this set and ubuntu-1..3 take turns. Shut down cleanly with `Stop-VM`. Alertmanager silence `b86e87fa…`
+> (`host=~hv-rocky-linux-6|hv-rocky-linux-7|utility`, 30 days) — **expire it when they come back**. The service
+> map carries their last-good entries forward (20:13 snapshot) so they don't show as removed.
+
 | Host | Role | Notable |
 |---|---|---|
 | .103 hv-rocky-linux-6 | practice workstation | GNOME (gdm), Cockpit :9090, CUPS |
@@ -436,6 +441,10 @@ The Agent Lab `agentlab.service` is gone (retired); `~/agent-lab` + `.venv` rema
 All three: `node_exporter` + `alloy` running and scraped/shipped to .98. No containers.
 
 ## .91 / .92 / .93 — ubuntu-1, ubuntu-2, ubuntu-3 (new 2026-10-30)
+
+> **Running again since 2026-11-16 ~20:20** (swapped in for .103–.105). Booted clean, no failed units. Currently
+> **no k3s and no containers** (Docker up, `docker ps -a` empty): the user rebuilds these from scratch to test the
+> Kong / k3s install guides, so an empty box is expected. Their old silence `80729e19…` was expired.
 
 **Role:** general-purpose Ubuntu 24.04 VMs on the Hyper-V host (OFFICE-PC, .221), stored under `D:\Virtual Machines`.
 Gen2, 2 vCPU, 4 GB static RAM, 40 GB disk, built from the Ubuntu cloud image with a cloud-init seed (cloud-init now disabled).
@@ -460,16 +469,17 @@ On the service map since 2026-10-30.
 | .100 | Kong `nonamesecurity` plugin 5.0.1 (global) | mikec-lab | **running** |
 | .101 | eBPF host sensor | michaelc-lab | **removed** 2026-11-16, backup `/root/noname-sensor-decom-20261116.tgz` |
 | .99 | k3s sidecar `noname-sensor:3.3.60` in `vampi/vampi` + SA/RBAC/pull secret | michaelc-lab | **removed** 2026-11-16, backup `/root/noname-k8s-sensor-decom-20261116.yaml` |
-| .91 | Kong `nonamesecurity` plugin | — | host powered off, not checked |
+| .91 | Kong `nonamesecurity` plugin | — | none: host rebuilt, no Kong or containers (checked 2026-11-16 20:3x; .92/.93 clean too) |
 
 Backups are root-only (they hold the sensor key / registry pull secret). The yum repo file and the dnf re-enable hook
-are still on .101, so a reinstall there turns itself on. Not reachable for checking: .91–.93, .77, .194, Mac .188.
+are still on .101, so a reinstall there turns itself on. Not reachable for checking: .103–.105 (powered off), .77, .194, Mac .188.
 Not captured anywhere: opencode → LM Studio on .194:1234 (direct, no sensor on .98 or .194), and LiteLLM/crAPI on .101.
 
 ## Change Log
 
 | Date | Host | Change |
 |------|------|--------|
+| 2026-11-16 | .91–.93 .103–.105 | **VM swap for host RAM.** Clean shutdown of hv-rocky-linux-6/7/8 (.103–.105); started ubuntu-1..3 (.91–.93). Expired the ubuntu silence, added 30-day silence `b86e87fa…` for .103–.105. Service map republished with .91–.93 live and .103–.105 carried forward; `noname-mcp` cleared from .102 (`reset-failed`) and dropped from the map. |
 | 2026-11-16 | .99 .101 .102 | **Noname sensors reset for re-creation.** .102 sensor moved by the user to tenant mikec-lab (19:07). Removed the old michaelc-lab sensors: the eBPF RPM on .101 and the VAmPI sidecar + SA/ClusterRole/binding/pull secret on .99 (VAmPI now 1/1, :30500 → 200). The .102 sensor was removed by mistake at 19:50 and reinstalled with its own config at 19:56. Also: `noname-mcp` decommissioned on .102; MCP heartbeat/sweep on .98 got `--reinit-every` so a restarted sensor sees a fresh MCP handshake. |
 | 2026-10-30 | .101 .102 | **noname-sensor found disabled** after the 08:38 `dnf update -y` (3.3-62 → 3.3-64): the old package's `%postun` stops and disables the sensor and deletes its updater cron, even on upgrades. Re-enabled, cron restored, and a dnf `post-transaction-actions` hook (`/usr/local/sbin/noname-sensor-reenable`) added so future upgrades re-enable it automatically. Tested with `dnf reinstall` on both hosts. |
 | 2026-10-30 | .91 .92 .93 .98 | **New Ubuntu 24.04 VMs ubuntu-1..3** (.91–.93) on the Hyper-V host: Docker + compose, Claude Code + opencode (config same as .98), git push. Added to Prometheus/Loki/Grafana (firewalld Loki rule per host on .98), `LAB_HOSTS` and `labinventory/hosts.conf` in mikes-agents, and the service map. .103–.105 are powered off for now (not enough RAM on the Hyper-V host); the map keeps their last good inventory. |
