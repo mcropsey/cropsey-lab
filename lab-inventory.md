@@ -1,5 +1,5 @@
 # Lab Inventory — 192.168.1.x home lab
-**Updated:** 2026-10-30 (ubuntu-1..3 added) | 13 hosts verified live via SSH (2026-10-07) | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
+**Updated:** 2026-11-16 (Noname sensors: .101 and .99 removed, .102 moved to mikec-lab) | 2026-10-30 (ubuntu-1..3 added) | 13 hosts verified live via SSH (2026-10-07) | Rocky Linux 9.8 / 10.2 Hyper-V VMs + 5x Raspberry Pi 5 (Ubuntu 24.04)
 New since 2026-09-29: **mikes-agents** (lab agents on .98 using the local LLM through LiteLLM): the original
 set (secnews, labwatch, cvewatch, patchwatch, labinventory, servicemap) plus **five added 2026-10-19** —
 alertwatch (event-driven Alertmanager triage), patchrun (approval-gated OS patching), weekrollup (weekly digest
@@ -40,7 +40,7 @@ guardrail eval). The **Agent Lab** traffic generator was retired (~2026-10-05);
 │  .99  hv-rocky-linux-2  k3s v1.36 + Cloudflare Tunnel — juice-shop:30300 vampi:30500 nginx      │
 │  .100 hv-rocky-linux-3  Kong:80/8001 (Podman) · Jenkins:8080 (Docker)                           │
 │  .101 hv-rocky-linux-4  ★ LiteLLM AI GATEWAY :4000 (Podman) · crAPI stack · juice-shop · searxng│
-│  .102 hv-rocky-linux-5  Noname sensor · crapi-mcp:8009 noname-mcp:8013 ai-sim:8011/8012 vampi-mcp│
+│  .102 hv-rocky-linux-5  Noname sensor · crapi-mcp:8009 ai-sim:8011/8012 vampi-mcp:5000          │
 │                                                                                                │
 │  .75 rk1 ┐ microk8s v1.29 (2 nodes): vampi x2, ingress                                          │
 │  .76 rk2 ┘                                                                                      │
@@ -174,7 +174,7 @@ Prometheus: 25 active targets (the `litellm` gateway job added 2026-10-19), all 
 | .98 | hv-rocky-linux-1 | **Observability hub** + **lab agents (mikes-agents)** + VulnNotes API + MCP session host | Rocky 9.8 | 7.5 / 4.9 Gi | 19 / 70 G | 4d |
 | .99 | hv-rocky-linux-2 | k3s cluster + Cloudflare ingress | Rocky 9.8 | 3.6 / 1.5 Gi | 15 / 70 G | 4d |
 | .100 | hv-rocky-linux-3 | Kong + Jenkins CI | Rocky 9.8 | 7.5 / 4.9 Gi | 15 / 70 G | 12h |
-| .101 | hv-rocky-linux-4 | **LiteLLM AI gateway** + crAPI lab + Noname sensor | Rocky 9.8 | 3.6 / 1.2 Gi | 19 / 70 G | 4d |
+| .101 | hv-rocky-linux-4 | **LiteLLM AI gateway** + crAPI lab | Rocky 9.8 | 3.6 / 1.2 Gi | 19 / 70 G | 4d |
 | .102 | hv-rocky-linux-5 | Noname sensor + MCP servers + AI sim | Rocky 9.8 | 3.6 / 2.1 Gi | 19 / 70 G | 4d |
 | .103 | hv-rocky-linux-6 | RHCSA practice workstation | Rocky 10.2 | 3.6 / 2.6 Gi | 6.5 / 70 G | 4d |
 | .104 | hv-rocky-linux-7 | RHCSA practice workstation | Rocky 10.2 | 3.6 / 2.5 Gi | 11 / 70 G | 4d |
@@ -262,7 +262,7 @@ Lab scripts in `~/notes-test/`: `normal_traffic.py` (baseline traffic), `exploit
 |------------------------|---------|----------|
 | `default/nginx` | NodePort | :30453 |
 | `juiceshop/juice-shop` | NodePort | :30300 |
-| `vampi/vampi` (noname-sensor sidecar) | NodePort | :30500 |
+| `vampi/vampi` (Noname sidecar removed 2026-11-16) | NodePort | :30500 |
 | `ingress-nginx` controller | — | :80/:443/:8443, status :8181 |
 | kube-system: coredns, metrics-server, local-path-provisioner | ClusterIP | — |
 
@@ -277,7 +277,7 @@ Lab scripts in `~/notes-test/`: `normal_traffic.py` (baseline traffic), `exploit
 
 | Container | Runtime | Image | Ports |
 |------|---------|-------|-------|
-| `kong` | Podman (rootful) | `kong:3.6` | 0.0.0.0:80→8000, :8001 admin |
+| `kong` | Podman (rootful) | `localhost/kong-noname:3.9.4-5.0.1-src5` (global `nonamesecurity` plugin → mikec-lab) | 0.0.0.0:80→8000, :8001 admin |
 | `jenkins` | Docker | `myjenkins-noname:2.568.3-jdk21` | :8080, :50000 |
 | `jenkins-docker` | Docker | `docker:dind` | :2376 (TLS) |
 | `cadvisor` | Docker | `ghcr.io/google/cadvisor:v0.60.6` | :8081 |
@@ -293,7 +293,7 @@ pipeline-model-definition, credentials-binding, plain-credentials, git, workflow
 
 ## .101 — hv-rocky-linux-4
 
-**Role:** **LiteLLM AI gateway** + crAPI vulnerable-app lab + Noname Sensor. (Retired Agent Lab repo still in `~/agent-lab`.)
+**Role:** **LiteLLM AI gateway** + crAPI vulnerable-app lab. Noname sensor removed 2026-11-16 (see Noname capture points). (Retired Agent Lab repo still in `~/agent-lab`.)
 
 ### LiteLLM (added 2026-09-29)
 
@@ -361,7 +361,7 @@ Source JSON: `mikes-agents/litellm/grafana/litellm-gateway.json`.
 | `juice-shop` | `bkimminich/juice-shop:latest` | :3000 |
 | `dvga` | `dolevf/dvga:latest` (Damn Vulnerable GraphQL App) | :5013 |
 
-Systemd: `noname-sensor` (eBPF), `crapi.service` (starts the crAPI compose stack at boot), `node_exporter`,
+Systemd: `crapi.service` (starts the crAPI compose stack at boot), `node_exporter`,
 `prometheus-podman-exporter`, `alloy`.
 URLs: crAPI http://192.168.1.101:8888 / https://…:8443, MailHog :8025, chatbot :5500, SearXNG :8080, Juice Shop :3000,
 **LiteLLM :4000**. Firewall: firewalld rich rules — **never** `firewall-cmd --reload`.
@@ -388,19 +388,20 @@ own hourly `sensor_updater.sh` (it calls `yum`); a bare `rpm -U` would bypass it
 
 ## .102 — hv-rocky-linux-5
 
-**Role:** Noname Sensor + MCP servers + AI simulator (unchanged since 09-19)
+**Role:** Noname Sensor (mikec-lab) + MCP servers + AI simulator
 
 | Service | Port |
 |---------|------|
 | `crapi-mcp.service` (crAPI MCP, Streamable HTTP) | 8009 |
-| `noname-mcp.service` (Noname Management API MCP) | 8013 |
 | `ai-sim.service` (LLM + GenAI API simulator) | 8011 / 8012 |
 | `vampi-mcp` (Podman container) | 5000 |
 | `noname-sensor`, `node_exporter`, `prometheus-podman-exporter`, `alloy` | — / 9100 / 9882 |
 
-Services live under `/opt/{crapi-mcp,noname-mcp,ai-sim}` with their own `.venv`. firewalld rich rules — never `--reload`.
+Services live under `/opt/{crapi-mcp,ai-sim}` with their own `.venv`. firewalld rich rules — never `--reload`.
 Noname sensor repo: same `[Noname-Artifactory]` repo as .101, same `skip_if_unavailable=1` setting (2026-10-07).
 Same upgrade bug and same auto re-enable dnf hook as .101 (see the ⚠ note there).
+Sensor: `noname-sensor-ebpf-rhel9-3.3-65`, engine `https://mikec-lab.nonamesec.com/engine` (source index 1), set up by the
+user 2026-11-16 19:07 (was michaelc-lab). `noname-mcp` (:8013) was decommissioned 2026-11-16; backup `/root/noname-mcp-decom-20261116.tgz`.
 
 ---
 
@@ -451,10 +452,25 @@ On the service map since 2026-10-30.
 
 ---
 
+## Noname capture points (as of 2026-11-16)
+
+| Host | Type | Tenant | Status |
+|------|------|--------|--------|
+| .102 | eBPF host sensor `noname-sensor-ebpf-rhel9-3.3-65` | mikec-lab | **running** (sees MCP :8009, ai-sim :8011/:8012, vampi-mcp :5000) |
+| .100 | Kong `nonamesecurity` plugin 5.0.1 (global) | mikec-lab | **running** |
+| .101 | eBPF host sensor | michaelc-lab | **removed** 2026-11-16, backup `/root/noname-sensor-decom-20261116.tgz` |
+| .99 | k3s sidecar `noname-sensor:3.3.60` in `vampi/vampi` + SA/RBAC/pull secret | michaelc-lab | **removed** 2026-11-16, backup `/root/noname-k8s-sensor-decom-20261116.yaml` |
+| .91 | Kong `nonamesecurity` plugin | — | host powered off, not checked |
+
+Backups are root-only (they hold the sensor key / registry pull secret). The yum repo file and the dnf re-enable hook
+are still on .101, so a reinstall there turns itself on. Not reachable for checking: .91–.93, .77, .194, Mac .188.
+Not captured anywhere: opencode → LM Studio on .194:1234 (direct, no sensor on .98 or .194), and LiteLLM/crAPI on .101.
+
 ## Change Log
 
 | Date | Host | Change |
 |------|------|--------|
+| 2026-11-16 | .99 .101 .102 | **Noname sensors reset for re-creation.** .102 sensor moved by the user to tenant mikec-lab (19:07). Removed the old michaelc-lab sensors: the eBPF RPM on .101 and the VAmPI sidecar + SA/ClusterRole/binding/pull secret on .99 (VAmPI now 1/1, :30500 → 200). The .102 sensor was removed by mistake at 19:50 and reinstalled with its own config at 19:56. Also: `noname-mcp` decommissioned on .102; MCP heartbeat/sweep on .98 got `--reinit-every` so a restarted sensor sees a fresh MCP handshake. |
 | 2026-10-30 | .101 .102 | **noname-sensor found disabled** after the 08:38 `dnf update -y` (3.3-62 → 3.3-64): the old package's `%postun` stops and disables the sensor and deletes its updater cron, even on upgrades. Re-enabled, cron restored, and a dnf `post-transaction-actions` hook (`/usr/local/sbin/noname-sensor-reenable`) added so future upgrades re-enable it automatically. Tested with `dnf reinstall` on both hosts. |
 | 2026-10-30 | .91 .92 .93 .98 | **New Ubuntu 24.04 VMs ubuntu-1..3** (.91–.93) on the Hyper-V host: Docker + compose, Claude Code + opencode (config same as .98), git push. Added to Prometheus/Loki/Grafana (firewalld Loki rule per host on .98), `LAB_HOSTS` and `labinventory/hosts.conf` in mikes-agents, and the service map. .103–.105 are powered off for now (not enough RAM on the Hyper-V host); the map keeps their last good inventory. |
 | 2026-10-19 | .101 .98 | **LiteLLM guardrail + traffic monitoring.** Turned on LiteLLM's native Prometheus metrics (`callbacks: ["prometheus"]`, `require_auth_for_metrics_endpoint: false`; config backed up, gateway restarted). Prometheus on .98 now scrapes `192.168.1.101:4000/metrics/` (job `litellm`). New Grafana dashboard *LiteLLM Gateway* (`/d/litellm-gateway`, folder *LiteLLM*): per-agent requests / blocked (400) / tokens / spend / latency incl. guardrail overhead. The guardrail itself is unchanged (LiteLLM `basic-safety-filter`); this just makes it observable. `llmredteam-probe` key kept the guardrail on (not opted out) so llmredteam tests it. |
