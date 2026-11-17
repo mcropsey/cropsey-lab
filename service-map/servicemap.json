@@ -1,21 +1,123 @@
 {
- "generated_at": "2026-11-16T20:24:00",
- "fingerprint": "e1892d7b628092af",
- "change_summary": "-1 (noname-mcp)",
+ "generated_at": "2026-11-17T05:40:13",
+ "fingerprint": "cddc17da813aee57",
+ "change_summary": "-12 (alloy, node_exporter, alloy, node_exporter\u2026); 1 changed; 3 host changes",
  "changes": {
   "first_run": false,
   "added": [],
   "removed": [
    {
-    "id": "192.168.1.102/unit/noname-mcp.service",
-    "name": "noname-mcp",
-    "host": "192.168.1.102",
+    "id": "192.168.1.103/unit/alloy.service",
+    "name": "alloy",
+    "host": "192.168.1.103",
     "kind": "systemd",
-    "category": "ai-platform"
+    "category": "observability"
+   },
+   {
+    "id": "192.168.1.103/unit/node_exporter.service",
+    "name": "node_exporter",
+    "host": "192.168.1.103",
+    "kind": "systemd",
+    "category": "observability"
+   },
+   {
+    "id": "192.168.1.104/unit/alloy.service",
+    "name": "alloy",
+    "host": "192.168.1.104",
+    "kind": "systemd",
+    "category": "observability"
+   },
+   {
+    "id": "192.168.1.104/unit/node_exporter.service",
+    "name": "node_exporter",
+    "host": "192.168.1.104",
+    "kind": "systemd",
+    "category": "observability"
+   },
+   {
+    "id": "192.168.1.104/unit/prometheus-podman-exporter.service",
+    "name": "prometheus-podman-exporter",
+    "host": "192.168.1.104",
+    "kind": "systemd",
+    "category": "observability"
+   },
+   {
+    "id": "192.168.1.105/unit/alloy.service",
+    "name": "alloy",
+    "host": "192.168.1.105",
+    "kind": "systemd",
+    "category": "observability"
+   },
+   {
+    "id": "192.168.1.105/unit/dnsmasq.service",
+    "name": "dnsmasq",
+    "host": "192.168.1.105",
+    "kind": "systemd",
+    "category": "network"
+   },
+   {
+    "id": "192.168.1.105/unit/httpd.service",
+    "name": "httpd",
+    "host": "192.168.1.105",
+    "kind": "systemd",
+    "category": "ops"
+   },
+   {
+    "id": "192.168.1.105/unit/nfs-mountd.service",
+    "name": "nfs-mountd",
+    "host": "192.168.1.105",
+    "kind": "systemd",
+    "category": "ops"
+   },
+   {
+    "id": "192.168.1.105/unit/node_exporter.service",
+    "name": "node_exporter",
+    "host": "192.168.1.105",
+    "kind": "systemd",
+    "category": "observability"
+   },
+   {
+    "id": "192.168.1.98/proc/mcropsey/claude",
+    "name": "claude",
+    "host": "192.168.1.98",
+    "kind": "process",
+    "category": "ai-agent"
+   },
+   {
+    "id": "192.168.1.98/proc/mcropsey/mcp-remote",
+    "name": "mcp-remote",
+    "host": "192.168.1.98",
+    "kind": "process",
+    "category": "ai-agent"
    }
   ],
-  "changed": [],
-  "hosts": []
+  "changed": [
+   {
+    "id": "192.168.1.98/unit/servicemap.service",
+    "name": "servicemap",
+    "host": "192.168.1.98",
+    "field": "state",
+    "old": "inactive",
+    "new": "activating"
+   }
+  ],
+  "hosts": [
+   {
+    "ip": "192.168.1.103",
+    "name": "hv-rocky-linux-6",
+    "error": "RuntimeError: ssh: connect to host 192.168.1.103 port 22: No route to host"
+   },
+   {
+    "ip": "192.168.1.104",
+    "name": "hv-rocky-linux-7",
+    "error": "RuntimeError: ssh: connect to host 192.168.1.104 port 22: No route to host"
+   },
+   {
+    "ip": "192.168.1.105",
+    "name": "utility",
+    "error": "RuntimeError: ssh: connect to host 192.168.1.105 port 22: No route to host"
+   }
+  ]
  },
  "hosts": {
   "192.168.1.75": {
@@ -253,7 +355,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1068-raspi",
-   "booted": "2026-11-16 04:00:21",
+   "booted": "2026-11-17 04:01:48",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -266,7 +368,7 @@
     },
     {
      "port": 53,
-     "addr": "127.0.0.54",
+     "addr": "127.0.0.53%lo",
      "process": "systemd-resolve",
      "component": "systemd-resolved"
     },
@@ -295,7 +397,7 @@
      "component": "alloy"
     },
     {
-     "port": 42259,
+     "port": 39709,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -531,15 +633,9 @@
      "addr": "127.0.0.1",
      "process": "alloy",
      "component": "alloy"
-    },
-    {
-     "port": 40475,
-     "addr": "127.0.0.1",
-     "process": "claude",
-     "component": ""
     }
    ],
-   "role": "observability hub: Prometheus, Grafana, Loki, Alertmanager, VulnNotes API, agents"
+   "role": "Observability hub: Prometheus, Grafana, Loki, Alertmanager, VulnNotes, agents"
   },
   "192.168.1.99": {
    "ip": "192.168.1.99",
@@ -956,191 +1052,38 @@
   "192.168.1.103": {
    "ip": "192.168.1.103",
    "name": "hv-rocky-linux-6",
-   "os": "Rocky Linux 10.3 (Red Quartz)",
-   "kernel": "6.12.0-264.16.1.el10_3.x86_64",
-   "booted": "2026-11-16 11:40:07",
-   "cpus": 8,
-   "mem_gb": 3.6,
-   "error": "",
-   "listen": [
-    {
-     "port": 22,
-     "addr": "::",
-     "process": "sshd",
-     "component": "sshd"
-    },
-    {
-     "port": 631,
-     "addr": "::1",
-     "process": "cupsd",
-     "component": "cups"
-    },
-    {
-     "port": 9090,
-     "addr": "*",
-     "process": "systemd",
-     "component": ""
-    },
-    {
-     "port": 9100,
-     "addr": "*",
-     "process": "node_exporter",
-     "component": "node_exporter"
-    },
-    {
-     "port": 12345,
-     "addr": "127.0.0.1",
-     "process": "alloy",
-     "component": "alloy"
-    }
-   ],
-   "role": "RHCSA practice workstation"
+   "os": "",
+   "kernel": "",
+   "booted": "",
+   "cpus": null,
+   "mem_gb": null,
+   "error": "RuntimeError: ssh: connect to host 192.168.1.103 port 22: No route to host",
+   "listen": [],
+   "role": ""
   },
   "192.168.1.104": {
    "ip": "192.168.1.104",
    "name": "hv-rocky-linux-7",
-   "os": "Rocky Linux 10.3 (Red Quartz)",
-   "kernel": "6.12.0-264.16.1.el10_3.x86_64",
-   "booted": "2026-11-16 11:40:08",
-   "cpus": 8,
-   "mem_gb": 3.6,
-   "error": "",
-   "listen": [
-    {
-     "port": 22,
-     "addr": "::",
-     "process": "sshd",
-     "component": "sshd"
-    },
-    {
-     "port": 631,
-     "addr": "::1",
-     "process": "cupsd",
-     "component": "cups"
-    },
-    {
-     "port": 9090,
-     "addr": "*",
-     "process": "systemd",
-     "component": ""
-    },
-    {
-     "port": 9100,
-     "addr": "*",
-     "process": "node_exporter",
-     "component": "node_exporter"
-    },
-    {
-     "port": 9882,
-     "addr": "*",
-     "process": "prometheus-podm",
-     "component": "prometheus-podman-exporter"
-    },
-    {
-     "port": 12345,
-     "addr": "127.0.0.1",
-     "process": "alloy",
-     "component": "alloy"
-    }
-   ],
-   "role": "RHCSA practice workstation"
+   "os": "",
+   "kernel": "",
+   "booted": "",
+   "cpus": null,
+   "mem_gb": null,
+   "error": "RuntimeError: ssh: connect to host 192.168.1.104 port 22: No route to host",
+   "listen": [],
+   "role": ""
   },
   "192.168.1.105": {
    "ip": "192.168.1.105",
    "name": "utility",
-   "os": "Rocky Linux 10.3 (Red Quartz)",
-   "kernel": "6.12.0-264.16.1.el10_3.x86_64",
-   "booted": "2026-11-16 11:40:08",
-   "cpus": 8,
-   "mem_gb": 3.6,
-   "error": "",
-   "listen": [
-    {
-     "port": 22,
-     "addr": "::",
-     "process": "sshd",
-     "component": "sshd"
-    },
-    {
-     "port": 53,
-     "addr": "::1",
-     "process": "dnsmasq",
-     "component": "dnsmasq"
-    },
-    {
-     "port": 80,
-     "addr": "*",
-     "process": "httpd",
-     "component": "httpd"
-    },
-    {
-     "port": 111,
-     "addr": "::",
-     "process": "rpcbind,systemd",
-     "component": "rpcbind"
-    },
-    {
-     "port": 631,
-     "addr": "::1",
-     "process": "cupsd",
-     "component": "cups"
-    },
-    {
-     "port": 2049,
-     "addr": "::",
-     "process": "",
-     "component": ""
-    },
-    {
-     "port": 9090,
-     "addr": "*",
-     "process": "systemd",
-     "component": ""
-    },
-    {
-     "port": 9100,
-     "addr": "*",
-     "process": "node_exporter",
-     "component": "node_exporter"
-    },
-    {
-     "port": 12345,
-     "addr": "127.0.0.1",
-     "process": "alloy",
-     "component": "alloy"
-    },
-    {
-     "port": 20048,
-     "addr": "::",
-     "process": "rpc.mountd",
-     "component": "nfs-mountd"
-    },
-    {
-     "port": 33553,
-     "addr": "::",
-     "process": "",
-     "component": ""
-    },
-    {
-     "port": 37001,
-     "addr": "0.0.0.0",
-     "process": "rpc.statd",
-     "component": "rpc-statd"
-    },
-    {
-     "port": 46313,
-     "addr": "0.0.0.0",
-     "process": "",
-     "component": ""
-    },
-    {
-     "port": 47967,
-     "addr": "::",
-     "process": "rpc.statd",
-     "component": "rpc-statd"
-    }
-   ],
-   "role": "RHCSA utility server with dnf mirror, DNS, NFS"
+   "os": "",
+   "kernel": "",
+   "booted": "",
+   "cpus": null,
+   "mem_gb": null,
+   "error": "RuntimeError: ssh: connect to host 192.168.1.105 port 22: No route to host",
+   "listen": [],
+   "role": ""
   }
  },
  "clusters": [
@@ -1221,16 +1164,6 @@
    ]
   },
   {
-   "src": "192.168.1.76/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
@@ -1241,37 +1174,17 @@
    ]
   },
   {
+   "src": "192.168.1.76/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
+   "ports": [
+    3100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.85/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.91/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.92/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.93/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
     3100
@@ -1303,16 +1216,6 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.92/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1393,6 +1296,16 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.85/unit/node_exporter.service",
+   "ports": [
+    9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.99/unit/k3s.service",
    "ports": [
     10250
@@ -1432,17 +1345,6 @@
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-sweep.service",
-   "dst": "192.168.1.102/unit/crapi-mcp.service",
-   "ports": [
-    8009
-   ],
-   "how": [
-    "configured",
-    "observed"
-   ]
-  },
-  {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.100/unit/prometheus-podman-exporter.service",
    "ports": [
@@ -1459,6 +1361,17 @@
     8081
    ],
    "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/unit/mcp-heartbeat.service",
+   "dst": "192.168.1.102/unit/crapi-mcp.service",
+   "ports": [
+    8009
+   ],
+   "how": [
+    "configured",
     "observed"
    ]
   },
@@ -1703,7 +1616,7 @@
    ]
   },
   {
-   "src": "192.168.1.98/unit/mcp-heartbeat.service",
+   "src": "192.168.1.98/unit/mcp-sweep.service",
    "dst": "192.168.1.102/unit/crapi-mcp.service",
    "ports": [
     8009
@@ -1843,6 +1756,16 @@
    ]
   },
   {
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.100/podman-root/root/kong",
+   "ports": [
+    80
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
    "src": "192.168.1.99/unit/alloy.service",
    "dst": "192.168.1.98/docker/root/loki",
    "ports": [
@@ -1900,36 +1823,6 @@
    ],
    "how": [
     "configured"
-   ]
-  },
-  {
-   "src": "192.168.1.103/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.104/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.105/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
-   "ports": [
-    3100
-   ],
-   "how": [
-    "observed"
    ]
   }
  ],
@@ -7684,6 +7577,25 @@
    "description": "Prometheus node_exporter",
    "classified_by": "llm-cache"
   },
+  "192.168.1.92/unit/packagekit.service": {
+   "id": "192.168.1.92/unit/packagekit.service",
+   "host": "192.168.1.92",
+   "hosts": [
+    "192.168.1.92"
+   ],
+   "kind": "systemd",
+   "name": "packagekit",
+   "category": "ops",
+   "ai": false,
+   "purpose": "PackageKit Daemon",
+   "state": "running",
+   "schedule": "",
+   "detail": "/usr/libexec/packagekitd",
+   "user": "root",
+   "baseline": true,
+   "description": "PackageKit Daemon",
+   "classified_by": "rules"
+  },
   "192.168.1.92/unit/polkit.service": {
    "id": "192.168.1.92/unit/polkit.service",
    "host": "192.168.1.92",
@@ -10362,7 +10274,7 @@
    "category": "ai-agent",
    "ai": true,
    "purpose": "Daily SSH inventory and LLM labeling for lab service map",
-   "state": "inactive",
+   "state": "activating",
    "schedule": "*-*-* 05:40:00 America/Chicago",
    "detail": "/usr/sbin/runuser mcropsey",
    "user": "root",
@@ -10746,44 +10658,6 @@
    "description": "cron (dir)",
    "classified_by": "rules"
   },
-  "192.168.1.98/proc/mcropsey/claude": {
-   "id": "192.168.1.98/proc/mcropsey/claude",
-   "host": "192.168.1.98",
-   "hosts": [
-    "192.168.1.98"
-   ],
-   "kind": "process",
-   "name": "claude",
-   "category": "ai-agent",
-   "ai": true,
-   "purpose": "Long-running Claude Code session on Rocky observability host",
-   "state": "running",
-   "detail": "claude",
-   "user": "mcropsey",
-   "baseline": false,
-   "count": 1,
-   "description": "long-running claude outside any service (up 1.2h)",
-   "classified_by": "llm"
-  },
-  "192.168.1.98/proc/mcropsey/mcp-remote": {
-   "id": "192.168.1.98/proc/mcropsey/mcp-remote",
-   "host": "192.168.1.98",
-   "hosts": [
-    "192.168.1.98"
-   ],
-   "kind": "process",
-   "name": "mcp-remote",
-   "category": "ai-agent",
-   "ai": true,
-   "purpose": "Long-running MCP client bridge for AI tooling",
-   "state": "running",
-   "detail": "~/.npm/_npx/705d23756ff7dacc/node_modules/.bin/mcp-remote",
-   "user": "mcropsey",
-   "baseline": false,
-   "count": 1,
-   "description": "long-running node outside any service (up 1.2h)",
-   "classified_by": "llm"
-  },
   "192.168.1.98/proc/mcropsey/generate_traffic.py": {
    "id": "192.168.1.98/proc/mcropsey/generate_traffic.py",
    "host": "192.168.1.98",
@@ -10794,13 +10668,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "AI traffic simulator generating lab requests",
+   "purpose": "Long-running AI traffic simulator on observability hub",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running python3 outside any service (up 1.0h)",
+   "description": "long-running python3 outside any service (up 10.2h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -15012,2939 +14886,6 @@
    "host": "192.168.1.102",
    "hosts": [
     "192.168.1.102"
-   ],
-   "kind": "cron",
-   "name": "0anacron",
-   "category": "ops",
-   "ai": false,
-   "purpose": "cron (dir)",
-   "state": "scheduled",
-   "schedule": "@hourly",
-   "detail": "/etc/cron.hourly/0anacron",
-   "user": "",
-   "baseline": true,
-   "description": "cron (dir)",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/accounts-daemon.service": {
-   "id": "192.168.1.103/unit/accounts-daemon.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "accounts-daemon",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Accounts Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/accounts-daemon",
-   "user": "root",
-   "baseline": true,
-   "description": "Accounts Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/alloy.service": {
-   "id": "192.168.1.103/unit/alloy.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "alloy",
-   "category": "observability",
-   "ai": false,
-   "purpose": "Collects OpenTelemetry telemetry for lab monitoring",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/alloy run",
-   "user": "root",
-   "baseline": false,
-   "description": "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.103/unit/atd.service": {
-   "id": "192.168.1.103/unit/atd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "atd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Deferred execution scheduler",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/atd $OPTS",
-   "user": "root",
-   "baseline": true,
-   "description": "Deferred execution scheduler",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/auditd.service": {
-   "id": "192.168.1.103/unit/auditd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "auditd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Security Audit Logging Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/auditd",
-   "user": "root",
-   "baseline": true,
-   "description": "Security Audit Logging Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/avahi-daemon.service": {
-   "id": "192.168.1.103/unit/avahi-daemon.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "avahi-daemon",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Avahi mDNS/DNS-SD Stack",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/avahi-daemon",
-   "user": "root",
-   "baseline": true,
-   "description": "Avahi mDNS/DNS-SD Stack",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/chronyd.service": {
-   "id": "192.168.1.103/unit/chronyd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "chronyd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "NTP client/server",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/chronyd $OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "NTP client/server",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/colord.service": {
-   "id": "192.168.1.103/unit/colord.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "colord",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Manage, Install and Generate Color Profiles",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/colord",
-   "user": "colord",
-   "baseline": true,
-   "description": "Manage, Install and Generate Color Profiles",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/crond.service": {
-   "id": "192.168.1.103/unit/crond.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "crond",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Command Scheduler",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/crond $CRONDARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "Command Scheduler",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/cups.service": {
-   "id": "192.168.1.103/unit/cups.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "cups",
-   "category": "ops",
-   "ai": false,
-   "purpose": "CUPS Scheduler",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/cupsd",
-   "user": "root",
-   "baseline": true,
-   "description": "CUPS Scheduler",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/dbus-broker.service": {
-   "id": "192.168.1.103/unit/dbus-broker.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "dbus-broker",
-   "category": "ops",
-   "ai": false,
-   "purpose": "D-Bus System Message Bus",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/dbus-broker-launch system",
-   "user": "root",
-   "baseline": true,
-   "description": "D-Bus System Message Bus",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/dnf-makecache.service": {
-   "id": "192.168.1.103/unit/dnf-makecache.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "timer",
-   "name": "dnf-makecache",
-   "category": "ops",
-   "ai": false,
-   "purpose": "dnf makecache",
-   "state": "inactive",
-   "schedule": "",
-   "detail": "/usr/bin/dnf makecache",
-   "user": "root",
-   "baseline": true,
-   "description": "dnf makecache",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/firewalld.service": {
-   "id": "192.168.1.103/unit/firewalld.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "firewalld",
-   "category": "ops",
-   "ai": false,
-   "purpose": "firewalld - dynamic firewall daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/firewalld $FIREWALLD_ARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "firewalld - dynamic firewall daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/fstrim.service": {
-   "id": "192.168.1.103/unit/fstrim.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "timer",
-   "name": "fstrim",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Discard unused blocks on filesystems from /etc/fstab",
-   "state": "inactive",
-   "schedule": "Mon *-*-* 00:00:00",
-   "detail": "/usr/sbin/fstrim /etc/fstab:/proc/self/mountinfo",
-   "user": "root",
-   "baseline": true,
-   "description": "Discard unused blocks on filesystems from /etc/fstab",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/fwupd-refresh.service": {
-   "id": "192.168.1.103/unit/fwupd-refresh.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "timer",
-   "name": "fwupd-refresh",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Refresh fwupd metadata and update motd",
-   "state": "inactive",
-   "schedule": "*-*-* *:00:00",
-   "detail": "/usr/bin/fwupdmgr refresh",
-   "user": "fwupd-refresh",
-   "baseline": true,
-   "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/fwupd.service": {
-   "id": "192.168.1.103/unit/fwupd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/gdm.service": {
-   "id": "192.168.1.103/unit/gdm.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "gdm",
-   "category": "ops",
-   "ai": false,
-   "purpose": "GNOME Display Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/gdm",
-   "user": "root",
-   "baseline": true,
-   "description": "GNOME Display Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/gssproxy.service": {
-   "id": "192.168.1.103/unit/gssproxy.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "gssproxy",
-   "category": "ops",
-   "ai": false,
-   "purpose": "GSSAPI Proxy Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/gssproxy",
-   "user": "root",
-   "baseline": true,
-   "description": "GSSAPI Proxy Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/hypervkvpd.service": {
-   "id": "192.168.1.103/unit/hypervkvpd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "hypervkvpd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Hyper-V KVP daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/hypervkvpd",
-   "user": "root",
-   "baseline": true,
-   "description": "Hyper-V KVP daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/hypervvssd.service": {
-   "id": "192.168.1.103/unit/hypervvssd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "hypervvssd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Hyper-V VSS daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/hypervvssd",
-   "user": "root",
-   "baseline": true,
-   "description": "Hyper-V VSS daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/irqbalance.service": {
-   "id": "192.168.1.103/unit/irqbalance.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "irqbalance",
-   "category": "ops",
-   "ai": false,
-   "purpose": "irqbalance daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/irqbalance $IRQBALANCE_ARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "irqbalance daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/libstoragemgmt.service": {
-   "id": "192.168.1.103/unit/libstoragemgmt.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "libstoragemgmt",
-   "category": "ops",
-   "ai": false,
-   "purpose": "libstoragemgmt plug-in server daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/lsmd",
-   "user": "root",
-   "baseline": true,
-   "description": "libstoragemgmt plug-in server daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/logrotate.service": {
-   "id": "192.168.1.103/unit/logrotate.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "timer",
-   "name": "logrotate",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Rotate log files",
-   "state": "inactive",
-   "schedule": "*-*-* 00:00:00",
-   "detail": "/usr/sbin/logrotate /etc/logrotate.conf",
-   "user": "root",
-   "baseline": true,
-   "description": "Rotate log files",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/mcelog.service": {
-   "id": "192.168.1.103/unit/mcelog.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "mcelog",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Machine Check Exception Logging Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/mcelog",
-   "user": "root",
-   "baseline": true,
-   "description": "Machine Check Exception Logging Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/ModemManager.service": {
-   "id": "192.168.1.103/unit/ModemManager.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "ModemManager",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Modem Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/ModemManager",
-   "user": "root",
-   "baseline": true,
-   "description": "Modem Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/NetworkManager.service": {
-   "id": "192.168.1.103/unit/NetworkManager.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "NetworkManager",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Network Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/NetworkManager",
-   "user": "root",
-   "baseline": true,
-   "description": "Network Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/node_exporter.service": {
-   "id": "192.168.1.103/unit/node_exporter.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "node_exporter",
-   "category": "observability",
-   "ai": false,
-   "purpose": "Exports host metrics for Prometheus",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/local/bin/node_exporter",
-   "user": "node_exporter",
-   "baseline": false,
-   "description": "Prometheus node_exporter",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.103/unit/plocate-updatedb.service": {
-   "id": "192.168.1.103/unit/plocate-updatedb.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "timer",
-   "name": "plocate-updatedb",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Update the plocate database",
-   "state": "inactive",
-   "schedule": "*-*-* 00:00:00",
-   "detail": "/usr/sbin/updatedb",
-   "user": "root",
-   "baseline": true,
-   "description": "Update the plocate database",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/polkit.service": {
-   "id": "192.168.1.103/unit/polkit.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "polkit",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Authorization Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/polkit-1/polkitd",
-   "user": "polkitd",
-   "baseline": true,
-   "description": "Authorization Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/raid-check.service": {
-   "id": "192.168.1.103/unit/raid-check.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "timer",
-   "name": "raid-check",
-   "category": "ops",
-   "ai": false,
-   "purpose": "RAID setup health check",
-   "state": "inactive",
-   "schedule": "Sun *-*-* 01:00:00",
-   "detail": "/usr/sbin/raid-check",
-   "user": "root",
-   "baseline": true,
-   "description": "RAID setup health check",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/rsyslog.service": {
-   "id": "192.168.1.103/unit/rsyslog.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "rsyslog",
-   "category": "ops",
-   "ai": false,
-   "purpose": "System Logging Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/rsyslogd $SYSLOGD_OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "System Logging Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/rtkit-daemon.service": {
-   "id": "192.168.1.103/unit/rtkit-daemon.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "rtkit-daemon",
-   "category": "ops",
-   "ai": false,
-   "purpose": "RealtimeKit Scheduling Policy Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/rtkit-daemon",
-   "user": "root",
-   "baseline": true,
-   "description": "RealtimeKit Scheduling Policy Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/sshd.service": {
-   "id": "192.168.1.103/unit/sshd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "sshd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "OpenSSH server daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/sshd $OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "OpenSSH server daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/switcheroo-control.service": {
-   "id": "192.168.1.103/unit/switcheroo-control.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "switcheroo-control",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Switcheroo Control Proxy service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/switcheroo-control",
-   "user": "root",
-   "baseline": true,
-   "description": "Switcheroo Control Proxy service",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/systemd-journald.service": {
-   "id": "192.168.1.103/unit/systemd-journald.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "systemd-journald",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Journal Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-journald",
-   "user": "root",
-   "baseline": true,
-   "description": "Journal Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/systemd-logind.service": {
-   "id": "192.168.1.103/unit/systemd-logind.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "systemd-logind",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Login Management",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-logind",
-   "user": "root",
-   "baseline": true,
-   "description": "User Login Management",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/systemd-tmpfiles-clean.service": {
-   "id": "192.168.1.103/unit/systemd-tmpfiles-clean.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "timer",
-   "name": "systemd-tmpfiles-clean",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Cleanup of Temporary Directories",
-   "state": "inactive",
-   "schedule": "",
-   "detail": "systemd-tmpfiles",
-   "user": "root",
-   "baseline": true,
-   "description": "Cleanup of Temporary Directories",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/systemd-udevd.service": {
-   "id": "192.168.1.103/unit/systemd-udevd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "systemd-udevd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Rule-based Manager for Device Events and Files",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-udevd",
-   "user": "root",
-   "baseline": true,
-   "description": "Rule-based Manager for Device Events and Files",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/systemd-userdbd.service": {
-   "id": "192.168.1.103/unit/systemd-userdbd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "systemd-userdbd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Database Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-userdbd",
-   "user": "root",
-   "baseline": true,
-   "description": "User Database Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/tuned-ppd.service": {
-   "id": "192.168.1.103/unit/tuned-ppd.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "tuned-ppd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "PPD-to-TuneD API Translation Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/tuned-ppd",
-   "user": "root",
-   "baseline": true,
-   "description": "PPD-to-TuneD API Translation Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/tuned.service": {
-   "id": "192.168.1.103/unit/tuned.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "tuned",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Dynamic System Tuning Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/tuned",
-   "user": "root",
-   "baseline": true,
-   "description": "Dynamic System Tuning Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/udisks2.service": {
-   "id": "192.168.1.103/unit/udisks2.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "udisks2",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Disk Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/udisks2/udisksd",
-   "user": "root",
-   "baseline": true,
-   "description": "Disk Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/upower.service": {
-   "id": "192.168.1.103/unit/upower.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "upower",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Daemon for power management",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/upowerd",
-   "user": "root",
-   "baseline": true,
-   "description": "Daemon for power management",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/user@1000.service": {
-   "id": "192.168.1.103/unit/user@1000.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "user@1000",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Manager for UID 1000",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd",
-   "user": "1000",
-   "baseline": true,
-   "description": "User Manager for UID 1000",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/user@42.service": {
-   "id": "192.168.1.103/unit/user@42.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "user@42",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Manager for UID 42",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd",
-   "user": "42",
-   "baseline": true,
-   "description": "User Manager for UID 42",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/unit/wpa_supplicant.service": {
-   "id": "192.168.1.103/unit/wpa_supplicant.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "systemd",
-   "name": "wpa_supplicant",
-   "category": "ops",
-   "ai": false,
-   "purpose": "WPA supplicant",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/wpa_supplicant /etc/wpa_supplicant/wpa_supplicant.conf",
-   "user": "root",
-   "baseline": true,
-   "description": "WPA supplicant",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/user/mcropsey/dbus-broker.service": {
-   "id": "192.168.1.103/user/mcropsey/dbus-broker.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "user-unit",
-   "name": "dbus-broker",
-   "category": "ops",
-   "ai": false,
-   "purpose": "D-Bus User Message Bus",
-   "state": "running",
-   "user": "mcropsey",
-   "baseline": true,
-   "description": "D-Bus User Message Bus",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/user/mcropsey/systemd-tmpfiles-setup.service": {
-   "id": "192.168.1.103/user/mcropsey/systemd-tmpfiles-setup.service",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "user-unit",
-   "name": "systemd-tmpfiles-setup",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Create User Files and Directories",
-   "state": "exited",
-   "user": "mcropsey",
-   "baseline": true,
-   "description": "Create User Files and Directories",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/cron/7984553717": {
-   "id": "192.168.1.103/cron/7984553717",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "cron",
-   "name": "cron.hourly",
-   "category": "ops",
-   "ai": false,
-   "purpose": "cron (/etc/cron.d/0hourly)",
-   "state": "scheduled",
-   "schedule": "01 * * * *",
-   "detail": "/etc/cron.hourly",
-   "user": "root",
-   "baseline": true,
-   "description": "cron (/etc/cron.d/0hourly)",
-   "classified_by": "rules"
-  },
-  "192.168.1.103/cron/1ae337a218": {
-   "id": "192.168.1.103/cron/1ae337a218",
-   "host": "192.168.1.103",
-   "hosts": [
-    "192.168.1.103"
-   ],
-   "kind": "cron",
-   "name": "0anacron",
-   "category": "ops",
-   "ai": false,
-   "purpose": "cron (dir)",
-   "state": "scheduled",
-   "schedule": "@hourly",
-   "detail": "/etc/cron.hourly/0anacron",
-   "user": "",
-   "baseline": true,
-   "description": "cron (dir)",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/accounts-daemon.service": {
-   "id": "192.168.1.104/unit/accounts-daemon.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "accounts-daemon",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Accounts Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/accounts-daemon",
-   "user": "root",
-   "baseline": true,
-   "description": "Accounts Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/alloy.service": {
-   "id": "192.168.1.104/unit/alloy.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "alloy",
-   "category": "observability",
-   "ai": false,
-   "purpose": "Collects OpenTelemetry telemetry for lab monitoring",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/alloy run",
-   "user": "root",
-   "baseline": false,
-   "description": "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.104/unit/atd.service": {
-   "id": "192.168.1.104/unit/atd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "atd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Deferred execution scheduler",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/atd $OPTS",
-   "user": "root",
-   "baseline": true,
-   "description": "Deferred execution scheduler",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/auditd.service": {
-   "id": "192.168.1.104/unit/auditd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "auditd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Security Audit Logging Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/auditd",
-   "user": "root",
-   "baseline": true,
-   "description": "Security Audit Logging Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/avahi-daemon.service": {
-   "id": "192.168.1.104/unit/avahi-daemon.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "avahi-daemon",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Avahi mDNS/DNS-SD Stack",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/avahi-daemon",
-   "user": "root",
-   "baseline": true,
-   "description": "Avahi mDNS/DNS-SD Stack",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/chronyd.service": {
-   "id": "192.168.1.104/unit/chronyd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "chronyd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "NTP client/server",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/chronyd $OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "NTP client/server",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/colord.service": {
-   "id": "192.168.1.104/unit/colord.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "colord",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Manage, Install and Generate Color Profiles",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/colord",
-   "user": "colord",
-   "baseline": true,
-   "description": "Manage, Install and Generate Color Profiles",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/crond.service": {
-   "id": "192.168.1.104/unit/crond.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "crond",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Command Scheduler",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/crond $CRONDARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "Command Scheduler",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/cups.service": {
-   "id": "192.168.1.104/unit/cups.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "cups",
-   "category": "ops",
-   "ai": false,
-   "purpose": "CUPS Scheduler",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/cupsd",
-   "user": "root",
-   "baseline": true,
-   "description": "CUPS Scheduler",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/dbus-broker.service": {
-   "id": "192.168.1.104/unit/dbus-broker.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "dbus-broker",
-   "category": "ops",
-   "ai": false,
-   "purpose": "D-Bus System Message Bus",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/dbus-broker-launch system",
-   "user": "root",
-   "baseline": true,
-   "description": "D-Bus System Message Bus",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/dnf-makecache.service": {
-   "id": "192.168.1.104/unit/dnf-makecache.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "timer",
-   "name": "dnf-makecache",
-   "category": "ops",
-   "ai": false,
-   "purpose": "dnf makecache",
-   "state": "inactive",
-   "schedule": "",
-   "detail": "/usr/bin/dnf makecache",
-   "user": "root",
-   "baseline": true,
-   "description": "dnf makecache",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/firewalld.service": {
-   "id": "192.168.1.104/unit/firewalld.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "firewalld",
-   "category": "ops",
-   "ai": false,
-   "purpose": "firewalld - dynamic firewall daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/firewalld $FIREWALLD_ARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "firewalld - dynamic firewall daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/fstrim.service": {
-   "id": "192.168.1.104/unit/fstrim.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "timer",
-   "name": "fstrim",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Discard unused blocks on filesystems from /etc/fstab",
-   "state": "inactive",
-   "schedule": "Mon *-*-* 00:00:00",
-   "detail": "/usr/sbin/fstrim /etc/fstab:/proc/self/mountinfo",
-   "user": "root",
-   "baseline": true,
-   "description": "Discard unused blocks on filesystems from /etc/fstab",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/fwupd-refresh.service": {
-   "id": "192.168.1.104/unit/fwupd-refresh.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "timer",
-   "name": "fwupd-refresh",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Refresh fwupd metadata and update motd",
-   "state": "inactive",
-   "schedule": "*-*-* *:00:00",
-   "detail": "/usr/bin/fwupdmgr refresh",
-   "user": "fwupd-refresh",
-   "baseline": true,
-   "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/fwupd.service": {
-   "id": "192.168.1.104/unit/fwupd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/gdm.service": {
-   "id": "192.168.1.104/unit/gdm.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "gdm",
-   "category": "ops",
-   "ai": false,
-   "purpose": "GNOME Display Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/gdm",
-   "user": "root",
-   "baseline": true,
-   "description": "GNOME Display Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/gssproxy.service": {
-   "id": "192.168.1.104/unit/gssproxy.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "gssproxy",
-   "category": "ops",
-   "ai": false,
-   "purpose": "GSSAPI Proxy Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/gssproxy",
-   "user": "root",
-   "baseline": true,
-   "description": "GSSAPI Proxy Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/hypervkvpd.service": {
-   "id": "192.168.1.104/unit/hypervkvpd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "hypervkvpd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Hyper-V KVP daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/hypervkvpd",
-   "user": "root",
-   "baseline": true,
-   "description": "Hyper-V KVP daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/hypervvssd.service": {
-   "id": "192.168.1.104/unit/hypervvssd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "hypervvssd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Hyper-V VSS daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/hypervvssd",
-   "user": "root",
-   "baseline": true,
-   "description": "Hyper-V VSS daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/irqbalance.service": {
-   "id": "192.168.1.104/unit/irqbalance.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "irqbalance",
-   "category": "ops",
-   "ai": false,
-   "purpose": "irqbalance daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/irqbalance $IRQBALANCE_ARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "irqbalance daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/libstoragemgmt.service": {
-   "id": "192.168.1.104/unit/libstoragemgmt.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "libstoragemgmt",
-   "category": "ops",
-   "ai": false,
-   "purpose": "libstoragemgmt plug-in server daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/lsmd",
-   "user": "root",
-   "baseline": true,
-   "description": "libstoragemgmt plug-in server daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/logrotate.service": {
-   "id": "192.168.1.104/unit/logrotate.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "timer",
-   "name": "logrotate",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Rotate log files",
-   "state": "inactive",
-   "schedule": "*-*-* 00:00:00",
-   "detail": "/usr/sbin/logrotate /etc/logrotate.conf",
-   "user": "root",
-   "baseline": true,
-   "description": "Rotate log files",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/mcelog.service": {
-   "id": "192.168.1.104/unit/mcelog.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "mcelog",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Machine Check Exception Logging Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/mcelog",
-   "user": "root",
-   "baseline": true,
-   "description": "Machine Check Exception Logging Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/ModemManager.service": {
-   "id": "192.168.1.104/unit/ModemManager.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "ModemManager",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Modem Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/ModemManager",
-   "user": "root",
-   "baseline": true,
-   "description": "Modem Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/NetworkManager.service": {
-   "id": "192.168.1.104/unit/NetworkManager.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "NetworkManager",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Network Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/NetworkManager",
-   "user": "root",
-   "baseline": true,
-   "description": "Network Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/node_exporter.service": {
-   "id": "192.168.1.104/unit/node_exporter.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "node_exporter",
-   "category": "observability",
-   "ai": false,
-   "purpose": "Exports host metrics for Prometheus",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/local/bin/node_exporter",
-   "user": "node_exporter",
-   "baseline": false,
-   "description": "Prometheus node_exporter",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.104/unit/plocate-updatedb.service": {
-   "id": "192.168.1.104/unit/plocate-updatedb.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "timer",
-   "name": "plocate-updatedb",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Update the plocate database",
-   "state": "inactive",
-   "schedule": "*-*-* 00:00:00",
-   "detail": "/usr/sbin/updatedb",
-   "user": "root",
-   "baseline": true,
-   "description": "Update the plocate database",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/polkit.service": {
-   "id": "192.168.1.104/unit/polkit.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "polkit",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Authorization Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/polkit-1/polkitd",
-   "user": "polkitd",
-   "baseline": true,
-   "description": "Authorization Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/prometheus-podman-exporter.service": {
-   "id": "192.168.1.104/unit/prometheus-podman-exporter.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "prometheus-podman-exporter",
-   "category": "observability",
-   "ai": false,
-   "purpose": "Exports Podman container metrics for Prometheus",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/prometheus-podman-exporter $PODMAN_EXPORTER_OPTS",
-   "user": "root",
-   "baseline": false,
-   "description": "Prometheus exporter for podman (v5) machine",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.104/unit/raid-check.service": {
-   "id": "192.168.1.104/unit/raid-check.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "timer",
-   "name": "raid-check",
-   "category": "ops",
-   "ai": false,
-   "purpose": "RAID setup health check",
-   "state": "inactive",
-   "schedule": "Sun *-*-* 01:00:00",
-   "detail": "/usr/sbin/raid-check",
-   "user": "root",
-   "baseline": true,
-   "description": "RAID setup health check",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/rsyslog.service": {
-   "id": "192.168.1.104/unit/rsyslog.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "rsyslog",
-   "category": "ops",
-   "ai": false,
-   "purpose": "System Logging Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/rsyslogd $SYSLOGD_OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "System Logging Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/rtkit-daemon.service": {
-   "id": "192.168.1.104/unit/rtkit-daemon.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "rtkit-daemon",
-   "category": "ops",
-   "ai": false,
-   "purpose": "RealtimeKit Scheduling Policy Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/rtkit-daemon",
-   "user": "root",
-   "baseline": true,
-   "description": "RealtimeKit Scheduling Policy Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/sshd.service": {
-   "id": "192.168.1.104/unit/sshd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "sshd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "OpenSSH server daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/sshd $OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "OpenSSH server daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/switcheroo-control.service": {
-   "id": "192.168.1.104/unit/switcheroo-control.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "switcheroo-control",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Switcheroo Control Proxy service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/switcheroo-control",
-   "user": "root",
-   "baseline": true,
-   "description": "Switcheroo Control Proxy service",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/systemd-journald.service": {
-   "id": "192.168.1.104/unit/systemd-journald.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "systemd-journald",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Journal Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-journald",
-   "user": "root",
-   "baseline": true,
-   "description": "Journal Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/systemd-logind.service": {
-   "id": "192.168.1.104/unit/systemd-logind.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "systemd-logind",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Login Management",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-logind",
-   "user": "root",
-   "baseline": true,
-   "description": "User Login Management",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/systemd-tmpfiles-clean.service": {
-   "id": "192.168.1.104/unit/systemd-tmpfiles-clean.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "timer",
-   "name": "systemd-tmpfiles-clean",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Cleanup of Temporary Directories",
-   "state": "inactive",
-   "schedule": "",
-   "detail": "systemd-tmpfiles",
-   "user": "root",
-   "baseline": true,
-   "description": "Cleanup of Temporary Directories",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/systemd-udevd.service": {
-   "id": "192.168.1.104/unit/systemd-udevd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "systemd-udevd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Rule-based Manager for Device Events and Files",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-udevd",
-   "user": "root",
-   "baseline": true,
-   "description": "Rule-based Manager for Device Events and Files",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/systemd-userdbd.service": {
-   "id": "192.168.1.104/unit/systemd-userdbd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "systemd-userdbd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Database Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-userdbd",
-   "user": "root",
-   "baseline": true,
-   "description": "User Database Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/tuned-ppd.service": {
-   "id": "192.168.1.104/unit/tuned-ppd.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "tuned-ppd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "PPD-to-TuneD API Translation Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/tuned-ppd",
-   "user": "root",
-   "baseline": true,
-   "description": "PPD-to-TuneD API Translation Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/tuned.service": {
-   "id": "192.168.1.104/unit/tuned.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "tuned",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Dynamic System Tuning Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/tuned",
-   "user": "root",
-   "baseline": true,
-   "description": "Dynamic System Tuning Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/udisks2.service": {
-   "id": "192.168.1.104/unit/udisks2.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "udisks2",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Disk Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/udisks2/udisksd",
-   "user": "root",
-   "baseline": true,
-   "description": "Disk Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/upower.service": {
-   "id": "192.168.1.104/unit/upower.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "upower",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Daemon for power management",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/upowerd",
-   "user": "root",
-   "baseline": true,
-   "description": "Daemon for power management",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/user@1000.service": {
-   "id": "192.168.1.104/unit/user@1000.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "user@1000",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Manager for UID 1000",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd",
-   "user": "1000",
-   "baseline": true,
-   "description": "User Manager for UID 1000",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/user@42.service": {
-   "id": "192.168.1.104/unit/user@42.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "user@42",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Manager for UID 42",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd",
-   "user": "42",
-   "baseline": true,
-   "description": "User Manager for UID 42",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/unit/wpa_supplicant.service": {
-   "id": "192.168.1.104/unit/wpa_supplicant.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "systemd",
-   "name": "wpa_supplicant",
-   "category": "ops",
-   "ai": false,
-   "purpose": "WPA supplicant",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/wpa_supplicant /etc/wpa_supplicant/wpa_supplicant.conf",
-   "user": "root",
-   "baseline": true,
-   "description": "WPA supplicant",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/user/mcropsey/dbus-broker.service": {
-   "id": "192.168.1.104/user/mcropsey/dbus-broker.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "user-unit",
-   "name": "dbus-broker",
-   "category": "ops",
-   "ai": false,
-   "purpose": "D-Bus User Message Bus",
-   "state": "running",
-   "user": "mcropsey",
-   "baseline": true,
-   "description": "D-Bus User Message Bus",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/user/mcropsey/systemd-tmpfiles-setup.service": {
-   "id": "192.168.1.104/user/mcropsey/systemd-tmpfiles-setup.service",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "user-unit",
-   "name": "systemd-tmpfiles-setup",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Create User Files and Directories",
-   "state": "exited",
-   "user": "mcropsey",
-   "baseline": true,
-   "description": "Create User Files and Directories",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/cron/7984553717": {
-   "id": "192.168.1.104/cron/7984553717",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "cron",
-   "name": "cron.hourly",
-   "category": "ops",
-   "ai": false,
-   "purpose": "cron (/etc/cron.d/0hourly)",
-   "state": "scheduled",
-   "schedule": "01 * * * *",
-   "detail": "/etc/cron.hourly",
-   "user": "root",
-   "baseline": true,
-   "description": "cron (/etc/cron.d/0hourly)",
-   "classified_by": "rules"
-  },
-  "192.168.1.104/cron/1ae337a218": {
-   "id": "192.168.1.104/cron/1ae337a218",
-   "host": "192.168.1.104",
-   "hosts": [
-    "192.168.1.104"
-   ],
-   "kind": "cron",
-   "name": "0anacron",
-   "category": "ops",
-   "ai": false,
-   "purpose": "cron (dir)",
-   "state": "scheduled",
-   "schedule": "@hourly",
-   "detail": "/etc/cron.hourly/0anacron",
-   "user": "",
-   "baseline": true,
-   "description": "cron (dir)",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/accounts-daemon.service": {
-   "id": "192.168.1.105/unit/accounts-daemon.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "accounts-daemon",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Accounts Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/accounts-daemon",
-   "user": "root",
-   "baseline": true,
-   "description": "Accounts Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/alloy.service": {
-   "id": "192.168.1.105/unit/alloy.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "alloy",
-   "category": "observability",
-   "ai": false,
-   "purpose": "Collects OpenTelemetry telemetry for lab monitoring",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/alloy run",
-   "user": "root",
-   "baseline": false,
-   "description": "Vendor-agnostic OpenTelemetry Collector distribution with programmable pipelines",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.105/unit/atd.service": {
-   "id": "192.168.1.105/unit/atd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "atd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Deferred execution scheduler",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/atd $OPTS",
-   "user": "root",
-   "baseline": true,
-   "description": "Deferred execution scheduler",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/auditd.service": {
-   "id": "192.168.1.105/unit/auditd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "auditd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Security Audit Logging Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/auditd",
-   "user": "root",
-   "baseline": true,
-   "description": "Security Audit Logging Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/avahi-daemon.service": {
-   "id": "192.168.1.105/unit/avahi-daemon.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "avahi-daemon",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Avahi mDNS/DNS-SD Stack",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/avahi-daemon",
-   "user": "root",
-   "baseline": true,
-   "description": "Avahi mDNS/DNS-SD Stack",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/chronyd.service": {
-   "id": "192.168.1.105/unit/chronyd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "chronyd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "NTP client/server",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/chronyd $OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "NTP client/server",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/colord.service": {
-   "id": "192.168.1.105/unit/colord.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "colord",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Manage, Install and Generate Color Profiles",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/colord",
-   "user": "colord",
-   "baseline": true,
-   "description": "Manage, Install and Generate Color Profiles",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/crond.service": {
-   "id": "192.168.1.105/unit/crond.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "crond",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Command Scheduler",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/crond $CRONDARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "Command Scheduler",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/cups.service": {
-   "id": "192.168.1.105/unit/cups.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "cups",
-   "category": "ops",
-   "ai": false,
-   "purpose": "CUPS Scheduler",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/cupsd",
-   "user": "root",
-   "baseline": true,
-   "description": "CUPS Scheduler",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/dbus-broker.service": {
-   "id": "192.168.1.105/unit/dbus-broker.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "dbus-broker",
-   "category": "ops",
-   "ai": false,
-   "purpose": "D-Bus System Message Bus",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/dbus-broker-launch system",
-   "user": "root",
-   "baseline": true,
-   "description": "D-Bus System Message Bus",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/dnf-makecache.service": {
-   "id": "192.168.1.105/unit/dnf-makecache.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "timer",
-   "name": "dnf-makecache",
-   "category": "ops",
-   "ai": false,
-   "purpose": "dnf makecache",
-   "state": "inactive",
-   "schedule": "",
-   "detail": "/usr/bin/dnf makecache",
-   "user": "root",
-   "baseline": true,
-   "description": "dnf makecache",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/dnsmasq.service": {
-   "id": "192.168.1.105/unit/dnsmasq.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "dnsmasq",
-   "category": "network",
-   "ai": false,
-   "purpose": "Provides DNS caching for lab hosts",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/dnsmasq",
-   "user": "root",
-   "baseline": false,
-   "description": "DNS caching server.",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.105/unit/firewalld.service": {
-   "id": "192.168.1.105/unit/firewalld.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "firewalld",
-   "category": "ops",
-   "ai": false,
-   "purpose": "firewalld - dynamic firewall daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/firewalld $FIREWALLD_ARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "firewalld - dynamic firewall daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/fstrim.service": {
-   "id": "192.168.1.105/unit/fstrim.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "timer",
-   "name": "fstrim",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Discard unused blocks on filesystems from /etc/fstab",
-   "state": "inactive",
-   "schedule": "Mon *-*-* 00:00:00",
-   "detail": "/usr/sbin/fstrim /etc/fstab:/proc/self/mountinfo",
-   "user": "root",
-   "baseline": true,
-   "description": "Discard unused blocks on filesystems from /etc/fstab",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/fwupd-refresh.service": {
-   "id": "192.168.1.105/unit/fwupd-refresh.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "timer",
-   "name": "fwupd-refresh",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Refresh fwupd metadata and update motd",
-   "state": "inactive",
-   "schedule": "*-*-* *:00:00",
-   "detail": "/usr/bin/fwupdmgr refresh",
-   "user": "fwupd-refresh",
-   "baseline": true,
-   "description": "Refresh fwupd metadata and update motd",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/fwupd.service": {
-   "id": "192.168.1.105/unit/fwupd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "fwupd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Firmware update daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/fwupd/fwupd",
-   "user": "root",
-   "baseline": true,
-   "description": "Firmware update daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/gdm.service": {
-   "id": "192.168.1.105/unit/gdm.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "gdm",
-   "category": "ops",
-   "ai": false,
-   "purpose": "GNOME Display Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/gdm",
-   "user": "root",
-   "baseline": true,
-   "description": "GNOME Display Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/gssproxy.service": {
-   "id": "192.168.1.105/unit/gssproxy.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "gssproxy",
-   "category": "ops",
-   "ai": false,
-   "purpose": "GSSAPI Proxy Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/gssproxy",
-   "user": "root",
-   "baseline": true,
-   "description": "GSSAPI Proxy Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/httpd.service": {
-   "id": "192.168.1.105/unit/httpd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "httpd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Serves the dnf repository mirror",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/httpd $OPTIONS",
-   "user": "root",
-   "baseline": false,
-   "description": "The Apache HTTP Server",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.105/unit/hypervkvpd.service": {
-   "id": "192.168.1.105/unit/hypervkvpd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "hypervkvpd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Hyper-V KVP daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/hypervkvpd",
-   "user": "root",
-   "baseline": true,
-   "description": "Hyper-V KVP daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/hypervvssd.service": {
-   "id": "192.168.1.105/unit/hypervvssd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "hypervvssd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Hyper-V VSS daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/hypervvssd",
-   "user": "root",
-   "baseline": true,
-   "description": "Hyper-V VSS daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/irqbalance.service": {
-   "id": "192.168.1.105/unit/irqbalance.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "irqbalance",
-   "category": "ops",
-   "ai": false,
-   "purpose": "irqbalance daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/irqbalance $IRQBALANCE_ARGS",
-   "user": "root",
-   "baseline": true,
-   "description": "irqbalance daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/libstoragemgmt.service": {
-   "id": "192.168.1.105/unit/libstoragemgmt.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "libstoragemgmt",
-   "category": "ops",
-   "ai": false,
-   "purpose": "libstoragemgmt plug-in server daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/lsmd",
-   "user": "root",
-   "baseline": true,
-   "description": "libstoragemgmt plug-in server daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/logrotate.service": {
-   "id": "192.168.1.105/unit/logrotate.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "timer",
-   "name": "logrotate",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Rotate log files",
-   "state": "inactive",
-   "schedule": "*-*-* 00:00:00",
-   "detail": "/usr/sbin/logrotate /etc/logrotate.conf",
-   "user": "root",
-   "baseline": true,
-   "description": "Rotate log files",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/mcelog.service": {
-   "id": "192.168.1.105/unit/mcelog.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "mcelog",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Machine Check Exception Logging Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/mcelog",
-   "user": "root",
-   "baseline": true,
-   "description": "Machine Check Exception Logging Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/ModemManager.service": {
-   "id": "192.168.1.105/unit/ModemManager.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "ModemManager",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Modem Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/ModemManager",
-   "user": "root",
-   "baseline": true,
-   "description": "Modem Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/NetworkManager.service": {
-   "id": "192.168.1.105/unit/NetworkManager.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "NetworkManager",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Network Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/NetworkManager",
-   "user": "root",
-   "baseline": true,
-   "description": "Network Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/nfsdcld.service": {
-   "id": "192.168.1.105/unit/nfsdcld.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "nfsdcld",
-   "category": "ops",
-   "ai": false,
-   "purpose": "NFSv4 Client Tracking Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/nfsdcld",
-   "user": "root",
-   "baseline": true,
-   "description": "NFSv4 Client Tracking Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/nfs-idmapd.service": {
-   "id": "192.168.1.105/unit/nfs-idmapd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "nfs-idmapd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "NFSv4 ID-name mapping service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/rpc.idmapd",
-   "user": "root",
-   "baseline": true,
-   "description": "NFSv4 ID-name mapping service",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/nfs-mountd.service": {
-   "id": "192.168.1.105/unit/nfs-mountd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "nfs-mountd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Supports NFS file sharing for lab",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/rpc.mountd",
-   "user": "root",
-   "baseline": false,
-   "description": "NFS Mount Daemon",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.105/unit/node_exporter.service": {
-   "id": "192.168.1.105/unit/node_exporter.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "node_exporter",
-   "category": "observability",
-   "ai": false,
-   "purpose": "Exports host metrics for Prometheus",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/local/bin/node_exporter",
-   "user": "node_exporter",
-   "baseline": false,
-   "description": "Prometheus node_exporter",
-   "classified_by": "llm-cache"
-  },
-  "192.168.1.105/unit/plocate-updatedb.service": {
-   "id": "192.168.1.105/unit/plocate-updatedb.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "timer",
-   "name": "plocate-updatedb",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Update the plocate database",
-   "state": "inactive",
-   "schedule": "*-*-* 00:00:00",
-   "detail": "/usr/sbin/updatedb",
-   "user": "root",
-   "baseline": true,
-   "description": "Update the plocate database",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/polkit.service": {
-   "id": "192.168.1.105/unit/polkit.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "polkit",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Authorization Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/polkit-1/polkitd",
-   "user": "polkitd",
-   "baseline": true,
-   "description": "Authorization Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/raid-check.service": {
-   "id": "192.168.1.105/unit/raid-check.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "timer",
-   "name": "raid-check",
-   "category": "ops",
-   "ai": false,
-   "purpose": "RAID setup health check",
-   "state": "inactive",
-   "schedule": "Sun *-*-* 01:00:00",
-   "detail": "/usr/sbin/raid-check",
-   "user": "root",
-   "baseline": true,
-   "description": "RAID setup health check",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/rpcbind.service": {
-   "id": "192.168.1.105/unit/rpcbind.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "rpcbind",
-   "category": "ops",
-   "ai": false,
-   "purpose": "RPC Bind",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/bin/rpcbind $RPCBIND_OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "RPC Bind",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/rpc-statd.service": {
-   "id": "192.168.1.105/unit/rpc-statd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "rpc-statd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "NFS status monitor for NFSv2/3 locking.",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/rpc.statd",
-   "user": "root",
-   "baseline": true,
-   "description": "NFS status monitor for NFSv2/3 locking.",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/rsyslog.service": {
-   "id": "192.168.1.105/unit/rsyslog.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "rsyslog",
-   "category": "ops",
-   "ai": false,
-   "purpose": "System Logging Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/rsyslogd $SYSLOGD_OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "System Logging Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/rtkit-daemon.service": {
-   "id": "192.168.1.105/unit/rtkit-daemon.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "rtkit-daemon",
-   "category": "ops",
-   "ai": false,
-   "purpose": "RealtimeKit Scheduling Policy Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/rtkit-daemon",
-   "user": "root",
-   "baseline": true,
-   "description": "RealtimeKit Scheduling Policy Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/sshd.service": {
-   "id": "192.168.1.105/unit/sshd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "sshd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "OpenSSH server daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/sshd $OPTIONS",
-   "user": "root",
-   "baseline": true,
-   "description": "OpenSSH server daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/switcheroo-control.service": {
-   "id": "192.168.1.105/unit/switcheroo-control.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "switcheroo-control",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Switcheroo Control Proxy service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/switcheroo-control",
-   "user": "root",
-   "baseline": true,
-   "description": "Switcheroo Control Proxy service",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/systemd-journald.service": {
-   "id": "192.168.1.105/unit/systemd-journald.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "systemd-journald",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Journal Service",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-journald",
-   "user": "root",
-   "baseline": true,
-   "description": "Journal Service",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/systemd-logind.service": {
-   "id": "192.168.1.105/unit/systemd-logind.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "systemd-logind",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Login Management",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-logind",
-   "user": "root",
-   "baseline": true,
-   "description": "User Login Management",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/systemd-tmpfiles-clean.service": {
-   "id": "192.168.1.105/unit/systemd-tmpfiles-clean.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "timer",
-   "name": "systemd-tmpfiles-clean",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Cleanup of Temporary Directories",
-   "state": "inactive",
-   "schedule": "",
-   "detail": "systemd-tmpfiles",
-   "user": "root",
-   "baseline": true,
-   "description": "Cleanup of Temporary Directories",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/systemd-udevd.service": {
-   "id": "192.168.1.105/unit/systemd-udevd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "systemd-udevd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Rule-based Manager for Device Events and Files",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-udevd",
-   "user": "root",
-   "baseline": true,
-   "description": "Rule-based Manager for Device Events and Files",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/systemd-userdbd.service": {
-   "id": "192.168.1.105/unit/systemd-userdbd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "systemd-userdbd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Database Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd-userdbd",
-   "user": "root",
-   "baseline": true,
-   "description": "User Database Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/tuned-ppd.service": {
-   "id": "192.168.1.105/unit/tuned-ppd.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "tuned-ppd",
-   "category": "ops",
-   "ai": false,
-   "purpose": "PPD-to-TuneD API Translation Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/tuned-ppd",
-   "user": "root",
-   "baseline": true,
-   "description": "PPD-to-TuneD API Translation Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/tuned.service": {
-   "id": "192.168.1.105/unit/tuned.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "tuned",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Dynamic System Tuning Daemon",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/tuned",
-   "user": "root",
-   "baseline": true,
-   "description": "Dynamic System Tuning Daemon",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/udisks2.service": {
-   "id": "192.168.1.105/unit/udisks2.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "udisks2",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Disk Manager",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/udisks2/udisksd",
-   "user": "root",
-   "baseline": true,
-   "description": "Disk Manager",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/upower.service": {
-   "id": "192.168.1.105/unit/upower.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "upower",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Daemon for power management",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/libexec/upowerd",
-   "user": "root",
-   "baseline": true,
-   "description": "Daemon for power management",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/user@1000.service": {
-   "id": "192.168.1.105/unit/user@1000.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "user@1000",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Manager for UID 1000",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd",
-   "user": "1000",
-   "baseline": true,
-   "description": "User Manager for UID 1000",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/user@42.service": {
-   "id": "192.168.1.105/unit/user@42.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "user@42",
-   "category": "ops",
-   "ai": false,
-   "purpose": "User Manager for UID 42",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/lib/systemd/systemd",
-   "user": "42",
-   "baseline": true,
-   "description": "User Manager for UID 42",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/unit/wpa_supplicant.service": {
-   "id": "192.168.1.105/unit/wpa_supplicant.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "systemd",
-   "name": "wpa_supplicant",
-   "category": "ops",
-   "ai": false,
-   "purpose": "WPA supplicant",
-   "state": "running",
-   "schedule": "",
-   "detail": "/usr/sbin/wpa_supplicant /etc/wpa_supplicant/wpa_supplicant.conf",
-   "user": "root",
-   "baseline": true,
-   "description": "WPA supplicant",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/user/mcropsey/dbus-broker.service": {
-   "id": "192.168.1.105/user/mcropsey/dbus-broker.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "user-unit",
-   "name": "dbus-broker",
-   "category": "ops",
-   "ai": false,
-   "purpose": "D-Bus User Message Bus",
-   "state": "running",
-   "user": "mcropsey",
-   "baseline": true,
-   "description": "D-Bus User Message Bus",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/user/mcropsey/systemd-tmpfiles-setup.service": {
-   "id": "192.168.1.105/user/mcropsey/systemd-tmpfiles-setup.service",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "user-unit",
-   "name": "systemd-tmpfiles-setup",
-   "category": "ops",
-   "ai": false,
-   "purpose": "Create User Files and Directories",
-   "state": "exited",
-   "user": "mcropsey",
-   "baseline": true,
-   "description": "Create User Files and Directories",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/cron/7984553717": {
-   "id": "192.168.1.105/cron/7984553717",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
-   ],
-   "kind": "cron",
-   "name": "cron.hourly",
-   "category": "ops",
-   "ai": false,
-   "purpose": "cron (/etc/cron.d/0hourly)",
-   "state": "scheduled",
-   "schedule": "01 * * * *",
-   "detail": "/etc/cron.hourly",
-   "user": "root",
-   "baseline": true,
-   "description": "cron (/etc/cron.d/0hourly)",
-   "classified_by": "rules"
-  },
-  "192.168.1.105/cron/1ae337a218": {
-   "id": "192.168.1.105/cron/1ae337a218",
-   "host": "192.168.1.105",
-   "hosts": [
-    "192.168.1.105"
    ],
    "kind": "cron",
    "name": "0anacron",
