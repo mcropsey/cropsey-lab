@@ -1,289 +1,22 @@
 {
- "generated_at": "2026-11-18T05:40:15",
- "fingerprint": "4c94c3b4d2ca71b7",
- "change_summary": "+6 (alloy, homemovies-sync, jellyfin, multipathd\u2026); -25 (alloy, containerd, docker, hv-fcopy-daemon\u2026); 5 changed; 3 host changes",
+ "generated_at": "2026-11-19T05:40:14",
+ "fingerprint": "2e78689eee1f4e39",
+ "change_summary": "1 changed",
  "changes": {
   "first_run": false,
-  "added": [
-   {
-    "id": "192.168.1.90/unit/alloy.service",
-    "name": "alloy",
-    "host": "192.168.1.90",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.90/unit/homemovies-sync.service",
-    "name": "homemovies-sync",
-    "host": "192.168.1.90",
-    "kind": "timer",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.90/unit/jellyfin.service",
-    "name": "jellyfin",
-    "host": "192.168.1.90",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.90/unit/multipathd.service",
-    "name": "multipathd",
-    "host": "192.168.1.90",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.90/unit/node_exporter.service",
-    "name": "node_exporter",
-    "host": "192.168.1.90",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "ext/192.168.1.221:445",
-    "name": "192.168.1.221:445",
-    "host": "",
-    "kind": "external",
-    "category": "ops"
-   }
-  ],
-  "removed": [
-   {
-    "id": "192.168.1.91/unit/alloy.service",
-    "name": "alloy",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.91/unit/containerd.service",
-    "name": "containerd",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.91/unit/docker.service",
-    "name": "docker",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.91/unit/hv-fcopy-daemon.service",
-    "name": "hv-fcopy-daemon",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.91/unit/hv-kvp-daemon.service",
-    "name": "hv-kvp-daemon",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.91/unit/hv-vss-daemon.service",
-    "name": "hv-vss-daemon",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.91/unit/multipathd.service",
-    "name": "multipathd",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.91/unit/node_exporter.service",
-    "name": "node_exporter",
-    "host": "192.168.1.91",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.92/unit/alloy.service",
-    "name": "alloy",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.92/unit/containerd.service",
-    "name": "containerd",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.92/unit/docker.service",
-    "name": "docker",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.92/unit/hv-fcopy-daemon.service",
-    "name": "hv-fcopy-daemon",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/hv-kvp-daemon.service",
-    "name": "hv-kvp-daemon",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/hv-vss-daemon.service",
-    "name": "hv-vss-daemon",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/multipathd.service",
-    "name": "multipathd",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.92/unit/node_exporter.service",
-    "name": "node_exporter",
-    "host": "192.168.1.92",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.93/unit/alloy.service",
-    "name": "alloy",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "192.168.1.93/unit/containerd.service",
-    "name": "containerd",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.93/unit/docker.service",
-    "name": "docker",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "platform"
-   },
-   {
-    "id": "192.168.1.93/unit/hv-fcopy-daemon.service",
-    "name": "hv-fcopy-daemon",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/hv-kvp-daemon.service",
-    "name": "hv-kvp-daemon",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/hv-vss-daemon.service",
-    "name": "hv-vss-daemon",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/multipathd.service",
-    "name": "multipathd",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "ops"
-   },
-   {
-    "id": "192.168.1.93/unit/node_exporter.service",
-    "name": "node_exporter",
-    "host": "192.168.1.93",
-    "kind": "systemd",
-    "category": "observability"
-   },
-   {
-    "id": "ext/192.168.1.78:9100",
-    "name": "192.168.1.78:9100 (reserved, not mapped)",
-    "host": "",
-    "kind": "external",
-    "category": "ops"
-   }
-  ],
+  "added": [],
+  "removed": [],
   "changed": [
    {
-    "id": "192.168.1.98/unit/patchwatch.service",
-    "name": "patchwatch",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
-   },
-   {
-    "id": "192.168.1.98/unit/alertwatch-heartbeat.service",
-    "name": "alertwatch-heartbeat",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
-   },
-   {
-    "id": "192.168.1.98/unit/secnews.service",
-    "name": "secnews",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
-   },
-   {
-    "id": "192.168.1.98/unit/labwatch.service",
-    "name": "labwatch",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
-   },
-   {
-    "id": "192.168.1.98/unit/cvewatch.service",
-    "name": "cvewatch",
-    "host": "192.168.1.98",
-    "field": "state",
-    "old": "failed",
-    "new": "inactive"
+    "id": "192.168.1.101/podman-root/root/litellm",
+    "name": "litellm",
+    "host": "192.168.1.101",
+    "field": "image",
+    "old": "ghcr.io/berriai/litellm:v1.104.0",
+    "new": "ghcr.io/berriai/litellm:v1.108.11"
    }
   ],
-  "hosts": [
-   {
-    "ip": "192.168.1.91",
-    "name": "ubuntu-1",
-    "error": "RuntimeError: ssh: connect to host 192.168.1.91 port 22: No route to host"
-   },
-   {
-    "ip": "192.168.1.92",
-    "name": "ubuntu-2",
-    "error": "RuntimeError: ssh: connect to host 192.168.1.92 port 22: No route to host"
-   },
-   {
-    "ip": "192.168.1.93",
-    "name": "ubuntu-3",
-    "error": "RuntimeError: ssh: connect to host 192.168.1.93 port 22: No route to host"
-   }
-  ]
+  "hosts": []
  },
  "hosts": {
   "192.168.1.75": {
@@ -521,7 +254,7 @@
    "name": "rasp5",
    "os": "Ubuntu 24.04.5 LTS",
    "kernel": "6.8.0-1068-raspi",
-   "booted": "2026-11-18 04:01:59",
+   "booted": "2026-11-19 04:00:29",
    "cpus": 4,
    "mem_gb": 7.7,
    "error": "",
@@ -534,7 +267,7 @@
     },
     {
      "port": 53,
-     "addr": "127.0.0.53%lo",
+     "addr": "127.0.0.54",
      "process": "systemd-resolve",
      "component": "systemd-resolved"
     },
@@ -563,7 +296,7 @@
      "component": "alloy"
     },
     {
-     "port": 46245,
+     "port": 38061,
      "addr": "127.0.0.1",
      "process": "containerd",
      "component": "containerd"
@@ -1280,20 +1013,20 @@
    ]
   },
   {
-   "src": "192.168.1.76/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
    "ports": [
-    3100
+    19001
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.76/unit/snap.microk8s.daemon-k8s-dqlite.service",
-   "dst": "192.168.1.75/unit/snap.microk8s.daemon-k8s-dqlite.service",
+   "src": "192.168.1.76/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    19001
+    3100
    ],
    "how": [
     "observed"
@@ -1312,16 +1045,6 @@
   {
    "src": "192.168.1.98/docker/root/prometheus",
    "dst": "192.168.1.101/unit/node_exporter.service",
-   "ports": [
-    9100
-   ],
-   "how": [
-    "observed"
-   ]
-  },
-  {
-   "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
     9100
    ],
@@ -1432,9 +1155,9 @@
   },
   {
    "src": "192.168.1.98/docker/root/prometheus",
-   "dst": "192.168.1.101/unit/prometheus-podman-exporter.service",
+   "dst": "192.168.1.85/unit/node_exporter.service",
    "ports": [
-    9882
+    9100
    ],
    "how": [
     "observed"
@@ -1455,6 +1178,16 @@
    "dst": "192.168.1.99/unit/node_exporter.service",
    "ports": [
     9100
+   ],
+   "how": [
+    "observed"
+   ]
+  },
+  {
+   "src": "192.168.1.98/docker/root/prometheus",
+   "dst": "192.168.1.101/unit/prometheus-podman-exporter.service",
+   "ports": [
+    9882
    ],
    "how": [
     "observed"
@@ -1841,20 +1574,20 @@
    ]
   },
   {
-   "src": "192.168.1.99/unit/cloudflared.service",
-   "dst": "192.168.1.100/podman-root/root/kong",
+   "src": "192.168.1.99/unit/alloy.service",
+   "dst": "192.168.1.98/docker/root/loki",
    "ports": [
-    80
+    3100
    ],
    "how": [
     "observed"
    ]
   },
   {
-   "src": "192.168.1.99/unit/alloy.service",
-   "dst": "192.168.1.98/docker/root/loki",
+   "src": "192.168.1.99/unit/cloudflared.service",
+   "dst": "192.168.1.100/podman-root/root/kong",
    "ports": [
-    3100
+    80
    ],
    "how": [
     "observed"
@@ -6427,7 +6160,7 @@
    "user": "jellyfin",
    "baseline": false,
    "description": "Build Jellyfin Home Movies view (fix PCM audio copies)",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.90/unit/jellyfin.service": {
    "id": "192.168.1.90/unit/jellyfin.service",
@@ -6446,7 +6179,7 @@
    "user": "jellyfin",
    "baseline": false,
    "description": "Jellyfin Media Server",
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "192.168.1.90/unit/logrotate.service": {
    "id": "192.168.1.90/unit/logrotate.service",
@@ -8534,13 +8267,13 @@
    "name": "generate_traffic.py",
    "category": "ai-agent",
    "ai": true,
-   "purpose": "Long-running AI traffic simulator on observability hub.",
+   "purpose": "Long-running AI traffic simulator on hv-rocky-linux-1.",
    "state": "running",
    "detail": "~/ai-sim/generate_traffic.py",
    "user": "mcropsey",
    "baseline": false,
    "count": 1,
-   "description": "long-running python3 outside any service (up 34.2h)",
+   "description": "long-running python3 outside any service (up 58.2h)",
    "classified_by": "llm"
   },
   "192.168.1.99/unit/accounts-daemon.service": {
@@ -10506,6 +10239,26 @@
    "baseline": false,
    "classified_by": "llm-cache"
   },
+  "192.168.1.101/podman-root/root/litellm-db": {
+   "id": "192.168.1.101/podman-root/root/litellm-db",
+   "host": "192.168.1.101",
+   "hosts": [
+    "192.168.1.101"
+   ],
+   "kind": "podman-root",
+   "name": "litellm-db",
+   "category": "platform",
+   "ai": true,
+   "purpose": "PostgreSQL database for LiteLLM gateway",
+   "state": "running",
+   "ports": [],
+   "image": "docker.io/library/postgres:16.15",
+   "detail": "docker.io/library/postgres:16.15",
+   "user": "root",
+   "group": "",
+   "baseline": false,
+   "classified_by": "llm-cache"
+  },
   "192.168.1.101/podman-root/root/postgresdb": {
    "id": "192.168.1.101/podman-root/root/postgresdb",
    "host": "192.168.1.101",
@@ -10715,26 +10468,6 @@
    "baseline": false,
    "classified_by": "llm-cache"
   },
-  "192.168.1.101/podman-root/root/litellm-db": {
-   "id": "192.168.1.101/podman-root/root/litellm-db",
-   "host": "192.168.1.101",
-   "hosts": [
-    "192.168.1.101"
-   ],
-   "kind": "podman-root",
-   "name": "litellm-db",
-   "category": "platform",
-   "ai": true,
-   "purpose": "PostgreSQL database for LiteLLM gateway",
-   "state": "running",
-   "ports": [],
-   "image": "docker.io/library/postgres:16.15",
-   "detail": "docker.io/library/postgres:16.15",
-   "user": "root",
-   "group": "",
-   "baseline": false,
-   "classified_by": "llm-cache"
-  },
   "192.168.1.101/podman-root/root/litellm": {
    "id": "192.168.1.101/podman-root/root/litellm",
    "host": "192.168.1.101",
@@ -10745,149 +10478,130 @@
    "name": "litellm",
    "category": "ai-platform",
    "ai": true,
-   "purpose": "LiteLLM gateway for LLM API access",
+   "purpose": "LiteLLM gateway for AI model routing",
    "state": "running",
    "ports": [
     "4000->4000/tcp"
    ],
-   "image": "ghcr.io/berriai/litellm:v1.104.0",
-   "detail": "ghcr.io/berriai/litellm:v1.104.0",
+   "image": "ghcr.io/berriai/litellm:v1.108.11",
+   "detail": "ghcr.io/berriai/litellm:v1.108.11",
    "user": "root",
    "group": "",
    "baseline": false,
-   "classified_by": "llm-cache"
+   "classified_by": "llm"
   },
-  "192.168.1.101/unit/1f938b1e9c2fe80a87d91b7ebb82e960d6065c3168d3fd7bad99775da2f2ce6e-15450fa9abbb7e43.service": {
-   "id": "192.168.1.101/unit/1f938b1e9c2fe80a87d91b7ebb82e960d6065c3168d3fd7bad99775da2f2ce6e-15450fa9abbb7e43.service",
+  "192.168.1.101/unit/4b408e171e392af187ba4b1f5279430c8ad047080feb85bb9c9fcff5c500e956-3262484bdef01092.service": {
+   "id": "192.168.1.101/unit/4b408e171e392af187ba4b1f5279430c8ad047080feb85bb9c9fcff5c500e956-3262484bdef01092.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "1f938b1e9c2fe80a87d91b7ebb82e960d6065c3168d3fd7bad99775da2f2ce6e-15450fa9abbb7e43",
+   "name": "4b408e171e392af187ba4b1f5279430c8ad047080feb85bb9c9fcff5c500e956-3262484bdef01092",
    "category": "platform",
    "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run 1f938b1e9c2fe80a87d91b7ebb82e960d6065c3168d3fd7bad99775da2f2ce6e",
+   "purpose": "/usr/bin/podman healthcheck run 4b408e171e392af187ba4b1f5279430c8ad047080feb85bb9c9fcff5c500e956",
    "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/podman healthcheck",
    "user": "root",
    "baseline": true,
-   "description": "/usr/bin/podman healthcheck run 1f938b1e9c2fe80a87d91b7ebb82e960d6065c3168d3fd7bad99775da2f2ce6e",
+   "description": "/usr/bin/podman healthcheck run 4b408e171e392af187ba4b1f5279430c8ad047080feb85bb9c9fcff5c500e956",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/21548ad82cccf2f56ae729413badb82fe3ca208c5cb56b62426935b8d8d6330b-d7e8c7723ab068b.service": {
-   "id": "192.168.1.101/unit/21548ad82cccf2f56ae729413badb82fe3ca208c5cb56b62426935b8d8d6330b-d7e8c7723ab068b.service",
+  "192.168.1.101/unit/696a5bc835f6eb92f6de6c5a3ea5d7a6b2b73f35ce51b070d09786f8ab8b52de-33f62e708623c237.service": {
+   "id": "192.168.1.101/unit/696a5bc835f6eb92f6de6c5a3ea5d7a6b2b73f35ce51b070d09786f8ab8b52de-33f62e708623c237.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "21548ad82cccf2f56ae729413badb82fe3ca208c5cb56b62426935b8d8d6330b-d7e8c7723ab068b",
+   "name": "696a5bc835f6eb92f6de6c5a3ea5d7a6b2b73f35ce51b070d09786f8ab8b52de-33f62e708623c237",
    "category": "platform",
    "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run 21548ad82cccf2f56ae729413badb82fe3ca208c5cb56b62426935b8d8d6330b",
+   "purpose": "/usr/bin/podman healthcheck run 696a5bc835f6eb92f6de6c5a3ea5d7a6b2b73f35ce51b070d09786f8ab8b52de",
    "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/podman healthcheck",
    "user": "root",
    "baseline": true,
-   "description": "/usr/bin/podman healthcheck run 21548ad82cccf2f56ae729413badb82fe3ca208c5cb56b62426935b8d8d6330b",
+   "description": "/usr/bin/podman healthcheck run 696a5bc835f6eb92f6de6c5a3ea5d7a6b2b73f35ce51b070d09786f8ab8b52de",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/4b960afa40a89bb5a489cda006750f10581e208aec923d14a4a077f83a5d38e0-22f3afd69a217e35.service": {
-   "id": "192.168.1.101/unit/4b960afa40a89bb5a489cda006750f10581e208aec923d14a4a077f83a5d38e0-22f3afd69a217e35.service",
+  "192.168.1.101/unit/69a8ee16bc4ef18f295f2959261dc00187dcd3a759ecdeb134bed7c80112b9f3-40e52368540d7e14.service": {
+   "id": "192.168.1.101/unit/69a8ee16bc4ef18f295f2959261dc00187dcd3a759ecdeb134bed7c80112b9f3-40e52368540d7e14.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "4b960afa40a89bb5a489cda006750f10581e208aec923d14a4a077f83a5d38e0-22f3afd69a217e35",
+   "name": "69a8ee16bc4ef18f295f2959261dc00187dcd3a759ecdeb134bed7c80112b9f3-40e52368540d7e14",
    "category": "platform",
    "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run 4b960afa40a89bb5a489cda006750f10581e208aec923d14a4a077f83a5d38e0",
+   "purpose": "/usr/bin/podman healthcheck run 69a8ee16bc4ef18f295f2959261dc00187dcd3a759ecdeb134bed7c80112b9f3",
    "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/podman healthcheck",
    "user": "root",
    "baseline": true,
-   "description": "/usr/bin/podman healthcheck run 4b960afa40a89bb5a489cda006750f10581e208aec923d14a4a077f83a5d38e0",
+   "description": "/usr/bin/podman healthcheck run 69a8ee16bc4ef18f295f2959261dc00187dcd3a759ecdeb134bed7c80112b9f3",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/5467c51c261f098ad07989cb410160c1c6df5b74adfd59b4355bb886e66fd27a-755c253d5bb5657d.service": {
-   "id": "192.168.1.101/unit/5467c51c261f098ad07989cb410160c1c6df5b74adfd59b4355bb886e66fd27a-755c253d5bb5657d.service",
+  "192.168.1.101/unit/6d343c964c07ca7cd734cbb5714c1655ee5040ee6440840656bd013507248f1a-430c73466b885e67.service": {
+   "id": "192.168.1.101/unit/6d343c964c07ca7cd734cbb5714c1655ee5040ee6440840656bd013507248f1a-430c73466b885e67.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "5467c51c261f098ad07989cb410160c1c6df5b74adfd59b4355bb886e66fd27a-755c253d5bb5657d",
+   "name": "6d343c964c07ca7cd734cbb5714c1655ee5040ee6440840656bd013507248f1a-430c73466b885e67",
    "category": "platform",
    "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run 5467c51c261f098ad07989cb410160c1c6df5b74adfd59b4355bb886e66fd27a",
+   "purpose": "/usr/bin/podman healthcheck run 6d343c964c07ca7cd734cbb5714c1655ee5040ee6440840656bd013507248f1a",
    "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/podman healthcheck",
    "user": "root",
    "baseline": true,
-   "description": "/usr/bin/podman healthcheck run 5467c51c261f098ad07989cb410160c1c6df5b74adfd59b4355bb886e66fd27a",
+   "description": "/usr/bin/podman healthcheck run 6d343c964c07ca7cd734cbb5714c1655ee5040ee6440840656bd013507248f1a",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/7d559c986c2c2f9ac941c4ff030685dd5603f4655e4a0a69d5c18bea526728bb-6f15ca087a9fbe02.service": {
-   "id": "192.168.1.101/unit/7d559c986c2c2f9ac941c4ff030685dd5603f4655e4a0a69d5c18bea526728bb-6f15ca087a9fbe02.service",
+  "192.168.1.101/unit/9a810838deedcc5d0556d9c4861a1cc58f08d1b7a3ebd3d9a28845cde3b9e767-1919222e3a6a486a.service": {
+   "id": "192.168.1.101/unit/9a810838deedcc5d0556d9c4861a1cc58f08d1b7a3ebd3d9a28845cde3b9e767-1919222e3a6a486a.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "7d559c986c2c2f9ac941c4ff030685dd5603f4655e4a0a69d5c18bea526728bb-6f15ca087a9fbe02",
+   "name": "9a810838deedcc5d0556d9c4861a1cc58f08d1b7a3ebd3d9a28845cde3b9e767-1919222e3a6a486a",
    "category": "platform",
    "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run 7d559c986c2c2f9ac941c4ff030685dd5603f4655e4a0a69d5c18bea526728bb",
+   "purpose": "/usr/bin/podman healthcheck run 9a810838deedcc5d0556d9c4861a1cc58f08d1b7a3ebd3d9a28845cde3b9e767",
    "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/podman healthcheck",
    "user": "root",
    "baseline": true,
-   "description": "/usr/bin/podman healthcheck run 7d559c986c2c2f9ac941c4ff030685dd5603f4655e4a0a69d5c18bea526728bb",
+   "description": "/usr/bin/podman healthcheck run 9a810838deedcc5d0556d9c4861a1cc58f08d1b7a3ebd3d9a28845cde3b9e767",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/a281d57393a768d0d2dd8a132b4640820813804d6c27d6109fd23a5321da916f-7024463c7336838b.service": {
-   "id": "192.168.1.101/unit/a281d57393a768d0d2dd8a132b4640820813804d6c27d6109fd23a5321da916f-7024463c7336838b.service",
+  "192.168.1.101/unit/a890bcfcdd24d679d1819a225bd9b68a0af78cd669ff5cb8f561c42ae3e9d2a4-2f3ec8f65bf4be10.service": {
+   "id": "192.168.1.101/unit/a890bcfcdd24d679d1819a225bd9b68a0af78cd669ff5cb8f561c42ae3e9d2a4-2f3ec8f65bf4be10.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "a281d57393a768d0d2dd8a132b4640820813804d6c27d6109fd23a5321da916f-7024463c7336838b",
+   "name": "a890bcfcdd24d679d1819a225bd9b68a0af78cd669ff5cb8f561c42ae3e9d2a4-2f3ec8f65bf4be10",
    "category": "platform",
    "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run a281d57393a768d0d2dd8a132b4640820813804d6c27d6109fd23a5321da916f",
+   "purpose": "/usr/bin/podman healthcheck run a890bcfcdd24d679d1819a225bd9b68a0af78cd669ff5cb8f561c42ae3e9d2a4",
    "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/podman healthcheck",
    "user": "root",
    "baseline": true,
-   "description": "/usr/bin/podman healthcheck run a281d57393a768d0d2dd8a132b4640820813804d6c27d6109fd23a5321da916f",
-   "classified_by": "rules"
-  },
-  "192.168.1.101/unit/a38176e024e02e8f4203fe170a1ac88414ca0aaad65e8b875f3c9cdbc3cd468c-774a5bb8c4f016d.service": {
-   "id": "192.168.1.101/unit/a38176e024e02e8f4203fe170a1ac88414ca0aaad65e8b875f3c9cdbc3cd468c-774a5bb8c4f016d.service",
-   "host": "192.168.1.101",
-   "hosts": [
-    "192.168.1.101"
-   ],
-   "kind": "timer",
-   "name": "a38176e024e02e8f4203fe170a1ac88414ca0aaad65e8b875f3c9cdbc3cd468c-774a5bb8c4f016d",
-   "category": "platform",
-   "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run a38176e024e02e8f4203fe170a1ac88414ca0aaad65e8b875f3c9cdbc3cd468c",
-   "state": "inactive",
-   "schedule": "",
-   "detail": "/usr/bin/podman healthcheck",
-   "user": "root",
-   "baseline": true,
-   "description": "/usr/bin/podman healthcheck run a38176e024e02e8f4203fe170a1ac88414ca0aaad65e8b875f3c9cdbc3cd468c",
+   "description": "/usr/bin/podman healthcheck run a890bcfcdd24d679d1819a225bd9b68a0af78cd669ff5cb8f561c42ae3e9d2a4",
    "classified_by": "rules"
   },
   "192.168.1.101/unit/accounts-daemon.service": {
@@ -10985,23 +10699,23 @@
    "description": "Avahi mDNS/DNS-SD Stack",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/b910dfa12d48250a845f6925d5212e71e40552400062b5a2dfaa168cf3357ead-8795560d584de1c.service": {
-   "id": "192.168.1.101/unit/b910dfa12d48250a845f6925d5212e71e40552400062b5a2dfaa168cf3357ead-8795560d584de1c.service",
+  "192.168.1.101/unit/bc9e0fae662dcbc564924bd3c4ab3ec29d7c658e36bcfb08916eb9421a0b9a59-528e1bd76237c0b4.service": {
+   "id": "192.168.1.101/unit/bc9e0fae662dcbc564924bd3c4ab3ec29d7c658e36bcfb08916eb9421a0b9a59-528e1bd76237c0b4.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "b910dfa12d48250a845f6925d5212e71e40552400062b5a2dfaa168cf3357ead-8795560d584de1c",
+   "name": "bc9e0fae662dcbc564924bd3c4ab3ec29d7c658e36bcfb08916eb9421a0b9a59-528e1bd76237c0b4",
    "category": "platform",
    "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run b910dfa12d48250a845f6925d5212e71e40552400062b5a2dfaa168cf3357ead",
+   "purpose": "/usr/bin/podman healthcheck run bc9e0fae662dcbc564924bd3c4ab3ec29d7c658e36bcfb08916eb9421a0b9a59",
    "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/podman healthcheck",
    "user": "root",
    "baseline": true,
-   "description": "/usr/bin/podman healthcheck run b910dfa12d48250a845f6925d5212e71e40552400062b5a2dfaa168cf3357ead",
+   "description": "/usr/bin/podman healthcheck run bc9e0fae662dcbc564924bd3c4ab3ec29d7c658e36bcfb08916eb9421a0b9a59",
    "classified_by": "rules"
   },
   "192.168.1.101/unit/c6499a1467ebb4a0d316c5bca6a855ded50fd2b0485595c40f773d6fd96dc9f5-767cba602f42792f.service": {
@@ -11023,23 +10737,23 @@
    "description": "/usr/bin/podman healthcheck run c6499a1467ebb4a0d316c5bca6a855ded50fd2b0485595c40f773d6fd96dc9f5",
    "classified_by": "rules"
   },
-  "192.168.1.101/unit/cf1e63207a74004ff4f27b1c4e90228967bee429c28f9347d7b41d1e39ca0132-1ebec013e756f8ba.service": {
-   "id": "192.168.1.101/unit/cf1e63207a74004ff4f27b1c4e90228967bee429c28f9347d7b41d1e39ca0132-1ebec013e756f8ba.service",
+  "192.168.1.101/unit/c8aaf3dd24c40be77690c38d9b97e2cc97bd3eeb7d544e44f86fb67320dbdf5c-582619ace924f205.service": {
+   "id": "192.168.1.101/unit/c8aaf3dd24c40be77690c38d9b97e2cc97bd3eeb7d544e44f86fb67320dbdf5c-582619ace924f205.service",
    "host": "192.168.1.101",
    "hosts": [
     "192.168.1.101"
    ],
    "kind": "timer",
-   "name": "cf1e63207a74004ff4f27b1c4e90228967bee429c28f9347d7b41d1e39ca0132-1ebec013e756f8ba",
+   "name": "c8aaf3dd24c40be77690c38d9b97e2cc97bd3eeb7d544e44f86fb67320dbdf5c-582619ace924f205",
    "category": "platform",
    "ai": false,
-   "purpose": "/usr/bin/podman healthcheck run cf1e63207a74004ff4f27b1c4e90228967bee429c28f9347d7b41d1e39ca0132",
+   "purpose": "/usr/bin/podman healthcheck run c8aaf3dd24c40be77690c38d9b97e2cc97bd3eeb7d544e44f86fb67320dbdf5c",
    "state": "inactive",
    "schedule": "",
    "detail": "/usr/bin/podman healthcheck",
    "user": "root",
    "baseline": true,
-   "description": "/usr/bin/podman healthcheck run cf1e63207a74004ff4f27b1c4e90228967bee429c28f9347d7b41d1e39ca0132",
+   "description": "/usr/bin/podman healthcheck run c8aaf3dd24c40be77690c38d9b97e2cc97bd3eeb7d544e44f86fb67320dbdf5c",
    "classified_by": "rules"
   },
   "192.168.1.101/unit/chronyd.service": {
@@ -11116,6 +10830,25 @@
    "user": "root",
    "baseline": true,
    "description": "CUPS Scheduler",
+   "classified_by": "rules"
+  },
+  "192.168.1.101/unit/da3284d47b835ad9c64ca0395a56baefd95c7f7987a89d0d1a4f32d42d13572f-88d2e885a90e847.service": {
+   "id": "192.168.1.101/unit/da3284d47b835ad9c64ca0395a56baefd95c7f7987a89d0d1a4f32d42d13572f-88d2e885a90e847.service",
+   "host": "192.168.1.101",
+   "hosts": [
+    "192.168.1.101"
+   ],
+   "kind": "timer",
+   "name": "da3284d47b835ad9c64ca0395a56baefd95c7f7987a89d0d1a4f32d42d13572f-88d2e885a90e847",
+   "category": "platform",
+   "ai": false,
+   "purpose": "/usr/bin/podman healthcheck run da3284d47b835ad9c64ca0395a56baefd95c7f7987a89d0d1a4f32d42d13572f",
+   "state": "inactive",
+   "schedule": "",
+   "detail": "/usr/bin/podman healthcheck",
+   "user": "root",
+   "baseline": true,
+   "description": "/usr/bin/podman healthcheck run da3284d47b835ad9c64ca0395a56baefd95c7f7987a89d0d1a4f32d42d13572f",
    "classified_by": "rules"
   },
   "192.168.1.101/unit/dbus-broker.service": {
@@ -13112,7 +12845,7 @@
    "state": "",
    "detail": "192.168.1.221:445",
    "baseline": false,
-   "classified_by": "llm"
+   "classified_by": "llm-cache"
   },
   "ext/192.168.1.221:9182": {
    "id": "ext/192.168.1.221:9182",
